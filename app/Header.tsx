@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Bars2Icon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,11 +36,7 @@ const Header = () => {
   ];
 
   return (
-    <header
-      className={`p-5 bg-white flex-col items-center justify-center ${
-        showNav ? "" : ""
-      }`}
-    >
+    <header className={`p-5 bg-white flex-col items-center justify-center`}>
       <nav className="flex flex-row justify-between items-center">
         <Link href={"/"}>
           <div className="relative h-14 w-14 cursor-pointer">

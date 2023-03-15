@@ -8,25 +8,28 @@ import React, {
 } from "react";
 
 type UserType = {
-  userId: string;
-  firstName: string;
-  lastName: string;
-  username: string;
-  password: string;
+  user: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    password: string;
+  };
+  token: string;
 };
 
 interface ContextProps {
-  userData: UserType[];
-  setUserData: Dispatch<SetStateAction<UserType[]>>;
+  userData: UserType;
+  setUserData: any;
 }
 
-const GlobalContext = createContext<ContextProps>({
-  userData: [],
+const GlobalContext = createContext<any>({
+  userData: {},
   setUserData: (): UserType[] => [],
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
-  const [userData, setUserData] = useState<[] | UserType[]>([]);
+  const [userData, setUserData] = useState<{} | UserType>({});
 
   return (
     <GlobalContext.Provider value={{ userData, setUserData }}>

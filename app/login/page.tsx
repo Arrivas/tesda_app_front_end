@@ -4,6 +4,9 @@ import FormikField from "@/components/forms/FormikField";
 import AppFormField from "@/components/forms/AppFormField";
 import Image from "next/image";
 import SubmitButton from "@/components/forms/SubmitButton";
+import { useGlobalContext } from "@/context/store";
+import axios from "axios";
+import links from "@/config/links";
 
 interface ValuesType {
   username: string;
@@ -12,14 +15,32 @@ interface ValuesType {
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { userData, setUserData } = useGlobalContext();
 
   const initialValues: ValuesType = {
     username: "",
     password: "",
   };
-  const onSubmit = (values: any) => {
-    console.log(values);
+
+  const onSubmit = async (values: any) => {
+    await axios
+      .post(
+        `${links.default}/auth/login`,
+        {
+          username: values.username.trim(),
+          password: values.password.trim(),
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setUserData({ user: res.data?.user, token: res.data?.token });
+        console.log(userData);
+      })
+      .catch((error) => {
+        console.log(error.data);
+      });
   };
+
   return (
     <div className="px-[16px]">
       <div className="flex w-full justify-center pt-[8px]">
@@ -52,8 +73,15 @@ const Login = () => {
             onShowPassword={setShowPassword}
             showPassword={showPassword}
           />
-          <SubmitButton title="Log in" />
+          <SubmitButton containerClass="" title="Log in" />
         </FormikField>
+        {/* or */}
+
+        <div className="w-full relative flex flex-row items-center justify-between mt-[12px] mb-[4px]">
+          <span className="w-[999px] h-[1px] bg-gray-300"></span>
+          <p className="px-4">or</p>
+          <span className="w-[999px] h-[1px] bg-gray-300"></span>
+        </div>
       </div>
     </div>
   );

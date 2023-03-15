@@ -4,6 +4,7 @@ import { useFormikContext } from "formik";
 interface SubmitButtonProps {
   title: string;
   containerClass?: string;
+  textClass?: string;
 }
 
 interface useFormikContextType {
@@ -13,19 +14,23 @@ interface useFormikContextType {
 const SubmitButton: React.FC<SubmitButtonProps> = ({
   title,
   containerClass,
+  textClass,
 }) => {
   const { handleSubmit } = useFormikContext<useFormikContextType>();
   return (
-    <div className={`${containerClass}`}>
-      <button
-        type="submit"
-        onClick={() => {
-          handleSubmit();
-        }}
+    <button
+      className={`w-full h-[40px] mt-[12px] flex items-center justify-center rounded-md bg-[#203a6b] hover:bg-[#2c5093] ${containerClass}`}
+      type="submit"
+      onClick={() => {
+        handleSubmit();
+      }}
+    >
+      <p
+        className={`text-[17px] text-white font-semibold shadow-md ${textClass}`}
       >
-        <p>{title}</p>
-      </button>
-    </div>
+        {title}
+      </p>
+    </button>
   );
 };
 
