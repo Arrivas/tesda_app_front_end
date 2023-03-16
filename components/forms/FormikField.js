@@ -1,14 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 
-interface FormikFieldProps {
-  onSubmit: React.MouseEventHandler<HTMLButtonElement>;
-  initialValues: any;
-  validationSchema?: any;
-  children: React.ReactNode;
-}
-
-const FormikField: React.FC<FormikFieldProps> = ({
+const FormikField = ({
   onSubmit,
   initialValues,
   validationSchema,

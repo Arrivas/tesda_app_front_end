@@ -3,17 +3,7 @@ import React from "react";
 import { Field } from "formik";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
-export interface AppFormFieldProps {
-  name: string;
-  value: any;
-  customError: string;
-  placeholder?: string;
-  showPassword?: boolean;
-  type?: string;
-  onShowPassword?: Dispatch<SetStateAction<boolean>>;
-}
-
-const AppFormField: React.FC<AppFormFieldProps> = ({
+const AppFormField = ({
   name,
   value,
   customError,
@@ -23,8 +13,6 @@ const AppFormField: React.FC<AppFormFieldProps> = ({
   type = "text",
   ...rest
 }) => {
-  // const { setFieldTouched, handleChange, errors, touched, values, setValues } =
-  //   useFormikContext<AppFormFieldProps>();
   return (
     <>
       <div className="w-full relative flex-1 flex items-center justify-center text-center border border-gray-200 rounded-md">

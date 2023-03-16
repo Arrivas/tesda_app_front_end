@@ -4,37 +4,30 @@ import FormikField from "@/components/forms/FormikField";
 import AppFormField from "@/components/forms/AppFormField";
 import Image from "next/image";
 import SubmitButton from "@/components/forms/SubmitButton";
-import { useGlobalContext } from "@/context/store";
+import { useAuthContext } from "@/context/store";
 import axios from "axios";
 import links from "@/config/links";
-
-interface ValuesType {
-  username: string;
-  password: string;
-}
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { userData, setUserData } = useGlobalContext();
-
-  const initialValues: ValuesType = {
+  const { userData, setUserData } = useAuthContext();
+  const router = useRouter();
+  const initialValues = {
     username: "",
     password: "",
   };
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values) => {
     await axios
-      .post(
-        `${links.default}/auth/login`,
-        {
-          username: values.username.trim(),
-          password: values.password.trim(),
-        },
-        { withCredentials: true }
-      )
+      .post(`${links.default}/auth/login`, {
+        username: values.username.trim(),
+        password: values.password.trim(),
+      })
       .then((res) => {
-        setUserData({ user: res.data?.user, token: res.data?.token });
-        console.log(userData);
+        setUserData({ token: res.data?.token });
+        document.cookie = `jwt=${res.data?.token}`;
+        router.replace("/");
       })
       .catch((error) => {
         console.log(error.data);
