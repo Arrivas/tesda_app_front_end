@@ -1,8 +1,12 @@
-import React from "react";
-import Image from "next/image";
+"use client";
+import React, { useEffect } from "react";
 
-function Home() {
-  return <div className="bg-red-100">asd</div>;
-}
+const Home = () => {
+  useEffect(() => {
+    const cookie = localStorage.getItem("jwt");
+    console.log(cookie);
+  }, []);
+  return <div>Home</div>;
+};
 
 export default Home;

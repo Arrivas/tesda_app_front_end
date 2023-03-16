@@ -4,15 +4,18 @@ import FormikField from "@/components/forms/FormikField";
 import AppFormField from "@/components/forms/AppFormField";
 import Image from "next/image";
 import SubmitButton from "@/components/forms/SubmitButton";
-import { useAuthContext } from "@/context/store";
 import axios from "axios";
 import links from "@/config/links";
 import { useRouter } from "next/navigation";
+import { setUser } from "@/store/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { userData, setUserData } = useAuthContext();
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const initialValues = {
     username: "",
     password: "",
@@ -25,8 +28,8 @@ const Login = () => {
         password: values.password.trim(),
       })
       .then((res) => {
-        setUserData({ token: res.data?.token });
-        document.cookie = `jwt=${res.data?.token}`;
+        dispatch(setUser(res.data?.user));
+        localStorage.setItem("jwt", res.data?.token);
         router.replace("/");
       })
       .catch((error) => {

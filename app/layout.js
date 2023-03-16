@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./globals.css";
 import Header from "./Header";
-import { AuthContextProvider } from "@/context/store";
-import { useAuthContext } from "@/context/store";
+import Providers from "@/components/Providers";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,13 +10,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const { userData } = useAuthContext();
   return (
     <html lang="en">
       <head></head>
       <body>
-        {userData && <Header />}
-        <AuthContextProvider>{children}</AuthContextProvider>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );
