@@ -1,12 +1,24 @@
-import axios from "axios";
+import { verifyToken } from "@/config/verifyAuth";
 import links from "@/config/links";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/store/userSlice";
-import Cookies from "js-cookie";
+import axios from "axios";
 
-const useLogin = () => {
-  const cookie = Cookies.get("jwt");
-  if (cookie) console.log(cookie);
+const login = async () => {
+  const jwt = localStorage.getItem("jwt");
+  const verifiedToken = verifyToken(jwt);
+  let currentUser = {};
+  await axios
+    .get(`${links.default}/user/get/${verifiedToken.id}`)
+    .then((res) => {
+      currentUser = res.data;
+    })
+    .catch((err) => console.log(err));
+  return currentUser;
+};
+const checkToken = async () => {
+  const jwt = localStorage.getItem("jwt");
+  const verifiedToken = await verifyToken(jwt);
+  if (verifiedToken) return true;
+  return false;
 };
 
-export { useLogin };
+export { login, checkToken };

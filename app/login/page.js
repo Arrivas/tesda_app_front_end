@@ -9,7 +9,8 @@ import links from "@/config/links";
 import { useRouter } from "next/navigation";
 import { setUser } from "@/store/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import Cookies from "js-cookie";
+import { login } from "@/helper/auth";
+import * as Yup from "yup";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,19 +22,25 @@ const Login = () => {
     password: "",
   };
 
+  const validationSchema = Yup.object({
+    username: Yup.string().required(),
+    password: Yup.string().required().max(32).min(6),
+  });
+
   const onSubmit = async (values) => {
     await axios
       .post(`${links.default}/auth/login`, {
         username: values.username.trim(),
         password: values.password.trim(),
       })
-      .then((res) => {
-        dispatch(setUser(res.data?.user));
+      .then(async (res) => {
         localStorage.setItem("jwt", res.data?.token);
+        const user = await login();
+        dispatch(setUser(user));
         router.replace("/");
       })
       .catch((error) => {
-        console.log(error.data);
+        console.log(error.response.data);
       });
   };
 
@@ -52,7 +59,11 @@ const Login = () => {
       </div>
 
       <div className="max-w-[416px] mx-auto pt-[8px]">
-        <FormikField initialValues={initialValues} onSubmit={onSubmit}>
+        <FormikField
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+        >
           <AppFormField
             name="username"
             value={undefined}

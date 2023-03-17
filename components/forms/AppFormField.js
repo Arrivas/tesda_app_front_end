@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from "react";
-import { Field } from "formik";
+import { Field, useFormikContext } from "formik";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 const AppFormField = ({
@@ -13,6 +13,8 @@ const AppFormField = ({
   type = "text",
   ...rest
 }) => {
+  const { setFieldTouched, handleChange, errors, touched, values } =
+    useFormikContext();
   return (
     <>
       <div className="w-full relative flex-1 flex items-center justify-center text-center border border-gray-200 rounded-md">
@@ -49,6 +51,9 @@ const AppFormField = ({
           </button>
         )}
       </div>
+      {errors[name] && touched[name] && (
+        <p className={`text-red-400 bottom-2`}>{errors[name]}</p>
+      )}
     </>
   );
 };

@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-  useEffect(() => {
-    const cookie = localStorage.getItem("jwt");
-    console.log(cookie);
-  }, []);
+  const user = useSelector((state) => state.user);
+  // console.log(user);
   return <div>Home</div>;
 };
 
