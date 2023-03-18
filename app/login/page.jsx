@@ -8,12 +8,14 @@ import axios from "axios";
 import links from "@/config/links";
 import { useRouter } from "next/navigation";
 import { setUser } from "@/store/userSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "@/helper/auth";
 import * as Yup from "yup";
+import ErrorMessage from "@/components/forms/ErrorMessage";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [authError, setAuthError] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -40,7 +42,7 @@ const Login = () => {
         router.replace("/");
       })
       .catch((error) => {
-        console.log(error.response.data);
+        setAuthError(error.response?.data?.message || "");
       });
   };
 
@@ -80,6 +82,7 @@ const Login = () => {
             onShowPassword={setShowPassword}
             showPassword={showPassword}
           />
+          <ErrorMessage error={authError} />
           <SubmitButton containerClass="" title="Log in" />
         </FormikField>
         {/* or */}

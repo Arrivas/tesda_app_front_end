@@ -17,6 +17,7 @@
     "eslint-config-next": "13.2.4",
     "formik": "^2.2.9",
     "i": "^0.3.7",
+    "install": "^0.13.0",
     "jose": "^4.13.1",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^9.0.0",

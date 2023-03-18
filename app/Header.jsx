@@ -136,7 +136,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                     className="block w-full"
                     onClick={() => setShowNav(!showNav)}
                   >
-                    <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9]/90 rounded-md">
+                    <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md">
                       <ArrowsPointingOutIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
                     </div>
                   </button>

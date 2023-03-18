@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./globals.css";
 import Header from "./Header";
 import Providers from "@/components/Providers";
-import Login from "./login/page";
 import { usePathname } from "next/navigation";
 
 export const metadata = {
