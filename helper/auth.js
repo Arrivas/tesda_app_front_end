@@ -4,7 +4,8 @@ import axios from "axios";
 
 const login = async () => {
   const jwt = localStorage.getItem("jwt");
-  const verifiedToken = verifyToken(jwt);
+  const verifiedToken = await verifyToken(jwt);
+  if (!verifiedToken) return;
   let currentUser = {};
   await axios
     .get(`${links.default}/user/get/${verifiedToken.id}`)

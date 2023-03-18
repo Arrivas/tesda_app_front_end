@@ -10,15 +10,17 @@ import links from "@/config/links";
 
 const Providers = ({ children }) => {
   const router = useRouter();
+
   const getUser = async () => {
-    const jwt = localStorage.getItem("jwt");
+    let jwt = localStorage.getItem("jwt");
+
     const verifiedToken = await verifyToken(jwt);
     if (verifiedToken) {
       await axios
         .get(`${links.default}/user/get/${verifiedToken.id}`)
         .then((res) => {
-          store.dispatch(setUser(res.data));
           router.replace("/");
+          store.dispatch(setUser(res.data));
         })
         .catch((err) => console.log(err));
     } else {

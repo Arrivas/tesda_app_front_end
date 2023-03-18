@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./globals.css";
 import Header from "./Header";
 import Providers from "@/components/Providers";
+import Head from "next/head";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,13 +11,33 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const [innerWidth, setInnerWidth] = useState(0);
+  const [showNav, setShowNav] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setInnerWidth(window.innerWidth);
+      if (window.innerWidth >= 640) setShowNav(true);
+    }
+  }, [window.innerWidth]);
   return (
     <html lang="en">
-      <head></head>
+      {/* <Head>
+        <meta name="robots" content="noindex" />
+      </Head> */}
       <body>
         <Providers>
-          <Header />
-          {children}
+          <div className="flex h-screen">
+            <div className={`${showNav ? "w-[300px]" : "w-[100px]"}`}>
+              <Header
+                showNav={showNav}
+                setShowNav={setShowNav}
+                innerWidth={innerWidth}
+              />
+            </div>
+            <div className="w-screen">{children}</div>
+            {/* main content */}
+          </div>
         </Providers>
       </body>
     </html>
