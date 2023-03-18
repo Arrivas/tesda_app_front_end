@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <div className="px-[16px]">
+    <div className="px-[16px] ">
       <div className="flex w-full justify-center pt-[8px]">
         <div className="relative w-28 h-28">
           <Image

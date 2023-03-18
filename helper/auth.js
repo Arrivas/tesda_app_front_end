@@ -15,6 +15,7 @@ const login = async () => {
     .catch((err) => console.log(err));
   return currentUser;
 };
+
 const checkToken = async () => {
   const jwt = localStorage.getItem("jwt");
   const verifiedToken = await verifyToken(jwt);

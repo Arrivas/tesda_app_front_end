@@ -53,7 +53,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
     {
       id: 5,
       title: "Logout",
-      destination: "/",
+      destination: "/logout",
       icon: (
         <ArrowLeftOnRectangleIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
       ),
@@ -90,8 +90,8 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                   </div>
                 </Link>
                 {showNav && (
-                  <div className="hidden md:block">
-                    <p className="font-bold">Tesda Webb App</p>
+                  <div className="hidden md:block pl-1">
+                    <p className="font-bold text-[#0035a9]">Tesda Webb App</p>
                     <p className="text-xs">Binmaley, Pangasinan</p>
                   </div>
                 )}
@@ -102,14 +102,14 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                   className="block px-2"
                   onClick={() => setShowNav(!showNav)}
                 >
-                  <ChevronLeftIcon className="h-4 w-4" />
+                  <ChevronLeftIcon className="h-4 w-4 text-gray-500" />
                 </button>
               )}
             </div>
             {/* line */}
             <hr className="w-full bg-gray-200 h-[1px] my-3" />
             {/* nav 1 */}
-            <div className="flex justify-between flex-col h-[90%]">
+            <div className="flex justify-between flex-col h-[70%] md:h-[90%]">
               <nav className="py-2">
                 {navContents.map((item) => (
                   <button
@@ -118,7 +118,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                     onClick={() => setShowNavMobile(false)}
                   >
                     <Link href={item.destination}>
-                      <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#22396b]/90 rounded-md">
+                      <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md">
                         {item.icon}
                         {showNav && (
                           <p className="px-2 text-start text-gray-400 group-hover:text-white">
@@ -136,7 +136,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                     className="block w-full"
                     onClick={() => setShowNav(!showNav)}
                   >
-                    <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#22396b]/90 rounded-md">
+                    <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9]/90 rounded-md">
                       <ArrowsPointingOutIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
                     </div>
                   </button>
