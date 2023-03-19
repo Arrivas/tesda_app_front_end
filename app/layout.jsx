@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./Header";
 import Providers from "@/components/Providers";
 import { usePathname } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Create Next App",
@@ -28,6 +29,7 @@ export default function RootLayout({ children, location }) {
         <meta name="robots" content="noindex" />
       </Head> */}
       <body>
+        <Toaster />
         <Providers>
           <div className="flex h-screen ">
             {pathName !== "/login" && (

@@ -15,8 +15,8 @@ import { useSelector } from "react-redux";
 
 const Header = ({ showNav, setShowNav, innerWidth }) => {
   const [showNavMobile, setShowNavMobile] = useState(false);
-
   const user = useSelector((state) => state.user);
+
   const navContents = [
     {
       id: 1,
@@ -45,7 +45,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
     {
       id: 4,
       title: "Inventory",
-      destination: "/",
+      destination: "/inventory",
       icon: (
         <ArchiveBoxIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
       ),

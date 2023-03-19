@@ -9,6 +9,7 @@ const Logout = () => {
   const dispatch = useDispatch();
   const logout = () => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("hasUser");
     dispatch(setUser(null));
     router.replace("/login");
   };

@@ -9,18 +9,20 @@ import axios from "axios";
 import links from "@/config/links";
 
 const Providers = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const getUser = async () => {
     let jwt = localStorage.getItem("jwt");
+    let hasUser = localStorage.getItem("hasUser");
 
     const verifiedToken = await verifyToken(jwt);
     if (verifiedToken) {
       await axios
         .get(`${links.default}/user/get/${verifiedToken.id}`)
         .then((res) => {
-          router.replace("/");
           store.dispatch(setUser(res.data));
+          if (!jwt || !hasUser) return router.replace("/");
         })
         .catch((err) => console.log(err));
     } else {
@@ -31,13 +33,15 @@ const Providers = ({ children }) => {
   useEffect(() => {
     let ready = true;
     if (ready) {
+      setLoading(true);
       getUser();
+      setLoading(false);
     }
     return () => {
       ready = false;
     };
   }, []);
-  return <Provider store={store}>{children}</Provider>;
+  return <Provider store={store}>{loading ? <>loading</> : children}</Provider>;
 };
 
 export default Providers;

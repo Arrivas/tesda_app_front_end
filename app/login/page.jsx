@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { login } from "@/helper/auth";
 import * as Yup from "yup";
 import ErrorMessage from "@/components/forms/ErrorMessage";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,6 +38,7 @@ const Login = () => {
       })
       .then(async (res) => {
         localStorage.setItem("jwt", res.data?.token);
+        localStorage.setItem("hasUser", true);
         const user = await login();
         dispatch(setUser(user));
         router.replace("/");
@@ -48,7 +50,7 @@ const Login = () => {
 
   return (
     <div className="px-[16px] ">
-      <div className="flex w-full justify-center pt-[8px]">
+      <div className="flex w-full justify-center pt-[20px]">
         <div className="relative w-28 h-28">
           <Image
             alt="logo"
