@@ -31,7 +31,7 @@ export default function RootLayout({ children, location }) {
       <body>
         <Toaster />
         <Providers>
-          <div className="flex h-screen ">
+          <div className="flex h-screen overflow-hidden">
             {pathName !== "/login" && (
               <div className={`${showNav ? "w-[300px]" : "w-[100px]"}`}>
                 <Header

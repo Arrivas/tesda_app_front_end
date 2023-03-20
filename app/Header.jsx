@@ -26,22 +26,22 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
         <HomeIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
       ),
     },
-    {
-      id: 2,
-      title: "Register Borrower",
-      destination: "/rborrower",
-      icon: (
-        <UserPlusIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
-      ),
-    },
-    {
-      id: 3,
-      title: "Records/Lists",
-      destination: "/",
-      icon: (
-        <ListBulletIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
-      ),
-    },
+    // {
+    //   id: 2,
+    //   title: "Register Borrower",
+    //   destination: "/rborrower",
+    //   icon: (
+    //     <UserPlusIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
+    //   ),
+    // },
+    // {
+    //   id: 3,
+    //   title: "Records/Lists",
+    //   destination: "/",
+    //   icon: (
+    //     <ListBulletIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
+    //   ),
+    // },
     {
       id: 4,
       title: "Inventory",

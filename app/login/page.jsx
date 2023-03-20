@@ -17,6 +17,7 @@ import { toast } from "react-hot-toast";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -31,6 +32,7 @@ const Login = () => {
   });
 
   const onSubmit = async (values) => {
+    setLoading(true);
     await axios
       .post(`${links.default}/auth/login`, {
         username: values.username.trim(),
@@ -42,10 +44,16 @@ const Login = () => {
         const user = await login();
         dispatch(setUser(user));
         router.replace("/");
+        setLoading(false);
       })
       .catch((error) => {
-        setAuthError(error.response?.data?.message || "");
+        setAuthError(
+          error.response?.data?.message ||
+            "something went wrong, server is not available"
+        );
+        setLoading(false);
       });
+    setLoading(false);
   };
 
   return (
@@ -85,7 +93,7 @@ const Login = () => {
             showPassword={showPassword}
           />
           <ErrorMessage error={authError} />
-          <SubmitButton containerClass="" title="Log in" />
+          <SubmitButton disabled={loading} title="Log in" />
         </FormikField>
         {/* or */}
 
