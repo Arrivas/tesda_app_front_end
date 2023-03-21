@@ -18,8 +18,8 @@ export default function RootLayout({ children, location }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setInnerWidth(window?.innerWidth);
-      if (window.innerWidth > 640) setShowNav(true);
+      setInnerWidth(window.outerWidth);
+      if (window.outerWidth > 640) setShowNav(true);
     }
   }, []);
 

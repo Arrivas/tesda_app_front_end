@@ -3,10 +3,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import links from "@/config/links";
 import { toast } from "react-hot-toast";
+import TableComponent from "@/components/table/TableComponent";
+import SortByComponent from "@/components/home/SortByComponent";
 
 const Home = () => {
   const [borrow, setBorrow] = useState([]);
-  const [selectedCheckbox, setSelectedCheckbox] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
+  const [showTimeStamp, setShowTimeStamp] = useState(false);
+  const [activeTableHeader, setActiveTableHeader] = useState({
+    active: "No.",
+    sort: "asc",
+  });
+
   const fetchBorrow = async () => {
     try {
       const result = await axios.get(`${links.default}/borrow/get/all`);
@@ -15,74 +24,63 @@ const Home = () => {
       toast.error("something went wrong, cannot get borrow lists");
     }
   };
+
   useEffect(() => {
     let ready = true;
     if (ready) fetchBorrow().then((res) => setBorrow(res.data));
-
     return () => {
       ready = false;
     };
   }, []);
-  console.log(selectedCheckbox);
+
+  const sortBorrow = (arr, sort, active) => {
+    const borrowCopy = [...arr];
+    return borrowCopy.sort((a, b) => {
+      if (sort === "asc") {
+        if (active === "SSP") return a.SSP > b.SSP ? 1 : -1;
+        else if (active === "Property Number")
+          return a.propertyNo > b.propertyNo ? 1 : -1;
+        else if (active === "Received By")
+          return a.receivedBy > b.receivedBy ? 1 : -1;
+        else if (active === "Status") return a.status > b.status ? 1 : -1;
+        else if (active === "Timestamp")
+          return a.createdAt > b.createdAt ? 1 : -1;
+        else if (active === "No.") a > b ? 1 : -1;
+      } else {
+        if (active === "SSP") return a.SSP > b.SSP ? -1 : 1;
+        else if (active === "Property Number")
+          return a.propertyNo > b.propertyNo ? -1 : 1;
+        else if (active === "Received By")
+          return a.receivedBy > b.receivedBy ? -1 : 1;
+        else if (active === "Status") return a.status > b.status ? -1 : 1;
+        else if (active === "Timestamp")
+          return a.createdAt > b.createdAt ? -1 : 1;
+        else if (active === "No.") a > b ? -1 : 1;
+      }
+    });
+  };
+
+  const sortedBorrow = sortBorrow(
+    borrow,
+    activeTableHeader.sort,
+    activeTableHeader.active
+  );
+
   return (
     <>
-      <div className="table-responsive overflow-x-scroll">
-        <table className="w-full">
-          <thead className="bg-[#f6f6f6]">
-            <tr>
-              <th className="text-[#9b9b9b] w-[5%] p-3">
-                <input
-                  name="checkAll"
-                  type="checkbox"
-                  className=""
-                  onChange={() => {
-                    const newSelectedItems = {};
-                    items.forEach((item) => {
-                      newSelectedItems[item._id] = true;
-                    });
-                    setSelectedCheckbox(newSelectedItems);
-                  }}
-                />
-              </th>
-              <th className="text-[#9b9b9b] font-semibold text-start w-[4%]">
-                No.
-              </th>
-              <th className="text-[#9b9b9b] font-semibold text-start">SSP</th>
-              <th className="text-[#9b9b9b] font-semibold text-start">
-                Property Number
-              </th>
-              <th className="text-[#9b9b9b] font-semibold text-start">
-                Received By
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {borrow?.map((item, index) => (
-              <tr key={item._id}>
-                <td className="text-center py-2">
-                  <input
-                    name={`checkbox${index + 1}`}
-                    type="checkbox"
-                    className=""
-                    checked={selectedCheckbox[item._id]}
-                    onChange={() =>
-                      setSelectedCheckbox([
-                        {
-                          ...selectedCheckbox,
-                          [item._id]: !selectedCheckbox[item._id],
-                        },
-                      ])
-                    }
-                  />
-                </td>
-                <td className="w-[4%]">{index + 1}</td>
-                <td>{item.SSP}</td>
-                <td>{item.propertyNo}</td>
-                <td>{item.receivedBy}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="p-5">
+        {/* table menu */}
+        <TableComponent
+          borrow={sortedBorrow}
+          selectAll={selectAll}
+          selectedItems={selectedItems}
+          setSelectAll={setSelectAll}
+          setSelectedItems={setSelectedItems}
+          showTimeStamp={showTimeStamp}
+          setShowTimeStamp={setShowTimeStamp}
+          activeTableHeader={activeTableHeader}
+          setActiveTableHeader={setActiveTableHeader}
+        />
       </div>
     </>
   );
