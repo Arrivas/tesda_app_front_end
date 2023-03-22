@@ -28,13 +28,18 @@ const THeadComponent = ({
               }`}
             >
               <a>{t.label === "input" ? t.input : t.label}</a>
-              {t.label !== "input" &&
+              {activeTableHeader.active === t.label &&
+              t.label !== "No." &&
+              t.label !== "input" ? (
+                <ChevronUpIcon className="text-black h-3 w-3 inline" />
+              ) : (
+                activeTableHeader.sort === "desc" &&
                 activeTableHeader.active === t.label &&
-                (activeTableHeader.sort === "asc" ? (
-                  <ChevronUpIcon className="text-black h-3 w-3 inline" />
-                ) : (
+                t.label !== "No." &&
+                t.label !== "input" && (
                   <ChevronDownIcon className="text-black h-3 w-3 inline" />
-                ))}
+                )
+              )}
             </th>
           </>
         ))}

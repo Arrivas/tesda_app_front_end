@@ -4,7 +4,9 @@ import axios from "axios";
 import links from "@/config/links";
 import { toast } from "react-hot-toast";
 import TableComponent from "@/components/table/TableComponent";
-import SortByComponent from "@/components/home/SortByComponent";
+import paginate from "@/helper/paginate";
+import sortBorrow from "@/helper/sortBorrow";
+import Pagination from "@/components/pagination/Pagination";
 
 const Home = () => {
   const [borrow, setBorrow] = useState([]);
@@ -12,9 +14,10 @@ const Home = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [showTimeStamp, setShowTimeStamp] = useState(false);
   const [activeTableHeader, setActiveTableHeader] = useState({
-    active: "No.",
+    active: "SSP",
     sort: "asc",
   });
+  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchBorrow = async () => {
     try {
@@ -33,35 +36,14 @@ const Home = () => {
     };
   }, []);
 
-  const sortBorrow = (arr, sort, active) => {
-    const borrowCopy = [...arr];
-    return borrowCopy.sort((a, b) => {
-      if (sort === "asc") {
-        if (active === "SSP") return a.SSP > b.SSP ? 1 : -1;
-        else if (active === "Property Number")
-          return a.propertyNo > b.propertyNo ? 1 : -1;
-        else if (active === "Received By")
-          return a.receivedBy > b.receivedBy ? 1 : -1;
-        else if (active === "Status") return a.status > b.status ? 1 : -1;
-        else if (active === "Timestamp")
-          return a.createdAt > b.createdAt ? 1 : -1;
-        else if (active === "No.") a > b ? 1 : -1;
-      } else {
-        if (active === "SSP") return a.SSP > b.SSP ? -1 : 1;
-        else if (active === "Property Number")
-          return a.propertyNo > b.propertyNo ? -1 : 1;
-        else if (active === "Received By")
-          return a.receivedBy > b.receivedBy ? -1 : 1;
-        else if (active === "Status") return a.status > b.status ? -1 : 1;
-        else if (active === "Timestamp")
-          return a.createdAt > b.createdAt ? -1 : 1;
-        else if (active === "No.") a > b ? -1 : 1;
-      }
-    });
-  };
+  const indexOfLastItem = currentPage * 5;
+  const indexOfFirstItem = indexOfLastItem - 5;
+  const paginatedData = borrow?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const pageNumbers = paginate(5, borrow?.length);
 
   const sortedBorrow = sortBorrow(
-    borrow,
+    paginatedData,
     activeTableHeader.sort,
     activeTableHeader.active
   );
@@ -81,6 +63,13 @@ const Home = () => {
           activeTableHeader={activeTableHeader}
           setActiveTableHeader={setActiveTableHeader}
         />
+        {borrow?.length > 5 && (
+          <Pagination
+            pageNumbers={pageNumbers}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </div>
     </>
   );
