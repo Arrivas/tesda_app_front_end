@@ -24,8 +24,12 @@ const THeadComponent = ({
                   ? "w-[5%] p-3 text-center"
                   : t.label === "No."
                   ? "w-[4%] text-start"
+                  : t.label === "SSP"
+                  ? "w-[18%] text-start"
                   : "text-start"
               }`}
+              // : t.label === "Status"
+              // ? "w-[17%] text-start"
             >
               <a>{t.label === "input" ? t.input : t.label}</a>
               {activeTableHeader.active === t.label &&

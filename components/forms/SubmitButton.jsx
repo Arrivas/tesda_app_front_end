@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import Spinner from "../Spinner";
 
 const SubmitButton = ({
-  title,
+  title = "",
   containerClass,
   textClass,
   disabled,

@@ -7,10 +7,11 @@ const AppFormField = ({
   name,
   value,
   customError,
-  placeholder,
+  placeholder = "",
   showPassword = false,
   onShowPassword,
   type = "text",
+  fieldClass = "",
   ...rest
 }) => {
   const { setFieldTouched, handleChange, errors, touched, values } =
@@ -20,7 +21,7 @@ const AppFormField = ({
       <div className="w-full relative flex-1 flex items-center justify-center text-center border border-gray-200 rounded-md">
         <Field
           autoComplete="off"
-          className={`p-[12px] w-full bg-[#f5f6f7] ${
+          className={`p-[12px] w-full bg-[#f5f6f7] ${fieldClass} ${
             type === "password" ? "pr-10" : ""
           }`}
           name={name}

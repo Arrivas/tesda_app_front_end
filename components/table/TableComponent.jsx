@@ -2,6 +2,9 @@ import React from "react";
 import THeadComponent from "@/components/table/THeadComponent";
 import moment from "moment";
 import ShowTimeStamp from "../home/ShowTimeStamp";
+import { QrCodeIcon } from "@heroicons/react/24/solid";
+import QRCode from "react-qr-code";
+import ShowQrModal from "../home/ShowQrModal";
 
 const TableComponent = ({
   borrow,
@@ -13,6 +16,8 @@ const TableComponent = ({
   showTimeStamp,
   activeTableHeader,
   setActiveTableHeader,
+  showQr,
+  setShowQr,
 }) => {
   const theadItems = [
     {
@@ -43,11 +48,12 @@ const TableComponent = ({
     { id: 5, label: "Received By" },
     { id: 6, label: "Status" },
     { id: 7, label: "Timestamp" },
+    { id: 8, label: "QR Code" },
   ];
 
   return (
-    <div className="table-responsive overflow-x-scroll md:overflow-hidden">
-      <table className="w-full">
+    <div className="overflow-x-auto overflow-hidden min-w-[300px]">
+      <table className="w-[400px] min-w-full table-fixed break-words">
         <THeadComponent
           theadItems={theadItems}
           activeTableHeader={activeTableHeader}
@@ -83,9 +89,7 @@ const TableComponent = ({
                 />
               </td>
               <td className="w-[4%]">{index + 1}</td>
-              <td className="min-w-[220px] md:min-w-auto md:w-100%">
-                {item.SSP}
-              </td>
+              <td className="min-w-[220px] ">{item.SSP}</td>
               <td className="min-w-[220px] md:min-w-auto md:w-100%">
                 {item.propertyNo}
               </td>
@@ -112,9 +116,23 @@ const TableComponent = ({
                   </span>
                 </button>
               </td>
+              <td className="min-w-[120px] md:min-w-auto md:w-100%">
+                <button
+                  className="flex items-center"
+                  onClick={() => setShowQr(!showQr)}
+                >
+                  <QrCodeIcon className="w-5 h-5" />
+                  <span className="text-gray-500 text-xs">show qr</span>
+                </button>
+              </td>
               <ShowTimeStamp
                 setShowTimeStamp={setShowTimeStamp}
                 showTimeStamp={showTimeStamp}
+              />
+              <ShowQrModal
+                showQr={showQr}
+                setShowQr={setShowQr}
+                qrValue={item._id}
               />
             </tr>
           ))}
