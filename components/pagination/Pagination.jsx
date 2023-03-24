@@ -43,7 +43,7 @@ const Pagination = ({ pageNumbers, setCurrentPage, currentPage }) => {
                     href="#!"
                     className={`inline-block py-2 px-4 rounded-md transition-colors ${
                       isCurrentPage
-                        ? `bg-[#0035a9]/80 text-white`
+                        ? `bg-[#0035a9] text-white`
                         : "text-gray-700 hover:bg-blue-100"
                     }`}
                     onClick={() => setCurrentPage(number)}

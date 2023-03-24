@@ -7,7 +7,7 @@ const THeadComponent = ({
   setActiveTableHeader,
 }) => {
   return (
-    <thead className="bg-[#f6f6f6]">
+    <thead className="bg-[#f6f6f6] sticky top-0">
       <tr>
         {theadItems.map((t) => (
           <>
@@ -21,18 +21,23 @@ const THeadComponent = ({
               key={t.id}
               className={`text-[#9b9b9b] font-semibold cursor-pointer ${
                 t.label === "input"
-                  ? "w-[5%] p-3 text-center"
-                  : t.label === "No."
-                  ? "w-[4%] text-start"
+                  ? "w-[4%] text-center p-3"
                   : t.label === "SSP"
+                  ? "w-[22%] text-start"
+                  : t.label === "Received By"
                   ? "w-[18%] text-start"
+                  : t.label === "Status"
+                  ? "w-[12%] text-start"
                   : "text-start"
               }`}
+              // ? "w-[5%] p-3 text-center"
+              //     : t.label === "No."
               // : t.label === "Status"
               // ? "w-[17%] text-start"
             >
               <a>{t.label === "input" ? t.input : t.label}</a>
-              {activeTableHeader.active === t.label &&
+              {activeTableHeader.sort === "asc" &&
+              activeTableHeader.active === t.label &&
               t.label !== "No." &&
               t.label !== "input" ? (
                 <ChevronUpIcon className="text-black h-3 w-3 inline" />

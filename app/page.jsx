@@ -13,7 +13,6 @@ const Home = () => {
   const [borrow, setBorrow] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [showTimeStamp, setShowTimeStamp] = useState(false);
   const [activeTableHeader, setActiveTableHeader] = useState({
     active: "SSP",
     sort: "asc",
@@ -25,6 +24,8 @@ const Home = () => {
     label: "filter search by",
   });
   const [showQr, setShowQr] = useState(false);
+  const [selectedQr, setSelectedQr] = useState([]);
+
   const fetchBorrow = async () => {
     try {
       const result = await axios.get(`${links.default}/borrow/get/all`);
@@ -42,8 +43,8 @@ const Home = () => {
     };
   }, []);
 
-  const indexOfLastItem = currentPage * 5;
-  const indexOfFirstItem = indexOfLastItem - 5;
+  const indexOfLastItem = currentPage * 20;
+  const indexOfFirstItem = indexOfLastItem - 20;
   const paginatedData =
     search && searchFilter.name !== ""
       ? borrow?.filter((item) =>
@@ -51,7 +52,7 @@ const Home = () => {
         )
       : borrow?.slice(indexOfFirstItem, indexOfLastItem);
 
-  const pageNumbers = paginate(5, borrow?.length);
+  const pageNumbers = paginate(20, borrow?.length);
 
   const sortedBorrow = sortBorrow(
     paginatedData,
@@ -59,16 +60,31 @@ const Home = () => {
     activeTableHeader.active
   );
 
+  const onNewSubmit = async (values) => {
+    await axios
+      .post(`${links.default}/borrow/new`, values)
+      .then((res) => {
+        setBorrow((prevState) => [...prevState, res?.data]);
+        toast.success("added successfully");
+      })
+      .catch((err) => toast.error("something went wrong"));
+  };
+
   return (
     <>
-      <div className="p-5">
+      <div className="p-5 h-screen flex flex-col">
         {/* table menu */}
+
         <TableMenu
+          showQr={showQr}
           search={search}
+          setShowQr={setShowQr}
           setSearch={setSearch}
+          selectedQr={selectedQr}
           searchFilter={searchFilter}
           selectedItems={selectedItems}
           setSearchFilter={setSearchFilter}
+          onNewSubmit={onNewSubmit}
         />
 
         <TableComponent
@@ -76,10 +92,10 @@ const Home = () => {
           setShowQr={setShowQr}
           borrow={sortedBorrow}
           selectAll={selectAll}
+          selectedQr={selectedQr}
+          setSelectedQr={setSelectedQr}
           setSelectAll={setSelectAll}
           selectedItems={selectedItems}
-          showTimeStamp={showTimeStamp}
-          setShowTimeStamp={setShowTimeStamp}
           setSelectedItems={setSelectedItems}
           activeTableHeader={activeTableHeader}
           setActiveTableHeader={setActiveTableHeader}

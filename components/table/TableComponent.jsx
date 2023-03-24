@@ -1,9 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import THeadComponent from "@/components/table/THeadComponent";
 import moment from "moment";
-import ShowTimeStamp from "../home/ShowTimeStamp";
-import { QrCodeIcon } from "@heroicons/react/24/solid";
-import QRCode from "react-qr-code";
 import ShowQrModal from "../home/ShowQrModal";
 
 const TableComponent = ({
@@ -12,12 +9,12 @@ const TableComponent = ({
   setSelectedItems,
   selectAll,
   setSelectAll,
-  setShowTimeStamp,
-  showTimeStamp,
   activeTableHeader,
   setActiveTableHeader,
   showQr,
   setShowQr,
+  selectedQr,
+  setSelectedQr,
 }) => {
   const theadItems = [
     {
@@ -36,24 +33,31 @@ const TableComponent = ({
                   return { ...item, selected: true };
                 })
               );
-            } else setSelectedItems([]);
+              setSelectedQr(
+                borrow.map((item) => {
+                  return { id: item._id, propertyNo: item.propertyNo };
+                })
+              );
+            } else {
+              setSelectedQr([]);
+              setSelectedItems([]);
+            }
             setSelectAll(!selectAll);
           }}
         />
       ),
     },
-    { id: 2, label: "No." },
+    // { id: 2, label: "No." },
     { id: 3, label: "SSP" },
     { id: 4, label: "Property Number" },
     { id: 5, label: "Received By" },
     { id: 6, label: "Status" },
     { id: 7, label: "Timestamp" },
-    { id: 8, label: "QR Code" },
   ];
 
   return (
-    <div className="overflow-x-auto overflow-hidden min-w-[300px]">
-      <table className="w-[400px] min-w-full table-fixed break-words">
+    <div className="min-w-[300px] h-full overflow-y-scroll">
+      <table className="table-fixed break-words h-screen md:h-auto w-full">
         <THeadComponent
           theadItems={theadItems}
           activeTableHeader={activeTableHeader}
@@ -75,6 +79,21 @@ const TableComponent = ({
                       selected: isChecked,
                     };
 
+                    const qrItem = {
+                      id: item._id,
+                      propertyNo: item.propertyNo,
+                    };
+
+                    setSelectedQr((prevSelectedItems) => {
+                      if (isChecked) {
+                        return [...prevSelectedItems, qrItem];
+                      } else {
+                        return prevSelectedItems.filter(
+                          (s) => s.id !== item._id
+                        );
+                      }
+                    });
+
                     setSelectedItems((prevSelectedItems) => {
                       if (isChecked) {
                         return [...prevSelectedItems, modifiedSelectedItem];
@@ -88,7 +107,7 @@ const TableComponent = ({
                   }}
                 />
               </td>
-              <td className="w-[4%]">{index + 1}</td>
+              {/* <td className="w-[4%]">{index + 1}</td> */}
               <td className="min-w-[220px] ">{item.SSP}</td>
               <td className="min-w-[220px] md:min-w-auto md:w-100%">
                 {item.propertyNo}
@@ -108,31 +127,17 @@ const TableComponent = ({
                 </span>
               </td>
               <td className="min-w-[120px] md:min-w-auto md:w-100%">
-                <button onClick={() => setShowTimeStamp(!showTimeStamp)}>
-                  <span className="text-gray-500 text-xs underline">
-                    {moment(new Date(item.createdAt)).format(
-                      "MMMM Do YYYY, h:mm a"
-                    )}
-                  </span>
-                </button>
+                <span className="text-gray-500 text-xs">
+                  {moment(new Date(item.createdAt)).format(
+                    "MMMM Do YYYY, h:mm a"
+                  )}
+                </span>
               </td>
-              <td className="min-w-[120px] md:min-w-auto md:w-100%">
-                <button
-                  className="flex items-center"
-                  onClick={() => setShowQr(!showQr)}
-                >
-                  <QrCodeIcon className="w-5 h-5" />
-                  <span className="text-gray-500 text-xs">show qr</span>
-                </button>
-              </td>
-              <ShowTimeStamp
-                setShowTimeStamp={setShowTimeStamp}
-                showTimeStamp={showTimeStamp}
-              />
+
               <ShowQrModal
                 showQr={showQr}
                 setShowQr={setShowQr}
-                qrValue={item._id}
+                selectedQr={selectedQr}
               />
             </tr>
           ))}
