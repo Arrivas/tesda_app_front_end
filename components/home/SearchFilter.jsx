@@ -3,7 +3,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const people = [
-  { id: 1, name: "", label: "filter search by" },
+  { id: 1, name: "", label: "select search filter" },
   { id: 2, name: "SSP", label: "SSP" },
   { id: 3, name: "propertyNo", label: "Property No." },
   { id: 4, name: "receivedBy", label: "Receive By" },
@@ -17,7 +17,7 @@ const SearchFilter = ({ searchFilter, setSearchFilter }) => {
           <Listbox.Button className="relative w-full rounded-lg bg-white py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             <span
               className={`block truncate ${
-                searchFilter.label === "filter search by"
+                searchFilter.label === "select search filter"
                   ? "text-gray-400"
                   : "text-black"
               }`}
@@ -44,14 +44,14 @@ const SearchFilter = ({ searchFilter, setSearchFilter }) => {
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                       active
-                        ? "bg-[#0035a9]/30 text-[#0035a9]"
-                        : filter.label === "filter search by"
+                        ? "bg-[#0035a9] text-white"
+                        : filter.label === "select search filter"
                         ? "text-gray-300"
                         : "text-gray-900"
                     }`
                   }
                   value={filter}
-                  disabled={filter.label === "filter search by"}
+                  disabled={filter.label === "select search filter"}
                 >
                   {({ selected }) => (
                     <>

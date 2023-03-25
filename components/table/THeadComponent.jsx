@@ -12,11 +12,14 @@ const THeadComponent = ({
         {theadItems.map((t) => (
           <>
             <th
-              onClick={() =>
-                setActiveTableHeader({
-                  active: t.label,
-                  sort: activeTableHeader.sort === "asc" ? "desc" : "asc",
-                })
+              onClick={
+                t.label === "input"
+                  ? null
+                  : () =>
+                      setActiveTableHeader({
+                        active: t.label,
+                        sort: activeTableHeader.sort === "asc" ? "desc" : "asc",
+                      })
               }
               key={t.id}
               className={`text-[#9b9b9b] font-semibold cursor-pointer ${
@@ -30,10 +33,6 @@ const THeadComponent = ({
                   ? "w-[12%] text-start"
                   : "text-start"
               }`}
-              // ? "w-[5%] p-3 text-center"
-              //     : t.label === "No."
-              // : t.label === "Status"
-              // ? "w-[17%] text-start"
             >
               <a>{t.label === "input" ? t.input : t.label}</a>
               {activeTableHeader.sort === "asc" &&

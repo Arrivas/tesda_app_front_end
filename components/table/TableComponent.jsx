@@ -66,7 +66,7 @@ const TableComponent = ({
         <tbody>
           {borrow?.map((item, index) => (
             <tr key={item._id}>
-              <td className="text-center py-2">
+              <td className="text-center py-4">
                 <input
                   name="selected"
                   type="checkbox"
@@ -120,7 +120,7 @@ const TableComponent = ({
                   className={`${
                     item.isBorrowed
                       ? "text-[#bf807f] bg-[#ffe0e1]"
-                      : "text-[#63a878] bg-[#e0ffeb]"
+                      : " text-[#63a878] bg-[#e0ffeb]"
                   } p-2 text-xs font-bold rounded-md`}
                 >
                   {item.isBorrowed ? "borrowed" : "returned"}

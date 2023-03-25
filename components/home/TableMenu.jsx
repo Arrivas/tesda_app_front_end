@@ -19,15 +19,24 @@ const TableMenu = ({
   showQr,
   setShowQr,
   onNewSubmit,
+  showNew,
+  setShowNew,
+  handleDelete,
 }) => {
-  const [showNew, setShowNew] = useState(false);
   return (
     <>
       <div className="flex my-4 flex-col md:flex-row h-[46px]">
         <div className="flex-1 flex items-center w-full md:space-x-2 my-1 flex-col md:flex-row space-y-1 md:space-y-0">
-          <div className="flex w-full items-center border border-gray-200 p-2 rounded-md">
+          <div
+            className={`flex w-full items-center  p-2 rounded-md ${
+              searchFilter.name === ""
+                ? "bg-[#f2f2f2]"
+                : "border border-gray-200"
+            }`}
+          >
             <MagnifyingGlassIcon className="h-4 w-4" />
             <input
+              disabled={searchFilter.name === "" ? true : false}
               className="w-full focus:outline-none px-2"
               placeholder="search..."
               type="text"
@@ -51,9 +60,14 @@ const TableMenu = ({
             </button>
           )}
           {selectedItems?.length > 0 && (
-            <button className="flex items-center hover:bg-[#ff6c6c] bg-[#fb4847] p-2 px-3 rounded-md space-x-1">
+            <button
+              onClick={handleDelete}
+              className="flex items-center hover:bg-[#ff6c6c] bg-[#fb4847] p-2 px-3 rounded-md space-x-1"
+            >
               <TrashIcon className="h-4 w-4 text-white" />
-              <span className="text-white font-semibold">remove</span>
+              <span className="text-white font-semibold">
+                remove {selectedItems?.length} item(s)
+              </span>
             </button>
           )}
           {selectedItems?.length > 0 && selectedItems?.length <= 1 && (

@@ -45,13 +45,13 @@ const ShowQrModal = ({ showQr, setShowQr, selectedQr }) => {
       onClose={() => setShowQr(false)}
       className="relative z-50"
     >
-      <div className="fixed inset-0 bg-gray-100/80" aria-hidden="true" />
+      <div className="fixed inset-0 bg-black/10" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4 ">
         <Dialog.Panel
-          className="w-full max-w-lg rounded shadow-lg bg-white p-2"
+          className="w-full max-w-lg rounded bg-white p-2"
           ref={qrCodeRef}
         >
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center overflowy-auto">
             <Dialog.Title className="font-semibold">QR Code</Dialog.Title>
             <button
               className="dialog-close-button"

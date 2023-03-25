@@ -14,15 +14,16 @@ const Home = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [activeTableHeader, setActiveTableHeader] = useState({
-    active: "SSP",
-    sort: "asc",
+    active: "Timestamp",
+    sort: "desc",
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [searchFilter, setSearchFilter] = useState({
     name: "",
-    label: "filter search by",
+    label: "select search filter",
   });
+  const [showNew, setShowNew] = useState(false);
   const [showQr, setShowQr] = useState(false);
   const [selectedQr, setSelectedQr] = useState([]);
 
@@ -43,31 +44,47 @@ const Home = () => {
     };
   }, []);
 
+  const sortedBorrow = sortBorrow(
+    borrow,
+    activeTableHeader.sort,
+    activeTableHeader.active
+  );
+
   const indexOfLastItem = currentPage * 20;
   const indexOfFirstItem = indexOfLastItem - 20;
   const paginatedData =
     search && searchFilter.name !== ""
-      ? borrow?.filter((item) =>
+      ? sortedBorrow?.filter((item) =>
           item[searchFilter.name].toLowerCase().startsWith(search)
         )
-      : borrow?.slice(indexOfFirstItem, indexOfLastItem);
+      : sortedBorrow?.slice(indexOfFirstItem, indexOfLastItem);
 
   const pageNumbers = paginate(20, borrow?.length);
-
-  const sortedBorrow = sortBorrow(
-    paginatedData,
-    activeTableHeader.sort,
-    activeTableHeader.active
-  );
 
   const onNewSubmit = async (values) => {
     await axios
       .post(`${links.default}/borrow/new`, values)
       .then((res) => {
+        setShowNew(false);
         setBorrow((prevState) => [...prevState, res?.data]);
         toast.success("added successfully");
       })
-      .catch((err) => toast.error("something went wrong"));
+      .catch((err) => toast.error("failed, something went wrong"));
+  };
+
+  const handleDelete = async () => {
+    const toDelete = selectedItems.map((item) => item._id);
+    await axios
+      .post(`${links.default}/borrow/delete/multiple`, { toDelete })
+      .then((res) => toast.success(res.data.message))
+      .catch((err) => toast.error("failed, something went wrong"));
+    // update db
+    let borrowCopy = [...borrow];
+    borrowCopy = borrowCopy.filter(
+      (item) => !selectedItems.some((s) => s._id === item._id)
+    );
+    setBorrow(borrowCopy);
+    setSelectedItems([]);
   };
 
   return (
@@ -76,6 +93,9 @@ const Home = () => {
         {/* table menu */}
 
         <TableMenu
+          showNew={showNew}
+          setShowNew={setShowNew}
+          handleDelete={handleDelete}
           showQr={showQr}
           search={search}
           setShowQr={setShowQr}
@@ -90,7 +110,7 @@ const Home = () => {
         <TableComponent
           showQr={showQr}
           setShowQr={setShowQr}
-          borrow={sortedBorrow}
+          borrow={paginatedData}
           selectAll={selectAll}
           selectedQr={selectedQr}
           setSelectedQr={setSelectedQr}
