@@ -26,6 +26,7 @@ const Home = () => {
   const [showNew, setShowNew] = useState(false);
   const [showQr, setShowQr] = useState(false);
   const [selectedQr, setSelectedQr] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
 
   const fetchBorrow = async () => {
     try {
@@ -72,6 +73,14 @@ const Home = () => {
       .catch((err) => toast.error("failed, something went wrong"));
   };
 
+  const handleUpdate = async (values) => {
+    if (selectedItems.length > 1) return;
+    axios
+      .put(`${links.default}/borrow/update/${selectedItems[0]._id}`, values)
+      .then((res) => console.log(res.data))
+      .catch((err) => toast.error("failed, something went wrong"));
+  };
+
   const handleDelete = async () => {
     const toDelete = selectedItems.map((item) => item._id);
     await axios
@@ -93,29 +102,32 @@ const Home = () => {
         {/* table menu */}
 
         <TableMenu
-          showNew={showNew}
-          setShowNew={setShowNew}
-          handleDelete={handleDelete}
           showQr={showQr}
           search={search}
+          showNew={showNew}
+          showEdit={showEdit}
           setShowQr={setShowQr}
           setSearch={setSearch}
+          setShowNew={setShowNew}
           selectedQr={selectedQr}
+          onNewSubmit={onNewSubmit}
+          setShowEdit={setShowEdit}
           searchFilter={searchFilter}
+          handleUpdate={handleUpdate}
+          handleDelete={handleDelete}
           selectedItems={selectedItems}
           setSearchFilter={setSearchFilter}
-          onNewSubmit={onNewSubmit}
         />
 
         <TableComponent
           showQr={showQr}
           setShowQr={setShowQr}
-          borrow={paginatedData}
           selectAll={selectAll}
+          borrow={paginatedData}
           selectedQr={selectedQr}
-          setSelectedQr={setSelectedQr}
           setSelectAll={setSelectAll}
           selectedItems={selectedItems}
+          setSelectedQr={setSelectedQr}
           setSelectedItems={setSelectedItems}
           activeTableHeader={activeTableHeader}
           setActiveTableHeader={setActiveTableHeader}

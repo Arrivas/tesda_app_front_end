@@ -12,16 +12,27 @@ const AppFormField = ({
   onShowPassword,
   type = "text",
   fieldClass = "",
+  label = "",
   ...rest
 }) => {
-  const { setFieldTouched, handleChange, errors, touched, values } =
-    useFormikContext();
+  const { errors, touched } = useFormikContext();
   return (
     <>
-      <div className="w-full relative flex-1 flex items-center justify-center text-center border border-gray-200 rounded-md">
+      {label && (
+        <span className="px-3 font-semibold bg-white text-xs w-full">
+          {label}
+        </span>
+      )}
+      <div
+        className={`${
+          label ? "flex-col" : null
+        } w-full relative flex-1 flex items-center justify-center text-start border border-gray-200 rounded-md`}
+      >
         <Field
           autoComplete="off"
-          className={`p-[12px] w-full bg-[#f5f6f7] ${fieldClass} ${
+          className={`p-[12px] ${
+            label && "pt-2"
+          } w-full bg-white ${fieldClass} ${
             type === "password" ? "pr-10" : ""
           }`}
           name={name}

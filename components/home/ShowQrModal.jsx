@@ -48,10 +48,10 @@ const ShowQrModal = ({ showQr, setShowQr, selectedQr }) => {
       <div className="fixed inset-0 bg-black/10" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4 ">
         <Dialog.Panel
-          className="w-full max-w-lg rounded bg-white p-2"
+          className="w-full max-w-lg rounded bg-white p-2 max-h-[400px] overflow-y-auto"
           ref={qrCodeRef}
         >
-          <div className="flex justify-between items-center overflowy-auto">
+          <div className="flex justify-between items-center">
             <Dialog.Title className="font-semibold">QR Code</Dialog.Title>
             <button
               className="dialog-close-button"
@@ -73,7 +73,7 @@ const ShowQrModal = ({ showQr, setShowQr, selectedQr }) => {
               </div>
             ))}
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 sticky bottom-0 bg-white">
             <button
               className="w-full h-[40px] mt-[12px] hover:bg-gray-100 flex items-center justify-center rounded-md border border-gray-200 "
               onClick={() => setShowQr(!showQr)}

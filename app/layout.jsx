@@ -29,7 +29,7 @@ export default function RootLayout({ children, location }) {
         <meta name="robots" content="noindex" />
       </Head> */}
       <body>
-        <Toaster />
+        <Toaster position="top-right" reverseOrder={false} />
         <Providers>
           <div className="flex h-screen overflow-hidden">
             {pathName !== "/login" && (

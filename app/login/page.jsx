@@ -47,10 +47,14 @@ const Login = () => {
         setLoading(false);
       })
       .catch((error) => {
-        setAuthError(
+        toast.error(
           error.response?.data?.message ||
             "something went wrong, server is not available"
         );
+        // setAuthError(
+        //   error.response?.data?.message ||
+        //     "something went wrong, server is not available"
+        // );
         setLoading(false);
       });
     setLoading(false);
@@ -92,7 +96,7 @@ const Login = () => {
             onShowPassword={setShowPassword}
             showPassword={showPassword}
           />
-          <ErrorMessage error={authError} />
+          {/* <ErrorMessage error={authError} /> */}
           <SubmitButton disabled={loading} title="Log in" />
         </FormikField>
         {/* or */}

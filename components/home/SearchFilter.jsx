@@ -14,7 +14,7 @@ const SearchFilter = ({ searchFilter, setSearchFilter }) => {
     <div className="w-full flex items-center border border-gray-200 rounded-md">
       <Listbox value={searchFilter} onChange={setSearchFilter}>
         <div className="relative mt-1 cursor-pointer w-full">
-          <Listbox.Button className="relative w-full rounded-lg bg-white py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+          <Listbox.Button className="relative w-full rounded-lg bg-white py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 sm:text-sm">
             <span
               className={`block truncate ${
                 searchFilter.label === "select search filter"

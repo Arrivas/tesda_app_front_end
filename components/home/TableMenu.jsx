@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/solid";
 import SearchFilter from "@/components/home/SearchFilter";
 import NewBorrowModal from "@/components/home/NewBorrowModal";
+import EditModal from "./EditModal";
 
 const TableMenu = ({
   search,
@@ -22,6 +23,9 @@ const TableMenu = ({
   showNew,
   setShowNew,
   handleDelete,
+  handleUpdate,
+  setShowEdit,
+  showEdit,
 }) => {
   return (
     <>
@@ -72,7 +76,10 @@ const TableMenu = ({
           )}
           {selectedItems?.length > 0 && selectedItems?.length <= 1 && (
             <>
-              <button className="flex items-center hover:bg-[#fcdd52] bg-[#fbd325] p-2 px-3 rounded-md space-x-1">
+              <button
+                onClick={() => setShowEdit(true)}
+                className="flex items-center hover:bg-[#fcdd52] bg-[#fbd325] p-2 px-3 rounded-md space-x-1"
+              >
                 <PencilIcon className="h-4 w-4 text-white" />
                 <span className="text-white font-semibold">edit</span>
               </button>
@@ -94,6 +101,12 @@ const TableMenu = ({
         showNew={showNew}
         setShowNew={setShowNew}
         onNewSubmit={onNewSubmit}
+      />
+      <EditModal
+        selectedItems={selectedItems}
+        setShowEdit={setShowEdit}
+        showEdit={showEdit}
+        handleUpdate={handleUpdate}
       />
     </>
   );
