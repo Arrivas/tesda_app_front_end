@@ -49,7 +49,10 @@ const Login = () => {
       .catch((error) => {
         toast.error(
           error.response?.data?.message ||
-            "something went wrong, server is not available"
+            "something went wrong, server is not available",
+          {
+            position: "top-center",
+          }
         );
         // setAuthError(
         //   error.response?.data?.message ||

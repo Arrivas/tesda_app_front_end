@@ -4,9 +4,10 @@ import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const people = [
   { id: 1, name: "", label: "select search filter" },
-  { id: 2, name: "SSP", label: "SSP" },
-  { id: 3, name: "propertyNo", label: "Property No." },
-  { id: 4, name: "receivedBy", label: "Receive By" },
+  { id: 2, name: "propertyNo", label: "Property No." },
+  { id: 3, name: "equipment", label: "Equipment" },
+  { id: 4, name: "fullName", label: "Name" },
+  { id: 5, name: "role", label: "Role" },
 ];
 
 const SearchFilter = ({ searchFilter, setSearchFilter }) => {

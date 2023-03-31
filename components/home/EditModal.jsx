@@ -19,6 +19,7 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, selectedItems }) => {
     propertyNo: selectedItems[0]?.propertyNo,
     receivedBy: selectedItems[0]?.receivedBy,
     isBorrowed: isBorrowed.isBorrowed,
+    _id: selectedItems[0]?._id,
   };
 
   const validationSchema = Yup.object({

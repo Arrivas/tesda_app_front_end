@@ -17,7 +17,7 @@ const AppFormField = ({
 }) => {
   const { errors, touched } = useFormikContext();
   return (
-    <>
+    <div className="w-full bg-white ">
       {label && (
         <span className="px-3 font-semibold bg-white text-xs w-full">
           {label}
@@ -26,7 +26,7 @@ const AppFormField = ({
       <div
         className={`${
           label ? "flex-col" : null
-        } w-full relative flex-1 flex items-center justify-center text-start border border-gray-200 rounded-md`}
+        } w-full relative flex-1 flex items-center p-[1px] justify-center text-start border border-gray-400 rounded-md`}
       >
         <Field
           autoComplete="off"
@@ -63,10 +63,8 @@ const AppFormField = ({
           </button>
         )}
       </div>
-      {errors[name] && touched[name] && (
-        <p className={`text-red-400 bottom-2`}>{errors[name]}</p>
-      )}
-    </>
+      <p className={`text-red-400 bottom-2`}>{errors[name]} </p>
+    </div>
   );
 };
 

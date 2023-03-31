@@ -25,8 +25,8 @@ const THeadComponent = ({
               className={`text-[#9b9b9b] font-semibold cursor-pointer ${
                 t.label === "input"
                   ? "w-[4%] text-center p-3"
-                  : t.label === "SSP"
-                  ? "w-[22%] text-start"
+                  : t.label === "Qty"
+                  ? "w-[6%] text-start"
                   : t.label === "Received By"
                   ? "w-[18%] text-start"
                   : t.label === "Status"

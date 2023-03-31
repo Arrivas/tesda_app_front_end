@@ -74,31 +74,54 @@ const Home = () => {
   };
 
   const handleUpdate = async (values) => {
+    const updatedBorrow = borrow.map((item) =>
+      item._id === values._id
+        ? {
+            ...item,
+            SSP: values.SSP,
+            isBorrowed: values.isBorrowed,
+            propertyNo: values.propertyNo,
+            receivedBy: values.receivedBy,
+          }
+        : item
+    );
+    setBorrow(updatedBorrow);
     if (selectedItems.length > 1) return;
     axios
       .put(`${links.default}/borrow/update/${selectedItems[0]._id}`, values)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        toast.success(res.data.message, {
+          position: "top-center",
+        });
+        setSelectedItems([]);
+        setSelectedQr([]);
+      })
       .catch((err) => toast.error("failed, something went wrong"));
   };
 
   const handleDelete = async () => {
     const toDelete = selectedItems.map((item) => item._id);
+    // update db
     await axios
       .post(`${links.default}/borrow/delete/multiple`, { toDelete })
-      .then((res) => toast.success(res.data.message))
+      .then((res) => {
+        toast.success(res.data.message);
+        setSelectedItems([]);
+        setSelectedQr([]);
+      })
       .catch((err) => toast.error("failed, something went wrong"));
-    // update db
     let borrowCopy = [...borrow];
     borrowCopy = borrowCopy.filter(
       (item) => !selectedItems.some((s) => s._id === item._id)
     );
+
     setBorrow(borrowCopy);
-    setSelectedItems([]);
   };
 
   return (
     <>
       <div className="p-5 h-screen flex flex-col">
+        <h1 className="font-semibold text-4xl text-gray-800">SSP</h1>
         {/* table menu */}
 
         <TableMenu

@@ -48,11 +48,13 @@ const TableComponent = ({
       ),
     },
     // { id: 2, label: "No." },
-    { id: 3, label: "SSP" },
-    { id: 4, label: "Property Number" },
-    { id: 5, label: "Received By" },
-    { id: 6, label: "Status" },
-    { id: 7, label: "Timestamp" },
+    { id: 3, label: "Property Number" },
+    { id: 4, label: "Equipment" },
+    { id: 5, label: "Qty" },
+    { id: 6, label: "Name" },
+    { id: 7, label: "Role" },
+    { id: 8, label: "Status" },
+    { id: 9, label: "Timestamp" },
   ];
 
   return (
@@ -108,12 +110,16 @@ const TableComponent = ({
                 />
               </td>
               {/* <td className="w-[4%]">{index + 1}</td> */}
-              <td className="min-w-[220px] ">{item.SSP}</td>
+              <td className="min-w-[220px] ">{item.propertyNo}</td>
               <td className="min-w-[220px] md:min-w-auto md:w-100%">
-                {item.propertyNo}
+                {item.equipment}
+              </td>
+              <td className="min-w-[100px]">{item.qty}</td>
+              <td className="min-w-[220px] md:min-w-auto md:w-100%">
+                {item.fullName}
               </td>
               <td className="min-w-[220px] md:min-w-auto md:w-100%">
-                {item.receivedBy}
+                {item.role}
               </td>
               <td className="min-w-[80px] md:min-w-auto md:w-100%">
                 <span
