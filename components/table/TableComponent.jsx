@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import THeadComponent from "@/components/table/THeadComponent";
 import moment from "moment";
 import ShowQrModal from "../home/ShowQrModal";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
+import EditModal from "../home/EditModal";
 
 const TableComponent = ({
   borrow,
@@ -15,6 +17,9 @@ const TableComponent = ({
   setShowQr,
   selectedQr,
   setSelectedQr,
+  handleUpdate,
+  showEdit,
+  setShowEdit,
 }) => {
   const theadItems = [
     {
@@ -55,6 +60,7 @@ const TableComponent = ({
     { id: 7, label: "Role" },
     { id: 8, label: "Status" },
     { id: 9, label: "Timestamp" },
+    { id: 10, label: "" },
   ];
 
   return (
@@ -139,11 +145,22 @@ const TableComponent = ({
                   )}
                 </span>
               </td>
+              <td className="min-w-[120px] min-h-[120px] md:min-w-auto md:w-100%">
+                <button className="hover:bg-gray-200 rounded-full">
+                  <EllipsisHorizontalIcon height={20} width={20} />
+                </button>
+              </td>
 
               <ShowQrModal
                 showQr={showQr}
                 setShowQr={setShowQr}
                 selectedQr={selectedQr}
+              />
+              <EditModal
+                items={item}
+                showEdit={showEdit}
+                setShowEdit={setShowEdit}
+                handleUpdate={handleUpdate}
               />
             </tr>
           ))}

@@ -23,9 +23,7 @@ const TableMenu = ({
   showNew,
   setShowNew,
   handleDelete,
-  handleUpdate,
   setShowEdit,
-  showEdit,
 }) => {
   return (
     <>
@@ -101,12 +99,6 @@ const TableMenu = ({
         showNew={showNew}
         setShowNew={setShowNew}
         onNewSubmit={onNewSubmit}
-      />
-      <EditModal
-        selectedItems={selectedItems}
-        setShowEdit={setShowEdit}
-        showEdit={showEdit}
-        handleUpdate={handleUpdate}
       />
     </>
   );

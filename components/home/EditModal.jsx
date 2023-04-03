@@ -5,27 +5,64 @@ import FormikField from "../forms/FormikField";
 import AppFormField from "../forms/AppFormField";
 import SubmitButton from "../forms/SubmitButton";
 import * as Yup from "yup";
-import { Listbox } from "@headlessui/react";
-import BorrowedSelect from "./BorrowedSelect";
+import SelectForm from "../forms/SelectForm";
 
-const EditModal = ({ showEdit, setShowEdit, handleUpdate, selectedItems }) => {
+const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
   const [isBorrowed, setIsBorrowed] = useState({
-    label: "borrowed",
-    isBorrowed: selectedItems[0]?.isBorrowed,
+    label: items.isBorrowed ? "borrowed" : "returned",
+    isBorrowed: items.isBorrowed,
+  });
+  const [location, setLocation] = useState({
+    id: 1,
+    label: items.location,
+  });
+  const [role, setRole] = useState({ id: 1, label: items.role });
+
+  const [condition, setCondition] = useState({
+    id: 1,
+    label: items.condition,
   });
 
+  const locationItems = [
+    { id: 1, label: "Inside" },
+    { id: 2, label: "Outside" },
+  ];
+
+  const roleItems = [
+    { id: 1, label: "Trainee" },
+    { id: 2, label: "Trainor" },
+    { id: 3, label: "Admin Staff" },
+  ];
+
+  const conditionItems = [
+    { id: 1, label: "Serviceable" },
+    { id: 2, label: "Unserviceable" },
+  ];
+
+  const borrowedItems = [
+    { id: 1, label: "borrowed", isBorrowed: true },
+    { id: 2, label: "returned", isBorrowed: false },
+  ];
+
   const initialValues = {
-    SSP: selectedItems[0]?.SSP,
-    propertyNo: selectedItems[0]?.propertyNo,
-    receivedBy: selectedItems[0]?.receivedBy,
-    isBorrowed: isBorrowed.isBorrowed,
-    _id: selectedItems[0]?._id,
+    propertyNo: items?.propertyNo,
+    fullName: items?.fullName,
+    address: items?.address,
+    contactNumber: items?.contactNumber,
+    equipment: items?.equipment,
+    qty: items?.qty,
+    purpose: items?.purpose,
+    condition: condition.label,
+    role: role.label,
+    location: location.label,
+    dateReturn: items?.dateReturn,
+    isBorrowed: items?.isBorrowed,
+    _id: items?._id,
   };
 
   const validationSchema = Yup.object({
-    SSP: Yup.string().required("field must not be empty"),
     propertyNo: Yup.string().required("field must not be empty"),
-    receivedBy: Yup.string().required("field must not be empty"),
+    fullName: Yup.string().required("field must not be empty"),
   });
 
   return (
@@ -35,10 +72,10 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, selectedItems }) => {
       className="relative z-50"
     >
       <div className="fixed inset-0 bg-black/80" aria-hidden="true" />
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="w-full max-w-lg rounded shadow-lg bg-white p-2">
+      <div className="fixed inset-0 flex items-center justify-center">
+        <Dialog.Panel className="w-full max-w-3xl  rounded shadow-lg bg-white p-4">
           <div className="flex justify-between items-center">
-            <Dialog.Title className="font-semibold">Edit</Dialog.Title>
+            <Dialog.Title className="font-semibold px-3">Edit</Dialog.Title>
             <button onClick={() => setShowEdit(false)}>
               <XMarkIcon className="w-5 h-5 text-gray-400" />
             </button>
@@ -49,32 +86,83 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, selectedItems }) => {
             onSubmit={handleUpdate}
             validationSchema={validationSchema}
           >
-            <div className="space-y-2 py-2">
-              <AppFormField
-                name="SSP"
-                placeholder="SSP"
-                fieldClass="text-black bg-gray-50"
-                label="SSP"
-              />
+            <div className="space-y-2 py-2 overflow-y-auto px-3 h-[350px]">
               <AppFormField
                 name="propertyNo"
                 placeholder="Property Number"
+                label="Property Number"
                 fieldClass="text-black bg-gray-50"
-                label="Property No"
               />
-              <AppFormField
-                name="receivedBy"
-                placeholder="Received By"
-                fieldClass="text-black bg-gray-50"
-                label="Received By"
-              />
-              <div>
-                <p className="font-semibold px-3 text-xs">Status</p>
-                <BorrowedSelect
-                  isBorrowed={isBorrowed}
-                  setIsBorrowed={setIsBorrowed}
+              <div className="flex items-center space-x-2">
+                <AppFormField
+                  name="equipment"
+                  placeholder="Equipment"
+                  label="Equipment"
+                  fieldClass="text-black bg-gray-50"
+                />
+                <AppFormField
+                  name="qty"
+                  placeholder="Qty"
+                  label="Qty"
+                  fieldClass="text-black bg-gray-50"
                 />
               </div>
+              <div className="flex items-center space-x-2">
+                <AppFormField
+                  name="purpose"
+                  placeholder="Purpose"
+                  label="Purpose"
+                  fieldClass="text-black bg-gray-50"
+                />
+                <SelectForm
+                  select={condition}
+                  label="Condition"
+                  selectItems={conditionItems}
+                  onSetSelect={setCondition}
+                />
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <SelectForm
+                  select={role}
+                  label="Role"
+                  selectItems={roleItems}
+                  onSetSelect={setRole}
+                />
+                <SelectForm
+                  select={location}
+                  label="Location"
+                  selectItems={locationItems}
+                  onSetSelect={setLocation}
+                />
+              </div>
+
+              <AppFormField
+                name="fullName"
+                placeholder="Full Name"
+                label="Full Name"
+                fieldClass="text-black bg-gray-50"
+              />
+              <div className="flex items-center space-x-2">
+                <AppFormField
+                  name="address"
+                  placeholder="Address"
+                  label="Address"
+                  fieldClass="text-black bg-gray-50"
+                />
+                <AppFormField
+                  name="contactNumber"
+                  placeholder="Contact Number"
+                  label="Contact Number"
+                  fieldClass="text-black bg-gray-50"
+                />
+              </div>
+              <SelectForm
+                selectItems={borrowedItems}
+                onSetSelect={setIsBorrowed}
+                select={isBorrowed}
+                label="Status"
+              />
             </div>
             {/* buttons */}
             <div className="flex items-center space-x-2">

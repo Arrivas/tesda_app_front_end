@@ -13,7 +13,7 @@ const THeadComponent = ({
           <>
             <th
               onClick={
-                t.label === "input"
+                t.label === "input" || t.label === ""
                   ? null
                   : () =>
                       setActiveTableHeader({
@@ -22,8 +22,12 @@ const THeadComponent = ({
                       })
               }
               key={t.id}
-              className={`text-[#9b9b9b] font-semibold cursor-pointer ${
-                t.label === "input"
+              className={`text-[#9b9b9b] font-semibold ${
+                t.label === "input" || t.label === ""
+                  ? "cursor-normal"
+                  : "cursor-pointer"
+              }  ${
+                t.label === "input" || t.label === ""
                   ? "w-[4%] text-center p-3"
                   : t.label === "Qty"
                   ? "w-[6%] text-start"

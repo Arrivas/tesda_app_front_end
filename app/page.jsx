@@ -74,14 +74,23 @@ const Home = () => {
   };
 
   const handleUpdate = async (values) => {
+    console.log(values);
     const updatedBorrow = borrow.map((item) =>
       item._id === values._id
         ? {
             ...item,
-            SSP: values.SSP,
+            address: values.address,
+            condition: values.condition,
+            contactNumber: values.contactNumber,
+            dateReturn: values.dateReturn,
+            equipment: values.equipment,
+            fullName: values.fullName,
             isBorrowed: values.isBorrowed,
+            location: values.location,
             propertyNo: values.propertyNo,
-            receivedBy: values.receivedBy,
+            purpose: values.purpose,
+            qty: values.qty,
+            role: values.role,
           }
         : item
     );
@@ -90,9 +99,7 @@ const Home = () => {
     axios
       .put(`${links.default}/borrow/update/${selectedItems[0]._id}`, values)
       .then((res) => {
-        toast.success(res.data.message, {
-          position: "top-center",
-        });
+        toast.success(res.data.message);
         setSelectedItems([]);
         setSelectedQr([]);
       })
@@ -114,7 +121,6 @@ const Home = () => {
     borrowCopy = borrowCopy.filter(
       (item) => !selectedItems.some((s) => s._id === item._id)
     );
-
     setBorrow(borrowCopy);
   };
 
@@ -125,18 +131,17 @@ const Home = () => {
         {/* table menu */}
 
         <TableMenu
+          borrow={borrow}
           showQr={showQr}
           search={search}
           showNew={showNew}
-          showEdit={showEdit}
           setShowQr={setShowQr}
+          setShowEdit={setShowEdit}
           setSearch={setSearch}
           setShowNew={setShowNew}
           selectedQr={selectedQr}
           onNewSubmit={onNewSubmit}
-          setShowEdit={setShowEdit}
           searchFilter={searchFilter}
-          handleUpdate={handleUpdate}
           handleDelete={handleDelete}
           selectedItems={selectedItems}
           setSearchFilter={setSearchFilter}
@@ -149,12 +154,16 @@ const Home = () => {
           borrow={paginatedData}
           selectedQr={selectedQr}
           setSelectAll={setSelectAll}
+          showEdit={showEdit}
+          setShowEdit={setShowEdit}
+          handleUpdate={handleUpdate}
           selectedItems={selectedItems}
           setSelectedQr={setSelectedQr}
           setSelectedItems={setSelectedItems}
           activeTableHeader={activeTableHeader}
           setActiveTableHeader={setActiveTableHeader}
         />
+
         {borrow?.length > 5 && (
           <Pagination
             pageNumbers={pageNumbers}

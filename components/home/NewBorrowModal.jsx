@@ -69,10 +69,12 @@ const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
       className="relative z-50"
     >
       <div className="fixed inset-0 bg-black/80" aria-hidden="true" />
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="w-full max-w-3xl  rounded shadow-lg bg-white p-2">
+      <div className="fixed inset-0 flex items-center justify-center ">
+        <Dialog.Panel className="w-full max-w-3xl  rounded shadow-lg bg-white p-4">
           <div className="flex justify-between items-center">
-            <Dialog.Title className="font-semibold">New Borrow</Dialog.Title>
+            <Dialog.Title className="font-semibold px-3">
+              New Borrow
+            </Dialog.Title>
             <button onClick={() => setShowNew(false)}>
               <XMarkIcon className="w-5 h-5 text-gray-400 " />
             </button>
@@ -83,13 +85,14 @@ const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
             onSubmit={onNewSubmit}
             validationSchema={validationSchema}
           >
-            <div className="space-y-2 py-2 overflow-y-auto px-5 h-[350px]">
+            <div className="space-y-2 py-2 overflow-y-auto px-3 h-[350px]">
               <AppFormField
                 name="propertyNo"
                 placeholder="Property Number"
                 label="Property Number"
                 fieldClass="text-black bg-gray-50"
               />
+
               <div className="flex items-center space-x-2">
                 <AppFormField
                   name="equipment"
@@ -104,6 +107,7 @@ const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
                   fieldClass="text-black bg-gray-50"
                 />
               </div>
+
               <div className="flex items-center space-x-2">
                 <AppFormField
                   name="purpose"
@@ -140,6 +144,7 @@ const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
                 label="Full Name"
                 fieldClass="text-black bg-gray-50"
               />
+
               <div className="flex items-center space-x-2">
                 <AppFormField
                   name="address"
