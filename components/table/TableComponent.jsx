@@ -20,6 +20,8 @@ const TableComponent = ({
   handleUpdate,
   showEdit,
   setShowEdit,
+  selectedImage,
+  setSelectedImage,
 }) => {
   const theadItems = [
     {
@@ -156,12 +158,17 @@ const TableComponent = ({
                 setShowQr={setShowQr}
                 selectedQr={selectedQr}
               />
-              <EditModal
-                items={item}
-                showEdit={showEdit}
-                setShowEdit={setShowEdit}
-                handleUpdate={handleUpdate}
-              />
+
+              {selectedItems[0]?._id === item._id && (
+                <EditModal
+                  selectedImage={selectedImage}
+                  setSelectedImage={setSelectedImage}
+                  items={item}
+                  showEdit={showEdit}
+                  setShowEdit={setShowEdit}
+                  handleUpdate={handleUpdate}
+                />
+              )}
             </tr>
           ))}
         </tbody>

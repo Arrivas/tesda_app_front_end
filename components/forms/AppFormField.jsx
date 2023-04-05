@@ -16,6 +16,7 @@ const AppFormField = ({
   ...rest
 }) => {
   const { errors, touched } = useFormikContext();
+
   return (
     <div className="w-full bg-white ">
       {label && (
@@ -63,7 +64,9 @@ const AppFormField = ({
           </button>
         )}
       </div>
-      <p className={`text-red-400 bottom-2`}>{errors[name]} </p>
+      {errors[name] && (
+        <p className={`text-red-400 bottom-2 h-[24px]`}>{errors[name]}</p>
+      )}
     </div>
   );
 };

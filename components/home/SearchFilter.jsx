@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 
-const people = [
+const sspSearchItemsFilter = [
   { id: 1, name: "", label: "select search filter" },
   { id: 2, name: "propertyNo", label: "Property No." },
   { id: 3, name: "equipment", label: "Equipment" },
@@ -10,7 +10,15 @@ const people = [
   { id: 5, name: "role", label: "Role" },
 ];
 
-const SearchFilter = ({ searchFilter, setSearchFilter }) => {
+const inventorySearchItemsFilter = [
+  { id: 1, name: "", label: "select search filter" },
+  { id: 2, name: "propertyNo", label: "Property No." },
+  { id: 3, name: "equipment", label: "Equipment" },
+  { id: 3, name: "receiveBy", label: "Receive By" },
+  { id: 4, name: "purchaseDate", label: "Purchase Date" },
+];
+
+const SearchFilter = ({ searchFilter, setSearchFilter, type = "default" }) => {
   return (
     <div className="w-full flex items-center border border-gray-200 rounded-md">
       <Listbox value={searchFilter} onChange={setSearchFilter}>
@@ -39,39 +47,79 @@ const SearchFilter = ({ searchFilter, setSearchFilter }) => {
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
-              {people.map((filter, index) => (
-                <Listbox.Option
-                  key={index}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active
-                        ? "bg-[#0035a9] text-white"
-                        : filter.label === "select search filter"
-                        ? "text-gray-300"
-                        : "text-gray-900"
-                    }`
-                  }
-                  value={filter}
-                  disabled={filter.label === "select search filter"}
-                >
-                  {({ selected }) => (
-                    <>
-                      <span
-                        className={`block truncate ${
-                          selected ? "font-medium" : "font-normal"
-                        }`}
-                      >
-                        {filter.label}
-                      </span>
-                      {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#0035a9]">
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </Listbox.Option>
-              ))}
+              {type !== "default"
+                ? inventorySearchItemsFilter.map((filter, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                          active
+                            ? "bg-[#0035a9] text-white"
+                            : filter.label === "select search filter"
+                            ? "text-gray-300"
+                            : "text-gray-900"
+                        }`
+                      }
+                      value={filter}
+                      disabled={filter.label === "select search filter"}
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selected ? "font-medium" : "font-normal"
+                            }`}
+                          >
+                            {filter.label}
+                          </span>
+                          {selected ? (
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#0035a9]">
+                              <CheckIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))
+                : sspSearchItemsFilter.map((filter, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                          active
+                            ? "bg-[#0035a9] text-white"
+                            : filter.label === "select search filter"
+                            ? "text-gray-300"
+                            : "text-gray-900"
+                        }`
+                      }
+                      value={filter}
+                      disabled={filter.label === "select search filter"}
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selected ? "font-medium" : "font-normal"
+                            }`}
+                          >
+                            {filter.label}
+                          </span>
+                          {selected ? (
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#0035a9]">
+                              <CheckIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
             </Listbox.Options>
           </Transition>
         </div>

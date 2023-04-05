@@ -7,9 +7,13 @@ const sortBorrow = (arr, sort, active) => {
       else if (active === "Equipment")
         return a.equipment > b.equipment ? 1 : -1;
       else if (active === "Qty") return a.receivedBy > b.receivedBy ? 1 : -1;
-      else if (active === "Name") return a.receivedBy > b.receivedBy ? 1 : -1;
+      else if (active === "Purchase Date")
+        return a.purchaseDate > b.purchaseDate ? 1 : -1;
+      else if (active === "Name") return a.name > b.name ? 1 : -1;
       else if (active === "Status") return a.status > b.status ? 1 : -1;
-      else if (active === "Role") return a.status > b.status ? 1 : -1;
+      else if (active === "Role") return a.role > b.role ? 1 : -1;
+      else if (active === "Receive By")
+        return a.receiveBy > b.receiveBy ? 1 : -1;
       else if (active === "Timestamp")
         return a.createdAt > b.createdAt ? 1 : -1;
     } else {
@@ -18,9 +22,13 @@ const sortBorrow = (arr, sort, active) => {
       else if (active === "Equipment")
         return a.equipment > b.equipment ? -1 : 1;
       else if (active === "Qty") return a.receivedBy > b.receivedBy ? -1 : 1;
-      else if (active === "Name") return a.receivedBy > b.receivedBy ? -1 : 1;
+      else if (active === "Purchase Date")
+        return a.purchaseDate > b.purchaseDate ? -1 : 1;
+      else if (active === "Name") return a.name > b.name ? -1 : 1;
       else if (active === "Status") return a.status > b.status ? -1 : 1;
-      else if (active === "Role") return a.status > b.status ? -1 : 1;
+      else if (active === "Role") return a.role > b.role ? -1 : 1;
+      else if (active === "Receive By")
+        return a.receiveBy > b.receiveBy ? -1 : 1;
       else if (active === "Timestamp")
         return a.createdAt > b.createdAt ? -1 : 1;
     }

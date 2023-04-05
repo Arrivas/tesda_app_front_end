@@ -7,29 +7,27 @@ import SubmitButton from "../forms/SubmitButton";
 import * as Yup from "yup";
 import SelectForm from "../forms/SelectForm";
 import DatePickerField from "../forms/DatePickerField";
+import moment from "moment";
+import UploadImage from "../forms/UploadImage";
 
-const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
-  const [location, setLocation] = useState({ id: 1, label: "Inside" });
-  const [role, setRole] = useState({ id: 1, label: "Trainee" });
-  const [condition, setCondition] = useState({ id: 1, label: "Serviceable" });
-  const [startDate, setStartDate] = useState(new Date());
-
-  const locationItems = [
-    { id: 1, label: "Inside" },
-    { id: 2, label: "Outside" },
-  ];
-
-  const roleItems = [
-    { id: 1, label: "Trainee" },
-    { id: 2, label: "Trainor" },
-    { id: 3, label: "Admin Staff" },
-  ];
-
-  const conditionItems = [
-    { id: 1, label: "Serviceable" },
-    { id: 2, label: "Unserviceable" },
-  ];
-
+const NewBorrowModal = ({
+  showNew,
+  setShowNew,
+  onNewSubmit,
+  startDate,
+  setStartDate,
+  selectedImage,
+  setSelectedImage,
+  location,
+  setLocation,
+  role,
+  setRole,
+  condition,
+  setCondition,
+  conditionItems,
+  roleItems,
+  locationItems,
+}) => {
   const initialValues = {
     propertyNo: "",
     fullName: "",
@@ -38,10 +36,7 @@ const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
     equipment: "",
     qty: 1,
     purpose: "",
-    condition: condition.label,
-    role: role.label,
-    location: location.label,
-    dateReturn: startDate.toISOString(),
+    specificLocation: "",
     isBorrowed: true,
   };
 
@@ -59,6 +54,7 @@ const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
       .required(),
     equipment: Yup.string().required("field must not be empty"),
     qty: Yup.number().required("field must not be empty"),
+    specificLocation: Yup.string().required("field must not be empty"),
     purpose: Yup.string().required("field must not be empty"),
   });
 
@@ -123,18 +119,24 @@ const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
                 />
               </div>
 
+              <SelectForm
+                select={role}
+                label="Role"
+                selectItems={roleItems}
+                onSetSelect={setRole}
+              />
               <div className="flex items-center space-x-2">
-                <SelectForm
-                  select={role}
-                  label="Role"
-                  selectItems={roleItems}
-                  onSetSelect={setRole}
-                />
                 <SelectForm
                   select={location}
                   label="Location"
                   selectItems={locationItems}
                   onSetSelect={setLocation}
+                />
+                <AppFormField
+                  name="specificLocation"
+                  placeholder="Location(specific)"
+                  label="Location(specific)"
+                  fieldClass="text-black bg-gray-50"
                 />
               </div>
 
@@ -161,10 +163,23 @@ const NewBorrowModal = ({ showNew, setShowNew, onNewSubmit }) => {
               </div>
 
               {/* date return */}
-              <DatePickerField
-                label="Return Date"
-                startDate={startDate}
-                setStartDate={setStartDate}
+              <div className="flex items-center w-full space-x-2">
+                <DatePickerField
+                  label="Return Date"
+                  startDate={startDate}
+                  setStartDate={setStartDate}
+                />
+                <div className="flex flex-col flex-1 py-2">
+                  <span className="font-semibold text-xs">
+                    Date & Time of Return
+                  </span>
+                  <span>{moment(startDate).format("LLLL")}</span>
+                </div>
+              </div>
+              {/* image */}
+              <UploadImage
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
               />
             </div>
             {/* buttons */}

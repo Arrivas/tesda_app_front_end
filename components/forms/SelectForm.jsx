@@ -33,22 +33,22 @@ const SelectForm = ({ select, onSetSelect, selectItems, label = "" }) => {
                 }
                 value={item}
               >
-                {({ selected }) => (
-                  <>
-                    <span
-                      className={`text-left ${
-                        selected ? "font-medium" : "font-normal"
-                      }`}
-                    >
-                      {item.label}
+                <>
+                  <span
+                    className={`text-left ${
+                      select?.label === item.label
+                        ? "font-medium"
+                        : "font-normal"
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                  {select?.label === item.label ? (
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-800">
+                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
                     </span>
-                    {selected ? (
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-white">
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                    ) : null}
-                  </>
-                )}
+                  ) : null}
+                </>
               </Listbox.Option>
             ))}
           </Listbox.Options>

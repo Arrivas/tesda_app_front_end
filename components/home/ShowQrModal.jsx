@@ -61,7 +61,7 @@ const ShowQrModal = ({ showQr, setShowQr, selectedQr }) => {
             </button>
           </div>
           <div className="grid grid-cols-3">
-            {selectedQr.map((item) => (
+            {selectedQr?.map((item) => (
               <div className="flex items-center flex-col p-1" key={item.id}>
                 <QRCode
                   size={256}

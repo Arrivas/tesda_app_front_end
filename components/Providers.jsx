@@ -7,6 +7,7 @@ import { verifyToken } from "@/config/verifyAuth";
 import { setUser } from "@/store/userSlice";
 import axios from "axios";
 import links from "@/config/links";
+import Loading from "./Loading";
 
 const Providers = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -41,7 +42,7 @@ const Providers = ({ children }) => {
       ready = false;
     };
   }, []);
-  return <Provider store={store}>{loading ? <>loading</> : children}</Provider>;
+  return <Provider store={store}>{loading ? <Loading /> : children}</Provider>;
 };
 
 export default Providers;

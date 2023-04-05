@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   MagnifyingGlassIcon,
   PlusIcon,
@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/24/solid";
 import SearchFilter from "@/components/home/SearchFilter";
 import NewBorrowModal from "@/components/home/NewBorrowModal";
-import EditModal from "./EditModal";
+import NewInventoryModal from "../inventory/NewInventoryModal";
 
 const TableMenu = ({
   search,
@@ -24,6 +24,20 @@ const TableMenu = ({
   setShowNew,
   handleDelete,
   setShowEdit,
+  startDate,
+  setStartDate,
+  selectedImage,
+  setSelectedImage,
+  location,
+  setLocation,
+  role,
+  setRole,
+  condition,
+  setCondition,
+  conditionItems,
+  roleItems,
+  locationItems,
+  type = "default",
 }) => {
   return (
     <>
@@ -47,6 +61,7 @@ const TableMenu = ({
             />
           </div>
           <SearchFilter
+            type="inventory"
             searchFilter={searchFilter}
             setSearchFilter={setSearchFilter}
           />
@@ -95,11 +110,34 @@ const TableMenu = ({
         </div>
       </div>
       {/* modal */}
-      <NewBorrowModal
-        showNew={showNew}
-        setShowNew={setShowNew}
-        onNewSubmit={onNewSubmit}
-      />
+      {type === "default" ? (
+        <NewBorrowModal
+          startDate={startDate}
+          setStartDate={setStartDate}
+          showNew={showNew}
+          setShowNew={setShowNew}
+          onNewSubmit={onNewSubmit}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+          location={location}
+          setLocation={setLocation}
+          role={role}
+          setRole={setRole}
+          condition={condition}
+          setCondition={setCondition}
+          conditionItems={conditionItems}
+          roleItems={roleItems}
+          locationItems={locationItems}
+        />
+      ) : (
+        <NewInventoryModal
+          startDate={startDate}
+          setStartDate={setStartDate}
+          showNew={showNew}
+          setShowNew={setShowNew}
+          onNewSubmit={onNewSubmit}
+        />
+      )}
     </>
   );
 };

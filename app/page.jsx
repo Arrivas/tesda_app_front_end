@@ -27,6 +27,27 @@ const Home = () => {
   const [showQr, setShowQr] = useState(false);
   const [selectedQr, setSelectedQr] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [location, setLocation] = useState({ id: 1, label: "Inside" });
+  const [role, setRole] = useState({ id: 1, label: "Trainee" });
+  const [condition, setCondition] = useState({ id: 1, label: "Serviceable" });
+
+  const locationItems = [
+    { id: 1, label: "Inside" },
+    { id: 2, label: "Outside" },
+  ];
+
+  const roleItems = [
+    { id: 1, label: "Trainee" },
+    { id: 2, label: "Trainor" },
+    { id: 3, label: "Admin Staff" },
+  ];
+
+  const conditionItems = [
+    { id: 1, label: "Serviceable" },
+    { id: 2, label: "Unserviceable" },
+  ];
 
   const fetchBorrow = async () => {
     try {
@@ -63,18 +84,66 @@ const Home = () => {
   const pageNumbers = paginate(20, borrow?.length);
 
   const onNewSubmit = async (values) => {
-    await axios
-      .post(`${links.default}/borrow/new`, values)
-      .then((res) => {
-        setShowNew(false);
-        setBorrow((prevState) => [...prevState, res?.data]);
-        toast.success("added successfully");
-      })
-      .catch((err) => toast.error("failed, something went wrong"));
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    const imagePromise = selectedImage
+      ? axios
+          .post(`${links.default}/images/upload`, formData)
+          .then((res) => {
+            if (res.status !== 200) {
+              throw new Error("failed, something went wrong");
+            }
+            return res.data?.image;
+          })
+          .catch((err) => {
+            throw new Error("failed, something went wrong");
+          })
+      : Promise.resolve(null);
+
+    const image = await imagePromise;
+    const dateReturn = startDate.toISOString();
+    const data = {
+      ...values,
+      dateReturn,
+      location: location.label,
+      role: role.label,
+      condition: condition.label,
+      image,
+    };
+    console.log(data);
+    try {
+      const res = await axios.post(`${links.default}/borrow/new`, data);
+      setShowNew(false);
+      setBorrow((prevState) => [...prevState, res.data]);
+      toast.success("added successfully");
+    } catch (err) {
+      toast.error("failed, something went wrong");
+    }
   };
 
   const handleUpdate = async (values) => {
-    console.log(values);
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    const imagePromise = selectedImage
+      ? axios
+          .post(
+            `${links.default}/images/upload/edit/${
+              values?.image?._id || "642dd2d246c980d34b9346b1"
+            }`,
+            formData
+          )
+          .then((res) => {
+            if (res.status !== 200) {
+              throw new Error("failed, something went wrong");
+            }
+            return res.data?.image;
+          })
+          .catch((err) => {
+            throw new Error("failed, something went wrong");
+          })
+      : Promise.resolve(null);
+
+    const image = await imagePromise;
     const updatedBorrow = borrow.map((item) =>
       item._id === values._id
         ? {
@@ -87,21 +156,26 @@ const Home = () => {
             fullName: values.fullName,
             isBorrowed: values.isBorrowed,
             location: values.location,
+            specificLocation: values.specificLocation,
             propertyNo: values.propertyNo,
             purpose: values.purpose,
             qty: values.qty,
             role: values.role,
+            image: image ? image : values.image,
+            _id: values._id,
           }
         : item
     );
     setBorrow(updatedBorrow);
+    values.image = image || values.image;
     if (selectedItems.length > 1) return;
     axios
-      .put(`${links.default}/borrow/update/${selectedItems[0]._id}`, values)
+      .put(`${links.default}/borrow/update/${values._id}`, values)
       .then((res) => {
         toast.success(res.data.message);
         setSelectedItems([]);
         setSelectedQr([]);
+        setShowEdit(false);
       })
       .catch((err) => toast.error("failed, something went wrong"));
   };
@@ -131,9 +205,13 @@ const Home = () => {
         {/* table menu */}
 
         <TableMenu
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
           borrow={borrow}
           showQr={showQr}
           search={search}
+          startDate={startDate}
+          setStartDate={setStartDate}
           showNew={showNew}
           setShowQr={setShowQr}
           setShowEdit={setShowEdit}
@@ -145,15 +223,26 @@ const Home = () => {
           handleDelete={handleDelete}
           selectedItems={selectedItems}
           setSearchFilter={setSearchFilter}
+          location={location}
+          setLocation={setLocation}
+          role={role}
+          setRole={setRole}
+          condition={condition}
+          setCondition={setCondition}
+          conditionItems={conditionItems}
+          roleItems={roleItems}
+          locationItems={locationItems}
         />
 
         <TableComponent
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
           showQr={showQr}
           setShowQr={setShowQr}
           selectAll={selectAll}
+          setSelectAll={setSelectAll}
           borrow={paginatedData}
           selectedQr={selectedQr}
-          setSelectAll={setSelectAll}
           showEdit={showEdit}
           setShowEdit={setShowEdit}
           handleUpdate={handleUpdate}

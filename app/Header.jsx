@@ -12,10 +12,12 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
 
 const Header = ({ showNav, setShowNav, innerWidth }) => {
   const [showNavMobile, setShowNavMobile] = useState(false);
   const user = useSelector((state) => state.user);
+  const pathName = usePathname();
 
   const navContents = [
     {
@@ -91,7 +93,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                 </Link>
                 {showNav && (
                   <div className="hidden md:block pl-1">
-                    <p className="font-bold text-[#0035a9]">Tesda Webb App</p>
+                    <p className="font-bold text-[#0035a9]">Tesda Web App</p>
                     <p className="text-xs">Binmaley, Pangasinan</p>
                   </div>
                 )}
@@ -118,10 +120,14 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                     onClick={() => setShowNavMobile(false)}
                   >
                     <Link href={item.destination}>
-                      <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md">
+                      <div
+                        className={`flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md`}
+                      >
                         {item.icon}
                         {showNav && (
-                          <p className="px-2 text-start text-gray-400 group-hover:text-white">
+                          <p
+                            className={`px-2 text-start text-gray-400 font-semibold group-hover:text-white`}
+                          >
                             {item.title}
                           </p>
                         )}
@@ -137,7 +143,9 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                     onClick={() => setShowNav(!showNav)}
                   >
                     <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md">
-                      <ArrowsPointingOutIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
+                      <ArrowsPointingOutIcon
+                        className={`h-6 w-6 text-gray-400 group-hover:text-white`}
+                      />
                     </div>
                   </button>
                 </nav>

@@ -6,8 +6,18 @@ import AppFormField from "../forms/AppFormField";
 import SubmitButton from "../forms/SubmitButton";
 import * as Yup from "yup";
 import SelectForm from "../forms/SelectForm";
+import DatePickerField from "../forms/DatePickerField";
+import moment from "moment";
+import UploadImage from "../forms/UploadImage";
 
-const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
+const EditModal = ({
+  showEdit,
+  setShowEdit,
+  handleUpdate,
+  items,
+  selectedImage,
+  setSelectedImage,
+}) => {
   const [isBorrowed, setIsBorrowed] = useState({
     label: items.isBorrowed ? "borrowed" : "returned",
     isBorrowed: items.isBorrowed,
@@ -22,6 +32,7 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
     id: 1,
     label: items.condition,
   });
+  const [startDate, setStartDate] = useState(new Date(items?.dateReturn));
 
   const locationItems = [
     { id: 1, label: "Inside" },
@@ -52,17 +63,31 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
     equipment: items?.equipment,
     qty: items?.qty,
     purpose: items?.purpose,
-    condition: condition.label,
-    role: role.label,
-    location: location.label,
-    dateReturn: items?.dateReturn,
-    isBorrowed: items?.isBorrowed,
+    condition: condition?.label,
+    role: role?.label,
+    location: location?.label,
+    dateReturn: startDate.toISOString(),
+    isBorrowed: isBorrowed?.isBorrowed,
+    specificLocation: items?.specificLocation,
+    image: items?.image,
     _id: items?._id,
   };
+
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const validationSchema = Yup.object({
     propertyNo: Yup.string().required("field must not be empty"),
     fullName: Yup.string().required("field must not be empty"),
+    address: Yup.string().required("field must not be empty"),
+    contactNumber: Yup.string()
+      .matches(phoneRegExp, "must be a valid phone number 09xxxxxxxxx")
+      .min(11, "too short")
+      .max(11, "too long")
+      .required(),
+    equipment: Yup.string().required("field must not be empty"),
+    qty: Yup.number().required("field must not be empty"),
+    purpose: Yup.string().required("field must not be empty"),
   });
 
   return (
@@ -71,7 +96,7 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
       onClose={() => setShowEdit(false)}
       className="relative z-50"
     >
-      <div className="fixed inset-0 bg-black/80" aria-hidden="true" />
+      <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center">
         <Dialog.Panel className="w-full max-w-3xl  rounded shadow-lg bg-white p-4">
           <div className="flex justify-between items-center">
@@ -163,7 +188,29 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
                 select={isBorrowed}
                 label="Status"
               />
+              <div className="flex items-center w-full space-x-2">
+                <DatePickerField
+                  label="Return Date"
+                  startDate={startDate}
+                  setStartDate={setStartDate}
+                />
+                <div className="flex flex-col flex-1 py-2 justify-end">
+                  <span className="font-semibold text-xs">
+                    Date & Time of Return
+                  </span>
+                  <span>{moment(startDate).format("LLLL")}</span>
+                </div>
+              </div>
+
+              {/* image */}
+              <UploadImage
+                type="inventory"
+                prevImage={items?.image}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+              />
             </div>
+
             {/* buttons */}
             <div className="flex items-center space-x-2">
               <button
