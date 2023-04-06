@@ -8,8 +8,10 @@ const Loading = () => {
         alt="logo"
         src="/tesda_alt.svg"
         className="object-cover animate-pulse"
-        height={300}
-        width={300}
+        width="0"
+        height="0"
+        sizes="100vw"
+        style={{ width: "300px", height: "auto" }}
         priority
       />
     </div>

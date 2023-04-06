@@ -2,7 +2,6 @@ import React from "react";
 import THeadComponent from "@/components/table/THeadComponent";
 import moment from "moment";
 import ShowQrModal from "../home/ShowQrModal";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 import EditModal from "../home/EditModal";
 
 const TableComponent = ({
@@ -62,7 +61,6 @@ const TableComponent = ({
     { id: 7, label: "Role" },
     { id: 8, label: "Status" },
     { id: 9, label: "Timestamp" },
-    { id: 10, label: "" },
   ];
 
   return (
@@ -147,28 +145,25 @@ const TableComponent = ({
                   )}
                 </span>
               </td>
-              <td className="min-w-[120px] min-h-[120px] md:min-w-auto md:w-100%">
-                <button className="hover:bg-gray-200 rounded-full">
-                  <EllipsisHorizontalIcon height={20} width={20} />
-                </button>
-              </td>
 
-              <ShowQrModal
-                showQr={showQr}
-                setShowQr={setShowQr}
-                selectedQr={selectedQr}
-              />
-
-              {selectedItems[0]?._id === item._id && (
-                <EditModal
-                  selectedImage={selectedImage}
-                  setSelectedImage={setSelectedImage}
-                  items={item}
-                  showEdit={showEdit}
-                  setShowEdit={setShowEdit}
-                  handleUpdate={handleUpdate}
+              <td className="hidden">
+                <ShowQrModal
+                  showQr={showQr}
+                  setShowQr={setShowQr}
+                  selectedQr={selectedQr}
                 />
-              )}
+
+                {selectedItems[0]?._id === item._id && (
+                  <EditModal
+                    selectedImage={selectedImage}
+                    setSelectedImage={setSelectedImage}
+                    items={item}
+                    showEdit={showEdit}
+                    setShowEdit={setShowEdit}
+                    handleUpdate={handleUpdate}
+                  />
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

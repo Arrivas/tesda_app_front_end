@@ -38,7 +38,7 @@ const UploadImage = ({
             <img
               src={previewUrl || prevImage?.imageUrl}
               alt="Preview"
-              className="max-w-full mb-4 rounded-md h-[300px] w-full object-cover"
+              className="mb-4 rounded-md h-[300px] w-full object-cover"
             />
           ) : null}
         </div>

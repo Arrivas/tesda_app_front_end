@@ -204,7 +204,7 @@ const EditModal = ({
 
               {/* image */}
               <UploadImage
-                type="inventory"
+                type="edit"
                 prevImage={items?.image}
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}

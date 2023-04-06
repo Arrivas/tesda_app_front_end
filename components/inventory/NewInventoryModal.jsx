@@ -7,6 +7,7 @@ import SubmitButton from "../forms/SubmitButton";
 import * as Yup from "yup";
 import moment from "moment";
 import DatePickerField from "../forms/DatePickerField";
+import UploadImage from "../forms/UploadImage";
 
 const NewInventoryModal = ({
   showNew,
@@ -14,6 +15,8 @@ const NewInventoryModal = ({
   onNewSubmit,
   startDate,
   setStartDate,
+  selectedImage,
+  setSelectedImage,
 }) => {
   const initialValues = {
     propertyNo: "",
@@ -92,6 +95,11 @@ const NewInventoryModal = ({
                   <span>{moment(startDate).format("LLLL")}</span>
                 </div>
               </div>
+              {/* upload image */}
+              <UploadImage
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+              />
             </div>
             {/* buttons */}
             <div className="flex items-center space-x-2">

@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 
 const Header = ({ showNav, setShowNav, innerWidth }) => {
   const [showNavMobile, setShowNavMobile] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const user = useSelector((state) => state.user);
   const pathName = usePathname();
 
@@ -25,7 +26,11 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
       title: "Home",
       destination: "/",
       icon: (
-        <HomeIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
+        <HomeIcon
+          className={`h-6 w-6 ${
+            pathName === "/" && !isHovering ? "text-white" : "text-gray-400"
+          } group-hover:text-white  transition-colors duration-300`}
+        />
       ),
     },
     // {
@@ -49,7 +54,13 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
       title: "Inventory",
       destination: "/inventory",
       icon: (
-        <ArchiveBoxIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
+        <ArchiveBoxIcon
+          className={`h-6 w-6 group-hover:text-white ${
+            pathName === "/inventory" && !isHovering
+              ? "text-white"
+              : "text-gray-400  transition-colors duration-300"
+          }`}
+        />
       ),
     },
     {
@@ -121,12 +132,22 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                   >
                     <Link href={item.destination}>
                       <div
-                        className={`flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md`}
+                        onMouseEnter={() => setIsHovering(true)}
+                        onMouseLeave={() => setIsHovering(false)}
+                        className={`flex p-3 mt-2 items-center group flex-row pl-7 ${
+                          item.destination === pathName && !isHovering
+                            ? "bg-[#0035a9]"
+                            : ""
+                        } rounded-md hover:bg-[#0035a9] transition-colors duration-300 `}
                       >
                         {item.icon}
                         {showNav && (
                           <p
-                            className={`px-2 text-start text-gray-400 font-semibold group-hover:text-white`}
+                            className={`px-2 text-start ${
+                              item.destination === pathName && !isHovering
+                                ? "text-white"
+                                : "text-gray-400"
+                            } font-semibold group-hover:text-white transition-colors duration-300`}
                           >
                             {item.title}
                           </p>
@@ -142,7 +163,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                     className="block w-full"
                     onClick={() => setShowNav(!showNav)}
                   >
-                    <div className="flex p-5 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md">
+                    <div className="flex p-3 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md">
                       <ArrowsPointingOutIcon
                         className={`h-6 w-6 text-gray-400 group-hover:text-white`}
                       />
@@ -156,7 +177,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
       )}
       {showNavMobile && (
         <button onClick={() => setShowNavMobile(false)}>
-          <div className="absolute bg-black/30 left-0 top-0 h-screen w-screen -z-50" />
+          <div className="absolute bg-black left-0 top-0 h-screen w-screen -z-50" />
         </button>
       )}
     </>

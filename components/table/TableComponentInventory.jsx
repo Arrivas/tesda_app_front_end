@@ -19,6 +19,8 @@ const TableComponentInventory = ({
   handleUpdate,
   selectAll,
   setSelectAll,
+  selectedImage,
+  setSelectedImage,
 }) => {
   const theadItems = [
     {
@@ -117,7 +119,6 @@ const TableComponentInventory = ({
                 </td>
                 <td className="min-w-[100px]">{item.receiveBy}</td>
                 <td className="min-w-[100px]">{item.qty}</td>
-
                 <td className="min-w-[120px] md:min-w-auto md:w-100%">
                   <span className="text-gray-500 text-xs">
                     {moment(new Date(item.purchaseDate)).format(
@@ -125,20 +126,23 @@ const TableComponentInventory = ({
                     )}
                   </span>
                 </td>
-
-                <ShowQrModal
-                  showQr={showQr}
-                  setShowQr={setShowQr}
-                  selectedQr={selectedQr}
-                />
-                {selectedItems[0]?._id === item._id && (
-                  <EditModal
-                    items={item}
-                    showEdit={showEdit}
-                    setShowEdit={setShowEdit}
-                    handleUpdate={handleUpdate}
+                <td className="hidden">
+                  <ShowQrModal
+                    showQr={showQr}
+                    setShowQr={setShowQr}
+                    selectedQr={selectedQr}
                   />
-                )}
+                  {selectedItems[0]?._id === item._id && (
+                    <EditModal
+                      selectedImage={selectedImage}
+                      setSelectedImage={setSelectedImage}
+                      items={item}
+                      showEdit={showEdit}
+                      setShowEdit={setShowEdit}
+                      handleUpdate={handleUpdate}
+                    />
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

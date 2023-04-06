@@ -131,6 +131,8 @@ const TableMenu = ({
         />
       ) : (
         <NewInventoryModal
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
           startDate={startDate}
           setStartDate={setStartDate}
           showNew={showNew}

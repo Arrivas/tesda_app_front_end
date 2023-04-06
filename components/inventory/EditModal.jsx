@@ -7,8 +7,16 @@ import SubmitButton from "../forms/SubmitButton";
 import * as Yup from "yup";
 import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
+import UploadImage from "../forms/UploadImage";
 
-const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
+const EditModal = ({
+  showEdit,
+  setShowEdit,
+  handleUpdate,
+  items,
+  selectedImage,
+  setSelectedImage,
+}) => {
   const [startDate, setStartDate] = useState(new Date(items?.purchaseDate));
 
   const initialValues = {
@@ -16,6 +24,7 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
     equipment: items?.equipment,
     qty: items?.qty,
     receiveBy: items?.receiveBy,
+    purchaseDate: startDate.toISOString(),
     _id: items?._id,
   };
 
@@ -85,6 +94,13 @@ const EditModal = ({ showEdit, setShowEdit, handleUpdate, items }) => {
                   <span>{moment(startDate).format("LLLL")}</span>
                 </div>
               </div>
+              {/* upload image */}
+              <UploadImage
+                type="edit"
+                prevImage={items?.image}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+              />
             </div>
             {/* buttons */}
             <div className="flex items-center space-x-2">

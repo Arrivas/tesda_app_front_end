@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import links from "@/config/links";
 import { toast } from "react-hot-toast";
-import TableComponent from "@/components/table/TableComponent";
 import paginate from "@/helper/paginate";
 import sortBorrow from "@/helper/sortBorrow";
 import Pagination from "@/components/pagination/Pagination";
 import TableMenu from "@/components/home/TableMenu";
 import TableComponentInventory from "@/components/table/TableComponentInventory";
+import { useSelector } from "react-redux";
+import Loading from "@/components/Loading";
 
 const Inventory = () => {
+  const user = useSelector((state) => state.user);
   const [inventory, setInventory] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -29,6 +31,7 @@ const Inventory = () => {
   });
   const [startDate, setStartDate] = useState(new Date());
   const [showNew, setShowNew] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const fetchInventory = async () => {
     try {
@@ -58,8 +61,26 @@ const Inventory = () => {
   const pageNumbers = paginate(20, inventory?.length);
 
   const onNewSubmit = async (values) => {
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    const imagePromise = selectedImage
+      ? axios
+          .post(`${links.default}/images/upload`, formData)
+          .then((res) => {
+            if (res.status !== 200) {
+              throw new Error("failed, something went wrong");
+            }
+            return res.data?.image;
+          })
+          .catch((err) => {
+            throw new Error("failed, something went wrong");
+          })
+      : Promise.resolve(null);
+
+    const image = await imagePromise;
     // update values to add dateReturn
     values.purchaseDate = startDate.toISOString();
+    values.image = image;
 
     await axios
       .post(`${links.default}/inventory/new`, values)
@@ -72,6 +93,28 @@ const Inventory = () => {
   };
 
   const handleUpdate = async (values) => {
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    const imagePromise = selectedImage
+      ? axios
+          .post(
+            `${links.default}/images/upload/edit/${
+              values?.image?._id || "642dd2d246c980d34b9346b1"
+            }`,
+            formData
+          )
+          .then((res) => {
+            if (res.status !== 200) {
+              throw new Error("failed, something went wrong");
+            }
+            return res.data?.image;
+          })
+          .catch((err) => {
+            throw new Error("failed, something went wrong");
+          })
+      : Promise.resolve(null);
+
+    const image = await imagePromise;
     const updatedInventory = inventory.map((item) =>
       item._id === values._id
         ? {
@@ -79,12 +122,15 @@ const Inventory = () => {
             propertyNumber: values.propertyNumber,
             equipment: values.equipment,
             receiveBy: values.receiveBy,
+            image: image || values.image,
+            purchaseDate: values.purchaseDate,
             qty: values.qty,
             _id: values._id,
           }
         : item
     );
     setInventory(updatedInventory);
+    values.image = image || values.image;
     if (selectedItems.length > 1) return;
     axios
       .put(`${links.default}/inventory/update/${values._id}`, values)
@@ -123,12 +169,16 @@ const Inventory = () => {
     };
   }, []);
 
+  if (!user.user) return <Loading />;
+
   return (
     <>
       <div className="p-5 h-screen flex flex-col">
         <h1 className="font-semibold text-4xl text-gray-800">Inventory</h1>
 
         <TableMenu
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
           showQr={showQr}
           search={search}
           startDate={startDate}
@@ -148,6 +198,8 @@ const Inventory = () => {
         />
 
         <TableComponentInventory
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
           inventory={paginatedData}
           selectAll={selectAll}
           setSelectAll={setSelectAll}

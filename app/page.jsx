@@ -8,8 +8,11 @@ import paginate from "@/helper/paginate";
 import sortBorrow from "@/helper/sortBorrow";
 import Pagination from "@/components/pagination/Pagination";
 import TableMenu from "@/components/home/TableMenu";
+import { useSelector } from "react-redux";
+import Loading from "@/components/Loading";
 
 const Home = () => {
+  const user = useSelector((state) => state.user);
   const [borrow, setBorrow] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -110,7 +113,7 @@ const Home = () => {
       condition: condition.label,
       image,
     };
-    console.log(data);
+
     try {
       const res = await axios.post(`${links.default}/borrow/new`, data);
       setShowNew(false);
@@ -198,6 +201,7 @@ const Home = () => {
     setBorrow(borrowCopy);
   };
 
+  if (!user.user) return <Loading />;
   return (
     <>
       <div className="p-5 h-screen flex flex-col">
