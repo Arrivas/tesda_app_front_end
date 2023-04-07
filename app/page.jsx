@@ -118,6 +118,7 @@ const Home = () => {
       const res = await axios.post(`${links.default}/borrow/new`, data);
       setShowNew(false);
       setBorrow((prevState) => [...prevState, res.data]);
+      setSelectedImage(null);
       toast.success("added successfully");
     } catch (err) {
       toast.error("failed, something went wrong");
@@ -139,6 +140,7 @@ const Home = () => {
             if (res.status !== 200) {
               throw new Error("failed, something went wrong");
             }
+
             return res.data?.image;
           })
           .catch((err) => {
@@ -179,15 +181,28 @@ const Home = () => {
         setSelectedItems([]);
         setSelectedQr([]);
         setShowEdit(false);
+        setSelectedImage(null);
       })
       .catch((err) => toast.error("failed, something went wrong"));
   };
 
   const handleDelete = async () => {
-    const toDelete = selectedItems.map((item) => item._id);
+    const toDelete = [];
+    const toDeleteImg = [];
+    selectedItems.map((item) => {
+      toDelete.push(item._id);
+      if (item?.image) {
+        toDeleteImg.push(item.image._id);
+      } else {
+        return;
+      }
+    });
     // update db
     await axios
-      .post(`${links.default}/borrow/delete/multiple`, { toDelete })
+      .post(`${links.default}/borrow/delete/multiple`, {
+        toDelete,
+        toDeleteImg,
+      })
       .then((res) => {
         toast.success(res.data.message);
         setSelectedItems([]);

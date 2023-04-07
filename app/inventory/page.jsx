@@ -87,6 +87,7 @@ const Inventory = () => {
       .then((res) => {
         setShowNew(false);
         setInventory((prevState) => [...prevState, res?.data]);
+        setSelectedImage(null);
         toast.success("added successfully");
       })
       .catch((err) => toast.error("failed, something went wrong"));
@@ -139,15 +140,28 @@ const Inventory = () => {
         setSelectedItems([]);
         setSelectedQr([]);
         setShowEdit(false);
+        setSelectedImage(null);
       })
       .catch((err) => toast.error("failed, something went wrong"));
   };
 
   const handleDelete = async () => {
-    const toDelete = selectedItems.map((item) => item._id);
+    const toDelete = [];
+    const toDeleteImg = [];
+    selectedItems.map((item) => {
+      toDelete.push(item._id);
+      if (item?.image) {
+        toDeleteImg.push(item.image._id);
+      } else {
+        return;
+      }
+    });
     // update db
     await axios
-      .post(`${links.default}/inventory/delete/multiple`, { toDelete })
+      .post(`${links.default}/inventory/delete/multiple`, {
+        toDelete,
+        toDeleteImg,
+      })
       .then((res) => {
         toast.success(res.data.message);
         setSelectedItems([]);
