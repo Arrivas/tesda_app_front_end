@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "./globals.css";
 import Header from "./Header";
+import Head from "next/head";
 import Providers from "@/components/Providers";
 import { usePathname } from "next/navigation";
 import { Toaster } from "react-hot-toast";
@@ -25,6 +26,9 @@ export default function RootLayout({ children, location }) {
 
   return (
     <html lang="en">
+      <Head>
+        <link rel="shortcut icon" href="/favicon.png" />
+      </Head>
       <body>
         <Toaster position="top-center" reverseOrder={false} />
         <Providers>

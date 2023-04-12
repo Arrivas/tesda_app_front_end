@@ -213,6 +213,7 @@ const Inventory = () => {
         <div className="flex flex-row space-x-4">
           {tabItems.map((item) => (
             <button
+              key={item.id}
               onClick={() =>
                 setSelectedTab(selectedTab === "SSP" ? "101" : "SSP")
               }
