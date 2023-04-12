@@ -1,4 +1,5 @@
 const sortBorrow = (arr, sort, active) => {
+  if (!arr) return;
   const borrowCopy = [...arr];
   return borrowCopy.sort((a, b) => {
     if (sort === "asc") {

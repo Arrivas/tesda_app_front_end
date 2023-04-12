@@ -12,7 +12,12 @@ const SelectForm = ({ select, onSetSelect, selectItems, label = "" }) => {
       )}
       <Listbox value={selectItems} onChange={onSetSelect}>
         <div className="relative ">
-          <Listbox.Button className="relative w-full cursor-default text-left rounded-lg bg-white py-3 border border-gray-400 pl-3 pr-10 text-leftfocus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 sm:text-sm">
+          <Listbox.Button
+            className="relative w-full cursor-default text-left 
+                rounded-lg bg-white py-3 border border-gray-400 pl-3 
+                pr-10 text-leftfocus:outline-none focus-visible:border-indigo-500 
+                focus-visible:ring-2 sm:text-sm"
+          >
             <span className="block truncate">{select?.label}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronDownIcon

@@ -23,10 +23,10 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
   const navContents = [
     {
       id: 1,
-      title: "Home",
+      title: "Borrow",
       destination: "/",
       icon: (
-        <HomeIcon
+        <UserPlusIcon
           className={`h-6 w-6 ${
             pathName === "/" && !isHovering ? "text-white" : "text-gray-400"
           } group-hover:text-white  transition-colors duration-300`}

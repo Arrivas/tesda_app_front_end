@@ -14,8 +14,7 @@ const inventorySearchItemsFilter = [
   { id: 1, name: "", label: "select search filter" },
   { id: 2, name: "propertyNo", label: "Property No." },
   { id: 3, name: "equipment", label: "Equipment" },
-  { id: 3, name: "receiveBy", label: "Receive By" },
-  { id: 4, name: "purchaseDate", label: "Purchase Date" },
+  { id: 4, name: "receiveBy", label: "Receive By" },
 ];
 
 const SearchFilter = ({ searchFilter, setSearchFilter, type = "default" }) => {

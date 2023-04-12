@@ -9,6 +9,7 @@ import {
 import SearchFilter from "@/components/home/SearchFilter";
 import NewBorrowModal from "@/components/home/NewBorrowModal";
 import NewInventoryModal from "../inventory/NewInventoryModal";
+import { usePathname } from "next/navigation";
 
 const TableMenu = ({
   search,
@@ -37,8 +38,11 @@ const TableMenu = ({
   conditionItems,
   roleItems,
   locationItems,
+  docType,
+  setDocType,
   type = "default",
 }) => {
+  const pathName = usePathname();
   return (
     <>
       <div className="flex my-4 flex-col md:flex-row h-[46px]">
@@ -61,7 +65,7 @@ const TableMenu = ({
             />
           </div>
           <SearchFilter
-            type="inventory"
+            type={pathName === "/inventory" ? "inventory" : "default"}
             searchFilter={searchFilter}
             setSearchFilter={setSearchFilter}
           />
@@ -138,6 +142,8 @@ const TableMenu = ({
           showNew={showNew}
           setShowNew={setShowNew}
           onNewSubmit={onNewSubmit}
+          docType={docType}
+          setDocType={setDocType}
         />
       )}
     </>

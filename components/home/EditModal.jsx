@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import FormikField from "../forms/FormikField";
@@ -9,6 +9,8 @@ import SelectForm from "../forms/SelectForm";
 import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
 import UploadImage from "../forms/UploadImage";
+import axios from "axios";
+import links from "@/config/links";
 
 const EditModal = ({
   showEdit,
@@ -17,6 +19,8 @@ const EditModal = ({
   items,
   selectedImage,
   setSelectedImage,
+  setBorrow,
+  borrow,
 }) => {
   const [isBorrowed, setIsBorrowed] = useState({
     label: items.isBorrowed ? "borrowed" : "returned",
@@ -54,6 +58,41 @@ const EditModal = ({
     { id: 1, label: "borrowed", isBorrowed: true },
     { id: 2, label: "returned", isBorrowed: false },
   ];
+
+  const fetchImage = async (itemId) => {
+    if (!itemId) return;
+    const result = await axios.get(`${links.default}/images/url/${itemId}`);
+    return result.data;
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    async function updateBorrowWithImage() {
+      try {
+        const image = await fetchImage(items?.image?._id);
+        if (image && isMounted) {
+          setBorrow((borrow) =>
+            borrow.map((item) =>
+              item._id === items._id
+                ? {
+                    ...item,
+                    image: { imageUrl: image, _id: items?.image?._id },
+                  }
+                : item
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Cannot update borrow with image", error);
+      }
+    }
+
+    updateBorrowWithImage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const initialValues = {
     propertyNo: items?.propertyNo,

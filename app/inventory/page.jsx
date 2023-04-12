@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import links from "@/config/links";
+import Head from "next/head";
 import { toast } from "react-hot-toast";
 import paginate from "@/helper/paginate";
 import sortBorrow from "@/helper/sortBorrow";
@@ -20,6 +21,10 @@ const Inventory = () => {
     active: "Purchase Date",
     sort: "desc",
   });
+  const [docType, setDocType] = useState({
+    label: "SSP",
+    value: "ssp",
+  });
   const [showQr, setShowQr] = useState(false);
   const [selectedQr, setSelectedQr] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
@@ -32,6 +37,7 @@ const Inventory = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [showNew, setShowNew] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedTab, setSelectedTab] = useState("SSP");
 
   const fetchInventory = async () => {
     try {
@@ -56,7 +62,13 @@ const Inventory = () => {
       ? sortedInventory?.filter((item) =>
           item[searchFilter.name].toLowerCase().startsWith(search)
         )
-      : sortedInventory?.slice(indexOfFirstItem, indexOfLastItem);
+      : selectedTab === "SSP"
+      ? sortedInventory
+          ?.filter((item) => item.docType === "ssp")
+          ?.slice(indexOfFirstItem, indexOfLastItem)
+      : sortedInventory
+          ?.filter((item) => item.docType === "101")
+          ?.slice(indexOfFirstItem, indexOfLastItem);
 
   const pageNumbers = paginate(20, inventory?.length);
 
@@ -78,9 +90,9 @@ const Inventory = () => {
       : Promise.resolve(null);
 
     const image = await imagePromise;
-    // update values to add dateReturn
     values.purchaseDate = startDate.toISOString();
     values.image = image;
+    values.docType = docType.value;
 
     await axios
       .post(`${links.default}/inventory/new`, values)
@@ -90,7 +102,11 @@ const Inventory = () => {
         setSelectedImage(null);
         toast.success("added successfully");
       })
-      .catch((err) => toast.error("failed, something went wrong"));
+      .catch((err) => {
+        if (err.request.status === 400)
+          return toast.error(err?.response?.data?.message);
+        toast.error("failed, something went wrong");
+      });
   };
 
   const handleUpdate = async (values) => {
@@ -126,6 +142,7 @@ const Inventory = () => {
             image: image || values.image,
             purchaseDate: values.purchaseDate,
             qty: values.qty,
+            docType: docType.value,
             _id: values._id,
           }
         : item
@@ -185,10 +202,31 @@ const Inventory = () => {
 
   if (!user.user) return <Loading />;
 
+  const tabItems = [
+    { id: 1, label: "SSP" },
+    { id: 2, label: "101" },
+  ];
+
   return (
     <>
       <div className="p-5 h-screen flex flex-col">
-        <h1 className="font-semibold text-4xl text-gray-800">Inventory</h1>
+        <div className="flex flex-row space-x-4">
+          {tabItems.map((item) => (
+            <button
+              onClick={() =>
+                setSelectedTab(selectedTab === "SSP" ? "101" : "SSP")
+              }
+            >
+              <h1
+                className={`font-semibold text-4xl ${
+                  selectedTab === item.label ? "text-gray-800" : "text-gray-100"
+                }`}
+              >
+                {item.label}
+              </h1>
+            </button>
+          ))}
+        </div>
 
         <TableMenu
           selectedImage={selectedImage}
@@ -209,6 +247,8 @@ const Inventory = () => {
           selectedItems={selectedItems}
           setSearchFilter={setSearchFilter}
           type="inventory"
+          docType={docType}
+          setDocType={setDocType}
         />
 
         <TableComponentInventory
@@ -228,6 +268,7 @@ const Inventory = () => {
           setSelectedQr={setSelectedQr}
           activeTableHeader={activeTableHeader}
           setActiveTableHeader={setActiveTableHeader}
+          setInventory={setInventory}
         />
 
         {inventory?.length > 5 && (

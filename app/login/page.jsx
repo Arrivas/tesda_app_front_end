@@ -104,11 +104,11 @@ const Login = () => {
         </FormikField>
         {/* or */}
 
-        <div className="w-full relative flex flex-row items-center justify-between mt-[12px] mb-[4px]">
+        {/* <div className="w-full relative flex flex-row items-center justify-between mt-[12px] mb-[4px]">
           <span className="w-[999px] h-[1px] bg-gray-300"></span>
           <p className="px-4">or</p>
           <span className="w-[999px] h-[1px] bg-gray-300"></span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

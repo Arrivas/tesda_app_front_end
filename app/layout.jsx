@@ -25,9 +25,6 @@ export default function RootLayout({ children, location }) {
 
   return (
     <html lang="en">
-      {/* <Head>
-        <meta name="robots" content="noindex" />
-      </Head> */}
       <body>
         <Toaster position="top-center" reverseOrder={false} />
         <Providers>

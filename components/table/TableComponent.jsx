@@ -21,6 +21,7 @@ const TableComponent = ({
   setShowEdit,
   selectedImage,
   setSelectedImage,
+  setBorrow,
 }) => {
   const theadItems = [
     {
@@ -30,7 +31,7 @@ const TableComponent = ({
         <input
           name="checkAll"
           type="checkbox"
-          className=""
+          className="caret-transparent"
           checked={selectedItems.length !== 0 && selectAll ? true : false}
           onChange={(e) => {
             if (e.target.checked) {
@@ -65,7 +66,7 @@ const TableComponent = ({
 
   return (
     <div className="min-w-[300px] h-full overflow-y-scroll">
-      <table className="table-fixed break-words h-screen md:h-auto w-full">
+      <table className="table-fixed break-words h-screen md:h-auto w-full caret-transparent">
         <THeadComponent
           theadItems={theadItems}
           activeTableHeader={activeTableHeader}
@@ -155,6 +156,8 @@ const TableComponent = ({
 
                 {selectedItems[0]?._id === item._id && (
                   <EditModal
+                    borrow={borrow}
+                    setBorrow={setBorrow}
                     selectedImage={selectedImage}
                     setSelectedImage={setSelectedImage}
                     items={item}

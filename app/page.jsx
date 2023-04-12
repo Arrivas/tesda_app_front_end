@@ -10,6 +10,7 @@ import Pagination from "@/components/pagination/Pagination";
 import TableMenu from "@/components/home/TableMenu";
 import { useSelector } from "react-redux";
 import Loading from "@/components/Loading";
+import Head from "next/head";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
@@ -63,7 +64,7 @@ const Home = () => {
 
   useEffect(() => {
     let ready = true;
-    if (ready) fetchBorrow().then((res) => setBorrow(res.data));
+    if (ready) fetchBorrow().then((res) => setBorrow(res?.data));
     return () => {
       ready = false;
     };
@@ -220,7 +221,7 @@ const Home = () => {
   return (
     <>
       <div className="p-5 h-screen flex flex-col">
-        <h1 className="font-semibold text-4xl text-gray-800">SSP</h1>
+        <h1 className="font-semibold text-4xl text-gray-800">Borrow</h1>
         {/* table menu */}
 
         <TableMenu
@@ -254,6 +255,7 @@ const Home = () => {
         />
 
         <TableComponent
+          setBorrow={setBorrow}
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
           showQr={showQr}

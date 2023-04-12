@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import moment from "moment";
 import DatePickerField from "../forms/DatePickerField";
 import UploadImage from "../forms/UploadImage";
+import SelectForm from "../forms/SelectForm";
 
 const NewInventoryModal = ({
   showNew,
@@ -17,6 +18,8 @@ const NewInventoryModal = ({
   setStartDate,
   selectedImage,
   setSelectedImage,
+  docType,
+  setDocType,
 }) => {
   const initialValues = {
     propertyNo: "",
@@ -32,6 +35,11 @@ const NewInventoryModal = ({
     receiveBy: Yup.string().required("field must not be empty"),
   });
 
+  const docTypeItems = [
+    { id: 1, label: "SSP", value: "ssp" },
+    { id: 2, label: "101", value: "101" },
+  ];
+
   return (
     <Dialog
       open={showNew}
@@ -42,9 +50,7 @@ const NewInventoryModal = ({
       <div className="fixed inset-0 flex items-center justify-center ">
         <Dialog.Panel className="w-full max-w-3xl  rounded shadow-lg bg-white p-4">
           <div className="flex justify-between items-center">
-            <Dialog.Title className="font-semibold px-3">
-              New Borrow
-            </Dialog.Title>
+            <Dialog.Title className="font-semibold px-3">Add New</Dialog.Title>
             <button onClick={() => setShowNew(false)}>
               <XMarkIcon className="w-5 h-5 text-gray-400 " />
             </button>
@@ -56,6 +62,12 @@ const NewInventoryModal = ({
             validationSchema={validationSchema}
           >
             <div className="space-y-2 py-2 overflow-y-auto px-3 h-[350px]">
+              <SelectForm
+                label="Type"
+                selectItems={docTypeItems}
+                select={docType}
+                onSetSelect={setDocType}
+              />
               <AppFormField
                 name="propertyNo"
                 placeholder="Property Number"

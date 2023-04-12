@@ -6,6 +6,7 @@ import EditModal from "../inventory/EditModal";
 
 const TableComponentInventory = ({
   inventory,
+  setInventory,
   setSelectedItems,
   setSelectedQr,
   selectedItems,
@@ -30,7 +31,7 @@ const TableComponentInventory = ({
         <input
           name="checkAll"
           type="checkbox"
-          className=""
+          className="caret-transparent"
           checked={selectedItems.length !== 0 && selectAll ? true : false}
           onChange={(e) => {
             if (e.target.checked) {
@@ -62,7 +63,7 @@ const TableComponentInventory = ({
   return (
     <>
       <div className="min-w-[300px] h-full overflow-y-scroll">
-        <table className="table-fixed break-words h-screen md:h-auto w-full">
+        <table className="table-fixed break-words h-screen md:h-auto w-full caret-transparent">
           <THeadComponent
             theadItems={theadItems}
             activeTableHeader={activeTableHeader}
@@ -140,6 +141,8 @@ const TableComponentInventory = ({
                       showEdit={showEdit}
                       setShowEdit={setShowEdit}
                       handleUpdate={handleUpdate}
+                      inventory={inventory}
+                      setInventory={setInventory}
                     />
                   )}
                 </td>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import FormikField from "../forms/FormikField";
@@ -8,6 +8,8 @@ import * as Yup from "yup";
 import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
 import UploadImage from "../forms/UploadImage";
+import links from "@/config/links";
+import axios from "axios";
 
 const EditModal = ({
   showEdit,
@@ -16,9 +18,10 @@ const EditModal = ({
   items,
   selectedImage,
   setSelectedImage,
+  inventory,
+  setInventory,
 }) => {
   const [startDate, setStartDate] = useState(new Date(items?.purchaseDate));
-
   const initialValues = {
     propertyNo: items?.propertyNo,
     equipment: items?.equipment,
@@ -34,6 +37,41 @@ const EditModal = ({
     qty: Yup.number().required("field must not be empty"),
     receiveBy: Yup.string().required("field must not be empty"),
   });
+
+  const fetchImage = async (itemId) => {
+    if (!itemId) return;
+    const result = await axios.get(`${links.default}/images/url/${itemId}`);
+    return result.data;
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    async function updateInventoryImage() {
+      try {
+        const image = await fetchImage(items?.image?._id);
+        if (image && isMounted) {
+          setInventory((inventory) =>
+            inventory.map((item) =>
+              item._id === items._id
+                ? {
+                    ...item,
+                    image: { imageUrl: image, _id: items?.image?._id },
+                  }
+                : item
+            )
+          );
+        }
+      } catch (error) {
+        // console.error("Cannot update borrow with image", error);
+      }
+    }
+
+    updateInventoryImage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <Dialog
