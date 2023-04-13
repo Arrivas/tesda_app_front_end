@@ -104,7 +104,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                 </Link>
                 {showNav && (
                   <div className="hidden md:block pl-1">
-                    <p className="font-bold text-[#0035a9]">Tesda Web App</p>
+                    <p className="font-bold text-[#0035a9]">TESDA-PTI</p>
                     <p className="text-xs">Binmaley, Pangasinan</p>
                   </div>
                 )}

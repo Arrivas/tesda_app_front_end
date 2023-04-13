@@ -64,12 +64,30 @@ const Login = () => {
   };
 
   return (
-    <div className="px-[16px] ">
+    <div className="px-[16px] relative">
+      <div className="w-screen h-screen absolute top-0 left-0 -z-10">
+        <Image
+          alt="logo"
+          src="/banner.png"
+          fill
+          className="object-cover opacity-60"
+          priority
+        />
+      </div>
       <div className="flex w-full justify-center pt-[20px]">
+        <div className="relative w-32 h-32">
+          <Image
+            alt="logo"
+            src="/tesda_alt.svg"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
         <div className="relative w-28 h-28">
           <Image
             alt="logo"
-            src="tesda.svg"
+            src="/tesda.svg"
             fill
             className="object-contain"
             priority
