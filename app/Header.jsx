@@ -23,24 +23,30 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
   const navContents = [
     {
       id: 1,
-      title: "Borrow",
+      title: "Home",
       destination: "/",
       icon: (
-        <UserPlusIcon
+        <HomeIcon
           className={`h-6 w-6 ${
             pathName === "/" && !isHovering ? "text-white" : "text-gray-400"
           } group-hover:text-white  transition-colors duration-300`}
         />
       ),
     },
-    // {
-    //   id: 2,
-    //   title: "Register Borrower",
-    //   destination: "/rborrower",
-    //   icon: (
-    //     <UserPlusIcon className="h-6 w-6 text-gray-400 group-hover:text-white" />
-    //   ),
-    // },
+    {
+      id: 2,
+      title: "Borrow",
+      destination: "/borrow",
+      icon: (
+        <UserPlusIcon
+          className={`h-6 w-6 ${
+            pathName === "/borrow" && !isHovering
+              ? "text-white"
+              : "text-gray-400"
+          } group-hover:text-white  transition-colors duration-300`}
+        />
+      ),
+    },
     // {
     //   id: 3,
     //   title: "Records/Lists",

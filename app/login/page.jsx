@@ -65,12 +65,12 @@ const Login = () => {
 
   return (
     <div className="px-[16px] relative">
-      <div className="w-screen h-screen absolute top-0 left-0 -z-10">
+      <div className="w-[50%] h-[250px] fixed bottom-0 left-0 -z-10">
         <Image
           alt="logo"
           src="/banner.png"
           fill
-          className="object-cover opacity-60"
+          className="object-contain opacity-60"
           priority
         />
       </div>

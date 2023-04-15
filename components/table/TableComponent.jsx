@@ -63,7 +63,7 @@ const TableComponent = ({
     { id: 8, label: "Status" },
     { id: 9, label: "Timestamp" },
   ];
-
+  const isDue = (date) => (new Date(`${date}`) < new Date() ? true : false);
   return (
     <div className="min-w-[300px] h-full overflow-y-scroll">
       <table className="table-fixed break-words h-screen md:h-auto w-full caret-transparent">
@@ -131,12 +131,18 @@ const TableComponent = ({
               <td className="min-w-[80px] md:min-w-auto md:w-100%">
                 <span
                   className={`${
-                    item.isBorrowed
+                    isDue(item.dateReturn) && item.isBorrowed
                       ? "text-[#bf807f] bg-[#ffe0e1]"
-                      : " text-[#63a878] bg-[#e0ffeb]"
+                      : item.isBorrowed
+                      ? "text-[#ffbd44] bg-[#ffbe4459]"
+                      : "text-[#63a878] bg-[#e0ffeb]"
                   } p-2 text-xs font-bold rounded-md`}
                 >
-                  {item.isBorrowed ? "borrowed" : "returned"}
+                  {isDue(item.dateReturn) && item.isBorrowed
+                    ? "past due"
+                    : item.isBorrowed
+                    ? "borrowed"
+                    : "returned"}
                 </span>
               </td>
               <td className="min-w-[120px] md:min-w-auto md:w-100%">
