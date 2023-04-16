@@ -214,9 +214,10 @@ const Inventory = () => {
           {tabItems.map((item) => (
             <button
               key={item.id}
-              onClick={() =>
-                setSelectedTab(selectedTab === "SSP" ? "101" : "SSP")
-              }
+              onClick={() => {
+                setSelectedItems([]);
+                setSelectedTab(selectedTab === "SSP" ? "101" : "SSP");
+              }}
             >
               <h1
                 className={`font-semibold text-4xl ${

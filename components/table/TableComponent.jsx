@@ -145,6 +145,7 @@ const TableComponent = ({
                     : "returned"}
                 </span>
               </td>
+
               <td className="min-w-[120px] md:min-w-auto md:w-100%">
                 <span className="text-gray-500 text-xs">
                   {moment(new Date(item.createdAt)).format(
