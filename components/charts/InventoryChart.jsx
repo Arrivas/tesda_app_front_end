@@ -27,6 +27,69 @@ const InventoryChart = ({ inventoryStats, setInventoryStats }) => {
       .then((res) => setInventoryStats(res.data))
       .catch((err) => console.log(err));
   };
+
+  const handleOnBarClick = (data) => {
+    console.log(data?.activePayload[0].payload?.objects);
+    if (data && data.activePayload && data.activePayload.length > 0) {
+      const printWindow = window.open("", "Print Table");
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print Table</title>
+            <style>
+              table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+              th,
+              td {
+                padding: 8px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+              }
+              th {
+                background-color: #f2f2f2;
+              }
+            </style>
+          </head>
+          <h1 style='text-align:center'>${
+            data.activePayload[0].payload.month
+          } ${new Date(yearSelect).getFullYear()} Inventory Report</h1>
+          <body>
+            <table>
+              <thead>
+              <tr>
+              <th>Category</th>
+              <th>Property No.</th>
+              <th>Equipment</th>
+              <th>Qty</th>
+              <th>Receiver</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data?.activePayload[0].payload?.objects
+                  .map(
+                    (item) =>
+                      `<tr>
+                    <td>${item.type.toUpperCase()}</td>
+                    <td>${item.propertyNo}</td>  
+                    <td>${item.equipment}</td>
+                    <td>${item.qty}</td>
+                    <td>${item.receiver}</td>
+                      </tr>`
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center gap-2">
@@ -49,6 +112,7 @@ const InventoryChart = ({ inventoryStats, setInventoryStats }) => {
             left: 20,
             bottom: 5,
           }}
+          onClick={handleOnBarClick}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
