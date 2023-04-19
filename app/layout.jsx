@@ -27,7 +27,7 @@ export default function RootLayout({ children, location }) {
   return (
     <html lang="en">
       <Head>
-        <link rel="shortcut icon" href="/favicon.png" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       </Head>
       <body>
         <Toaster position="top-center" reverseOrder={false} />
