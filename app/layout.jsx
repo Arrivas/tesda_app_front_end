@@ -21,6 +21,7 @@ export default function RootLayout({ children, location }) {
     if (typeof window !== "undefined") {
       setInnerWidth(window.outerWidth);
       if (window.outerWidth > 640) setShowNav(true);
+      setShowNav(JSON.parse(localStorage.getItem("mobile")));
     }
   }, []);
 

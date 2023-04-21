@@ -9,6 +9,12 @@ import moment from "moment";
 import DatePickerField from "../forms/DatePickerField";
 import UploadImage from "../forms/UploadImage";
 import SelectForm from "../forms/SelectForm";
+import ClassficationField from "../forms/ClassficationField";
+
+const docTypeItems = [
+  { id: 1, label: "SSP", value: "ssp" },
+  { id: 2, label: "101", value: "101" },
+];
 
 const NewInventoryModal = ({
   showNew,
@@ -20,25 +26,28 @@ const NewInventoryModal = ({
   setSelectedImage,
   docType,
   setDocType,
+  classification,
+  setClassification,
+  amount,
+  setAmount,
 }) => {
   const initialValues = {
     propertyNo: "",
     equipment: "",
     qty: 1,
     receiveBy: "",
+    unit: "",
   };
 
   const validationSchema = Yup.object({
     propertyNo: Yup.string().required("field must not be empty"),
     equipment: Yup.string().required("field must not be empty"),
-    qty: Yup.number().required("field must not be empty"),
+    qty: Yup.number()
+      .typeError("field must be a number")
+      .required("field must not be empty"),
     receiveBy: Yup.string().required("field must not be empty"),
+    unit: Yup.string(),
   });
-
-  const docTypeItems = [
-    { id: 1, label: "SSP", value: "ssp" },
-    { id: 2, label: "101", value: "101" },
-  ];
 
   return (
     <Dialog
@@ -61,7 +70,7 @@ const NewInventoryModal = ({
             onSubmit={onNewSubmit}
             validationSchema={validationSchema}
           >
-            <div className="space-y-2 py-2 overflow-y-auto px-3 h-[350px]">
+            <div className="space-y-2 py-2 overflow-y-auto pr-2 h-[350px]">
               <SelectForm
                 label="Type"
                 selectItems={docTypeItems}
@@ -93,11 +102,24 @@ const NewInventoryModal = ({
                 label="Receive By"
                 fieldClass="text-black bg-gray-50"
               />
+              {/* custom amount - classification */}
+              <ClassficationField
+                amount={amount}
+                setAmount={setAmount}
+                classification={classification}
+                setClassification={setClassification}
+              />
 
+              <AppFormField
+                name="unit"
+                placeholder="Unit(optional)"
+                label="Unit"
+                fieldClass="text-black bg-gray-50"
+              />
               {/* purchaseDate*/}
               <div className="flex items-center w-full space-x-2">
                 <DatePickerField
-                  label="Return Date"
+                  label="Purchase Date"
                   startDate={startDate}
                   setStartDate={setStartDate}
                   type="inventory"

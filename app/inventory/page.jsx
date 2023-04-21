@@ -38,6 +38,8 @@ const Inventory = () => {
   const [showNew, setShowNew] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedTab, setSelectedTab] = useState("SSP");
+  const [classification, setClassification] = useState("Semi-Expendable");
+  const [amount, setAmount] = useState(0);
 
   const fetchInventory = async () => {
     try {
@@ -93,6 +95,8 @@ const Inventory = () => {
     values.purchaseDate = startDate.toISOString();
     values.image = image;
     values.docType = docType.value;
+    values.amount = Number(amount);
+    values.classification = classification;
 
     await axios
       .post(`${links.default}/inventory/new`, values)
@@ -143,6 +147,8 @@ const Inventory = () => {
             purchaseDate: values.purchaseDate,
             qty: values.qty,
             docType: docType.value,
+            amount: values.amount,
+            classification: values.classification,
             _id: values._id,
           }
         : item
@@ -231,26 +237,30 @@ const Inventory = () => {
         </div>
 
         <TableMenu
-          selectedImage={selectedImage}
-          setSelectedImage={setSelectedImage}
+          amount={amount}
+          setAmount={setAmount}
+          classification={classification}
+          setClassification={setClassification}
           showQr={showQr}
           search={search}
-          startDate={startDate}
-          setStartDate={setStartDate}
-          showNew={showNew}
-          setShowQr={setShowQr}
-          setShowEdit={setShowEdit}
-          setSearch={setSearch}
-          setShowNew={setShowNew}
-          selectedQr={selectedQr}
-          onNewSubmit={onNewSubmit}
-          searchFilter={searchFilter}
-          handleDelete={handleDelete}
-          selectedItems={selectedItems}
-          setSearchFilter={setSearchFilter}
           type="inventory"
           docType={docType}
+          showNew={showNew}
+          startDate={startDate}
+          setShowQr={setShowQr}
+          setSearch={setSearch}
           setDocType={setDocType}
+          setShowNew={setShowNew}
+          selectedQr={selectedQr}
+          setShowEdit={setShowEdit}
+          onNewSubmit={onNewSubmit}
+          setStartDate={setStartDate}
+          searchFilter={searchFilter}
+          handleDelete={handleDelete}
+          selectedImage={selectedImage}
+          selectedItems={selectedItems}
+          setSearchFilter={setSearchFilter}
+          setSelectedImage={setSelectedImage}
         />
 
         <TableComponentInventory

@@ -10,6 +10,7 @@ import moment from "moment";
 import UploadImage from "../forms/UploadImage";
 import links from "@/config/links";
 import axios from "axios";
+import ClassficationField from "../forms/ClassficationField";
 
 const EditModal = ({
   showEdit,
@@ -18,16 +19,23 @@ const EditModal = ({
   items,
   selectedImage,
   setSelectedImage,
-  inventory,
   setInventory,
 }) => {
   const [startDate, setStartDate] = useState(new Date(items?.purchaseDate));
+  const [amount, setAmount] = useState(items.amount);
+  const [classification, setClassification] = useState(
+    items?.classification || ""
+  );
+
   const initialValues = {
     propertyNo: items?.propertyNo,
     equipment: items?.equipment,
     qty: items?.qty,
     receiveBy: items?.receiveBy,
     purchaseDate: startDate.toISOString(),
+    unit: items?.unit,
+    amount,
+    classification,
     _id: items?._id,
   };
 
@@ -117,6 +125,19 @@ const EditModal = ({
                 name="qty"
                 placeholder="Qty"
                 label="Qty"
+                fieldClass="text-black bg-gray-50"
+              />
+
+              <ClassficationField
+                amount={amount}
+                setAmount={setAmount}
+                classification={classification}
+                setClassification={setClassification}
+              />
+              <AppFormField
+                name="unit"
+                placeholder="Unit(optional)"
+                label="Unit"
                 fieldClass="text-black bg-gray-50"
               />
 

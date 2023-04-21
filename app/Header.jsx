@@ -15,7 +15,6 @@ import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 
 const Header = ({ showNav, setShowNav, innerWidth }) => {
-  const [showNavMobile, setShowNavMobile] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const user = useSelector((state) => state.user);
   const pathName = usePathname();
@@ -78,15 +77,12 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
       ),
     },
   ];
+
   return (
     <>
       {user?.user && (
         //  flex-col items-center justify-center
         <header className={` bg-white md:p-0`}>
-          {/* <NavMobile
-            setShowNavMobile={setShowNavMobile}
-            showNavMobile={showNavMobile}
-          /> */}
           <div
             className={`bg-[#fafafa] p-2 h-screen rounded-r-md relative left-0 top-0`}
           >
@@ -119,7 +115,10 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
               {showNav && (
                 <button
                   className="block px-2"
-                  onClick={() => setShowNav(!showNav)}
+                  onClick={() => {
+                    setShowNav(!showNav);
+                    localStorage.setItem("mobile", !showNav);
+                  }}
                 >
                   <ChevronLeftIcon className="h-4 w-4 text-gray-500" />
                 </button>
@@ -131,11 +130,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
             <div className="flex justify-between flex-col h-[70%] md:h-[90%]">
               <nav className="py-2">
                 {navContents.map((item) => (
-                  <button
-                    key={item.id}
-                    className="block w-full"
-                    onClick={() => setShowNavMobile(false)}
-                  >
+                  <button key={item.id} className="block w-full">
                     <Link href={item.destination}>
                       <div
                         onMouseEnter={() => setIsHovering(true)}
@@ -167,7 +162,10 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
                 <nav className="py-2">
                   <button
                     className="block w-full"
-                    onClick={() => setShowNav(!showNav)}
+                    onClick={() => {
+                      setShowNav(!showNav);
+                      localStorage.setItem("mobile", !showNav);
+                    }}
                   >
                     <div className="flex p-3 items-center group flex-row pl-7 hover:bg-[#0035a9] rounded-md">
                       <ArrowsPointingOutIcon
@@ -180,11 +178,6 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
             </div>
           </div>
         </header>
-      )}
-      {showNavMobile && (
-        <button onClick={() => setShowNavMobile(false)}>
-          <div className="absolute bg-black left-0 top-0 h-screen w-screen -z-50" />
-        </button>
       )}
     </>
   );

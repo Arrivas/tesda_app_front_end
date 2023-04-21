@@ -45,7 +45,7 @@ const EditModal = ({
 
   const roleItems = [
     { id: 1, label: "Trainee" },
-    { id: 2, label: "Trainor" },
+    { id: 2, label: "Trainer" },
     { id: 3, label: "Admin Staff" },
   ];
 

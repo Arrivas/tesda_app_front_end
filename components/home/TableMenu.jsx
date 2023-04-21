@@ -12,6 +12,10 @@ import NewInventoryModal from "../inventory/NewInventoryModal";
 import { usePathname } from "next/navigation";
 
 const TableMenu = ({
+  classification,
+  setClassification,
+  amount,
+  setAmount,
   search,
   setSearch,
   selectedQr,
@@ -135,6 +139,10 @@ const TableMenu = ({
         />
       ) : (
         <NewInventoryModal
+          amount={amount}
+          setAmount={setAmount}
+          classification={classification}
+          setClassification={setClassification}
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
           startDate={startDate}

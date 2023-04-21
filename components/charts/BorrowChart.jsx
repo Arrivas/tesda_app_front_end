@@ -153,12 +153,12 @@ const BorrowChart = ({ borrowStats, setBorrowStats }) => {
 
   const handlecheckChange = (onChangeItem) => {
     const index = checkItems.indexOf(onChangeItem);
-    const newCheckItems = [...checkItems];
-    newCheckItems[index].checked = !newCheckItems[index].checked;
+    const newCheckItems = checkItems.map((item, i) => ({
+      ...item,
+      checked: i === index ? !item.checked : false,
+    }));
     setCheckItems(newCheckItems);
-    setCheckFilter(
-      newCheckItems[index].checked ? newCheckItems[index].value : ""
-    );
+    setCheckFilter(newCheckItems[index].value);
   };
 
   return (
