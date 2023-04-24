@@ -17,6 +17,8 @@ const sortBorrow = (arr, sort, active) => {
         return a.receiveBy > b.receiveBy ? 1 : -1;
       else if (active === "Timestamp")
         return a.createdAt > b.createdAt ? 1 : -1;
+      else if (active === "Return Date")
+        return a.returnDate > b.returnDate ? 1 : -1;
     } else {
       if (active === "Property Number")
         return a.propertyNo > b.propertyNo ? -1 : 1;
@@ -32,6 +34,8 @@ const sortBorrow = (arr, sort, active) => {
         return a.receiveBy > b.receiveBy ? -1 : 1;
       else if (active === "Timestamp")
         return a.createdAt > b.createdAt ? -1 : 1;
+      else if (active === "Return Date")
+        return a.returnDate > b.returnDate ? -1 : 1;
     }
   });
 };

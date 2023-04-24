@@ -4,8 +4,11 @@ import axios from "axios";
 import links from "@/config/links";
 import BorrowChart from "@/components/charts/BorrowChart";
 import InventoryChart from "@/components/charts/InventoryChart";
+import { useSelector } from "react-redux";
+import Loading from "@/components/Loading";
 
 const page = () => {
+  const user = useSelector((state) => state.user);
   const [borrowStats, setBorrowStats] = useState([]);
   const [inventoryStats, setInventoryStats] = useState([]);
 
@@ -41,7 +44,7 @@ const page = () => {
       mounted = false;
     };
   }, []);
-
+  if (!user.user) return <Loading />;
   return (
     <div className="flex flex-col h-screen p-5">
       <div className="flex flex-1 flex-col">

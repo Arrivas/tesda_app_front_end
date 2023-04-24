@@ -62,6 +62,7 @@ const TableComponent = ({
     { id: 7, label: "Role" },
     { id: 8, label: "Status" },
     { id: 9, label: "Timestamp" },
+    { id: 10, label: "Return Date" },
   ];
   const isDue = (date) => (new Date(`${date}`) < new Date() ? true : false);
   return (
@@ -146,14 +147,21 @@ const TableComponent = ({
                 </span>
               </td>
 
-              <td className="min-w-[120px] md:min-w-auto md:w-100%">
+              <td className="min-w-[120px] md:min-w-auto md:w-100% ">
                 <span className="text-gray-500 text-xs">
                   {moment(new Date(item.createdAt)).format(
                     "MMMM Do YYYY, h:mm a"
                   )}
                 </span>
               </td>
-
+              <td>
+                {" "}
+                <span className="text-gray-500 text-xs">
+                  {moment(new Date(item.dateReturn)).format(
+                    "MMMM Do YYYY, h:mm a"
+                  )}
+                </span>
+              </td>
               <td className="hidden">
                 <ShowQrModal
                   showQr={showQr}
