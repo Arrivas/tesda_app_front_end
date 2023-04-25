@@ -274,7 +274,7 @@ const Home = () => {
           setActiveTableHeader={setActiveTableHeader}
         />
 
-        {borrow?.length > 5 && (
+        {borrow?.length > 20 && (
           <Pagination
             pageNumbers={pageNumbers}
             currentPage={currentPage}

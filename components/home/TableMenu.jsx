@@ -108,7 +108,10 @@ const TableMenu = ({
           )}
           {selectedItems?.length < 1 && (
             <button
-              onClick={() => setShowNew(true)}
+              onClick={() => {
+                setShowNew(true);
+                setAmount(0);
+              }}
               className="flex items-center hover:bg-[#2c51a0] bg-[#0035A9] p-2 px-3 rounded-md space-x-1"
             >
               <PlusIcon className="h-4 w-4 text-white" />
