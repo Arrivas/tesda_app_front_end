@@ -283,7 +283,7 @@ const Inventory = () => {
           setInventory={setInventory}
         />
 
-        {inventory?.length >= 20 && (
+        {inventory?.length > 20 && (
           <Pagination
             pageNumbers={pageNumbers}
             currentPage={currentPage}
