@@ -8,6 +8,7 @@ import {
   ListBulletIcon,
   ArchiveBoxIcon,
   ArrowsPointingOutIcon,
+  PresentationChartLineIcon,
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,7 +35,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
     },
     {
       id: 2,
-      title: "Borrow",
+      title: "Borrow/Return",
       destination: "/borrow",
       icon: (
         <UserPlusIcon
@@ -70,6 +71,20 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
     },
     {
       id: 5,
+      title: "Reports",
+      destination: "/reports",
+      icon: (
+        <PresentationChartLineIcon
+          className={`h-6 w-6 group-hover:text-white ${
+            pathName === "/reports" && !isHovering
+              ? "text-white"
+              : "text-gray-400  transition-colors duration-300"
+          }`}
+        />
+      ),
+    },
+    {
+      id: 6,
       title: "Logout",
       destination: "/logout",
       icon: (

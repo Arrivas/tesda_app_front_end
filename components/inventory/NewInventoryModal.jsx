@@ -78,6 +78,7 @@ const NewInventoryModal = ({
                 onSetSelect={setDocType}
               />
               <AppFormField
+                autofocus={true}
                 name="propertyNo"
                 placeholder="Property Number"
                 label="Property Number"

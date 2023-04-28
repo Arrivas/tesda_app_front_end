@@ -1,6 +1,6 @@
 import React from "react";
 import THeadComponent from "./THeadComponent";
-import ShowQrModal from "../home/ShowQrModal";
+import ShowQrModal from "../borrow/ShowQrModal";
 import moment from "moment";
 import EditModal from "../inventory/EditModal";
 

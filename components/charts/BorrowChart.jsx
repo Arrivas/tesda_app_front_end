@@ -10,10 +10,10 @@ import {
   ReferenceLine,
   ResponsiveContainer,
 } from "recharts";
-import SelectForm from "@/components/forms/SelectForm";
+import SelectForm from "../../components/forms/SelectForm";
 import DatePickerField from "../forms/DatePickerField";
 import axios from "axios";
-import links from "@/config/links";
+import links from "../../config/links";
 
 const activeBorrowItems = [
   { id: 1, label: "Total Borrows", value: "total" },
@@ -164,7 +164,7 @@ const BorrowChart = ({ borrowStats, setBorrowStats }) => {
   return (
     <>
       <div className="flex justify-between items-center gap-2">
-        <h1 className="text-2xl font-semibold flex-1">Borrow</h1>
+        <h1 className="text-2xl font-semibold flex-1">Borrower Report</h1>
         <div className="grid grid-cols-3 gap-1">
           <div className="col-span-1">
             <SelectForm
@@ -201,7 +201,7 @@ const BorrowChart = ({ borrowStats, setBorrowStats }) => {
           </div>
         </div>
       </div>
-      <ResponsiveContainer className="mt-2" width="98%" height="100%">
+      <ResponsiveContainer className="mt-2 " width="98%" height="100%">
         <BarChart
           data={borrowStats}
           margin={{
@@ -211,6 +211,7 @@ const BorrowChart = ({ borrowStats, setBorrowStats }) => {
             bottom: 5,
           }}
           onClick={handleOnBarClick}
+          className="cursor-pointer"
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />

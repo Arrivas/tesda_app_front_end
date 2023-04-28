@@ -1,17 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import FormikField from "@/components/forms/FormikField";
-import AppFormField from "@/components/forms/AppFormField";
+import FormikField from "../../components/forms/FormikField";
+import AppFormField from "../../components/forms/AppFormField";
 import Image from "next/image";
-import SubmitButton from "@/components/forms/SubmitButton";
+import SubmitButton from "../../components/forms/SubmitButton";
 import axios from "axios";
-import links from "@/config/links";
+import links from "../../config/links";
 import { useRouter } from "next/navigation";
-import { setUser } from "@/store/userSlice";
+import { setUser } from "../../store/userSlice";
 import { useDispatch } from "react-redux";
-import { login } from "@/helper/auth";
+import { login } from "../../helper/auth";
 import * as Yup from "yup";
-import ErrorMessage from "@/components/forms/ErrorMessage";
 import { toast } from "react-hot-toast";
 
 const Login = () => {

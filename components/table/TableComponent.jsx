@@ -1,8 +1,8 @@
 import React from "react";
-import THeadComponent from "@/components/table/THeadComponent";
+import THeadComponent from "../../components/table/THeadComponent";
 import moment from "moment";
-import ShowQrModal from "../home/ShowQrModal";
-import EditModal from "../home/EditModal";
+import ShowQrModal from "../borrow/ShowQrModal";
+import EditModal from "../borrow/EditModal";
 
 const TableComponent = ({
   borrow,

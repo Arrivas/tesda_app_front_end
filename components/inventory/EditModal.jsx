@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
 import UploadImage from "../forms/UploadImage";
-import links from "@/config/links";
+import links from "../../config/links";
 import axios from "axios";
 import ClassficationField from "../forms/ClassficationField";
 

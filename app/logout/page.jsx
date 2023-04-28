@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "@/store/userSlice";
+import { setUser } from "../../store/userSlice";
 import { useRouter } from "next/navigation";
 
 const Logout = () => {

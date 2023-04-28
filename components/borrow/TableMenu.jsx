@@ -6,8 +6,8 @@ import {
   TrashIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/solid";
-import SearchFilter from "@/components/home/SearchFilter";
-import NewBorrowModal from "@/components/home/NewBorrowModal";
+import SearchFilter from "../../components/borrow/SearchFilter";
+import NewBorrowModal from "../../components/borrow/NewBorrowModal";
 import NewInventoryModal from "../inventory/NewInventoryModal";
 import { usePathname } from "next/navigation";
 
@@ -108,9 +108,12 @@ const TableMenu = ({
           )}
           {selectedItems?.length < 1 && (
             <button
+              title={
+                type === "default" ? "add new borrower" : "add new equipments"
+              }
               onClick={() => {
                 setShowNew(true);
-                setAmount(0);
+                if (type !== "default") setAmount(0);
               }}
               className="flex items-center hover:bg-[#2c51a0] bg-[#0035A9] p-2 px-3 rounded-md space-x-1"
             >

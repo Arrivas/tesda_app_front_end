@@ -1,12 +1,12 @@
 "use client";
 import { Provider, useSelector } from "react-redux";
-import { store } from "@/store";
+import { store } from "../store/index";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { verifyToken } from "@/config/verifyAuth";
-import { setUser } from "@/store/userSlice";
+import { verifyToken } from "../config/verifyAuth";
+import { setUser } from "../store/userSlice";
 import axios from "axios";
-import links from "@/config/links";
+import links from "../config/links";
 import Loading from "./Loading";
 
 const Providers = ({ children }) => {

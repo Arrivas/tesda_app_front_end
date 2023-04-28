@@ -1,16 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import links from "@/config/links";
-import Head from "next/head";
+import links from "../../config/links";
 import { toast } from "react-hot-toast";
-import paginate from "@/helper/paginate";
-import sortBorrow from "@/helper/sortBorrow";
-import Pagination from "@/components/pagination/Pagination";
-import TableMenu from "@/components/home/TableMenu";
-import TableComponentInventory from "@/components/table/TableComponentInventory";
+import paginate from "../../helper/paginate";
+import sortBorrow from "../../helper/sortBorrow";
+import Pagination from "../../components/pagination/Pagination";
+import TableMenu from "../../components/borrow/TableMenu";
+import TableComponentInventory from "../../components/table/TableComponentInventory";
 import { useSelector } from "react-redux";
-import Loading from "@/components/Loading";
+import Loading from "../../components/Loading";
 
 const Inventory = () => {
   const user = useSelector((state) => state.user);

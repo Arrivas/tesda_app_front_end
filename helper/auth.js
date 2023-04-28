@@ -1,5 +1,5 @@
-import { verifyToken } from "@/config/verifyAuth";
-import links from "@/config/links";
+import { verifyToken } from "../config/verifyAuth";
+import links from "../config/links";
 import axios from "axios";
 
 const login = async () => {

@@ -10,7 +10,7 @@ import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
 import UploadImage from "../forms/UploadImage";
 import axios from "axios";
-import links from "@/config/links";
+import links from "../../config/links";
 
 const EditModal = ({
   showEdit,

@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import axios from "axios";
 import DatePickerField from "../forms/DatePickerField";
-import links from "@/config/links";
+import links from "../../config/links";
 
 const InventoryChart = ({ inventoryStats, setInventoryStats }) => {
   const [yearSelect, setYearSelect] = useState(new Date());
