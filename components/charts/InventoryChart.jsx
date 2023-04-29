@@ -29,7 +29,6 @@ const InventoryChart = ({ inventoryStats, setInventoryStats }) => {
   };
 
   const handleOnBarClick = (data) => {
-    console.log(data?.activePayload[0].payload?.objects);
     if (data && data.activePayload && data.activePayload.length > 0) {
       const printWindow = window.open("", "Print Table");
       printWindow.document.write(`

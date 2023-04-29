@@ -145,7 +145,11 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
             <div className="flex justify-between flex-col h-[70%] md:h-[90%]">
               <nav className="py-2">
                 {navContents.map((item) => (
-                  <button key={item.id} className="block w-full">
+                  <button
+                    title={item.title}
+                    key={item.id}
+                    className="block w-full"
+                  >
                     <Link href={item.destination}>
                       <div
                         onMouseEnter={() => setIsHovering(true)}
