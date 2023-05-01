@@ -84,6 +84,9 @@ const InventoryLists = ({
             <th>Equipment</th>
             <th>Qty</th>
             <th>Receiver</th>
+            <th>Unit</th>
+            <th>Amount</th>
+            <th>Classification</th>
               </tr>
             </thead>
               <tbody>
@@ -96,6 +99,9 @@ const InventoryLists = ({
                     <td>${item.equipment}</td>
                     <td>${item.qty}</td>
                     <td>${item.receiver}</td>
+                    <td>${item.unit}</td>
+                    <td>${item.amount}</td>
+                    <td>${item.classification}</td>
                       </tr>`
                   )
                   .join("")}
@@ -159,6 +165,9 @@ const InventoryLists = ({
             <th className="bg-[#f2f2f2] text-left">Equipment</th>
             <th className="bg-[#f2f2f2] text-left">Qty</th>
             <th className="bg-[#f2f2f2] text-left">Receiver</th>
+            <th className="bg-[#f2f2f2] text-left">Unit</th>
+            <th className="bg-[#f2f2f2] text-left">Amount</th>
+            <th className="bg-[#f2f2f2] text-left">Classification</th>
           </tr>
         </thead>
         <tbody>
@@ -180,6 +189,15 @@ const InventoryLists = ({
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
                   {item.receiver}
+                </td>
+                <td className="p-[8px] text-left border-b border-[#ddd]">
+                  {item.unit}
+                </td>
+                <td className="p-[8px] text-left border-b border-[#ddd]">
+                  {item.amount}
+                </td>
+                <td className="p-[8px] text-left border-b border-[#ddd]">
+                  {item.classification}
                 </td>
               </tr>
             ))}
