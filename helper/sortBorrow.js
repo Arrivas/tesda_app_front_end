@@ -8,6 +8,10 @@ const sortBorrow = (arr, sort, active) => {
       else if (active === "Equipment")
         return a.equipment > b.equipment ? 1 : -1;
       else if (active === "Qty") return a.receivedBy > b.receivedBy ? 1 : -1;
+      else if (active === "Specification")
+        return a.specification > b.specification ? 1 : -1;
+      else if (active === "Unit") return a.unit > b.unit ? 1 : -1;
+      else if (active === "Amount") return a.amount > b.amount ? 1 : -1;
       else if (active === "Purchase Date")
         return a.purchaseDate > b.purchaseDate ? 1 : -1;
       else if (active === "Name") return a.name > b.name ? 1 : -1;
@@ -25,6 +29,10 @@ const sortBorrow = (arr, sort, active) => {
       else if (active === "Equipment")
         return a.equipment > b.equipment ? -1 : 1;
       else if (active === "Qty") return a.receivedBy > b.receivedBy ? -1 : 1;
+      else if (active === "Specification")
+        return a.specification > b.specification ? -1 : 1;
+      else if (active === "Unit") return a.unit > b.unit ? -1 : 1;
+      else if (active === "Amount") return a.amount > b.amount ? -1 : 1;
       else if (active === "Purchase Date")
         return a.purchaseDate > b.purchaseDate ? -1 : 1;
       else if (active === "Name") return a.name > b.name ? -1 : 1;

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import THeadComponent from "./THeadComponent";
 import ShowQrModal from "../borrow/ShowQrModal";
 import moment from "moment";
 import EditModal from "../inventory/EditModal";
+import { Dialog } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const TableComponentInventory = ({
   inventory,
@@ -23,6 +25,7 @@ const TableComponentInventory = ({
   selectedImage,
   setSelectedImage,
 }) => {
+  const [showSpec, setShowSpec] = useState(false);
   const theadItems = [
     {
       id: 1,
@@ -58,10 +61,11 @@ const TableComponentInventory = ({
     { id: 4, label: "Equipment" },
     { id: 5, label: "Receive By" },
     { id: 6, label: "Qty" },
-    { id: 6, label: "Unit" },
-    { id: 8, label: "Amount" },
-    { id: 9, label: "Classification" },
-    { id: 10, label: "Purchase Date" },
+    { id: 7, label: "Specification" },
+    { id: 8, label: "Unit" },
+    { id: 9, label: "Amount" },
+    { id: 10, label: "Classification" },
+    { id: 11, label: "Purchase Date" },
   ];
   return (
     <>
@@ -124,6 +128,11 @@ const TableComponentInventory = ({
                 <td className="min-w-[100px]">{item.receiveBy}</td>
                 <td className="min-w-[100px]">{item.qty}</td>
                 <td className="min-w-[100px]">
+                  <button onClick={() => setShowSpec(true)}>
+                    {item._id.slice(14)}
+                  </button>
+                </td>
+                <td className="min-w-[100px]">
                   {item?.unit ? item.unit : "none"}
                 </td>
                 <td className="min-w-[100px]">{item.amount}</td>
@@ -153,6 +162,30 @@ const TableComponentInventory = ({
                       setInventory={setInventory}
                     />
                   )}
+                  <Dialog
+                    open={showSpec}
+                    onClose={() => setShowSpec(false)}
+                    className="relative z-50"
+                  >
+                    <div
+                      className="fixed inset-0 bg-black/50"
+                      aria-hidden="true"
+                    />
+                    <div className="fixed inset-0 flex items-center justify-center">
+                      <Dialog.Panel className="w-full max-w-lg  rounded shadow-lg bg-white p-4">
+                        <div className="flex justify-between items-center">
+                          <Dialog.Title className="font-semibold px-3">
+                            {item.equipment}
+                          </Dialog.Title>
+                          <button onClick={() => setShowSpec(false)}>
+                            <XMarkIcon className="w-5 h-5 text-gray-400" />
+                          </button>
+                        </div>
+                        <p className="px-3 my-2">{item.specification}</p>
+                        {/* form */}
+                      </Dialog.Panel>
+                    </div>
+                  </Dialog>
                 </td>
               </tr>
             ))}

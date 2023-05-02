@@ -31,6 +31,7 @@ const EditModal = ({
     propertyNo: items?.propertyNo,
     equipment: items?.equipment,
     qty: items?.qty,
+    specification: items?.specification,
     receiveBy: items?.receiveBy,
     purchaseDate: startDate.toISOString(),
     unit: items?.unit,
@@ -43,6 +44,7 @@ const EditModal = ({
     propertyNo: Yup.string().required("field must not be empty"),
     equipment: Yup.string().required("field must not be empty"),
     qty: Yup.number().required("field must not be empty"),
+    specification: Yup.string().required("field must not be empty"),
     receiveBy: Yup.string().required("field must not be empty"),
   });
 
@@ -121,12 +123,20 @@ const EditModal = ({
                 label="Receive By"
                 fieldClass="text-black bg-gray-50"
               />
-              <AppFormField
-                name="qty"
-                placeholder="Qty"
-                label="Qty"
-                fieldClass="text-black bg-gray-50"
-              />
+              <div className="flex flex-row flex-items-center space-x-2">
+                <AppFormField
+                  name="qty"
+                  placeholder="Qty"
+                  label="Qty"
+                  fieldClass="text-black bg-gray-50"
+                />
+                <AppFormField
+                  name="specification"
+                  placeholder="Specification"
+                  label="Specification(optional)"
+                  fieldClass="text-black bg-gray-50"
+                />
+              </div>
 
               <ClassficationField
                 amount={amount}

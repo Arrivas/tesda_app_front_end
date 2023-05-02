@@ -134,13 +134,6 @@ const page = () => {
           setInventoryStats={setInventoryStats}
         />
       )}
-
-      {/* {selectedTab === "BORROWER" ? (
-      
-      ) : (
-     
-      )} */}
-      {/*  */}
     </div>
   );
 };

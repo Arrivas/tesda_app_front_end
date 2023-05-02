@@ -35,6 +35,7 @@ const NewInventoryModal = ({
     propertyNo: "",
     equipment: "",
     qty: 1,
+    specification: "",
     receiveBy: "",
     unit: "",
   };
@@ -45,6 +46,7 @@ const NewInventoryModal = ({
     qty: Yup.number()
       .typeError("field must be a number")
       .required("field must not be empty"),
+    specification: Yup.string(),
     receiveBy: Yup.string().required("field must not be empty"),
     unit: Yup.string(),
   });
@@ -91,12 +93,20 @@ const NewInventoryModal = ({
                 label="Equipment"
                 fieldClass="text-black bg-gray-50"
               />
-              <AppFormField
-                name="qty"
-                placeholder="Qty"
-                label="Qty"
-                fieldClass="text-black bg-gray-50"
-              />
+              <div className="flex flex-row flex-items-center space-x-2">
+                <AppFormField
+                  name="qty"
+                  placeholder="Qty"
+                  label="Qty"
+                  fieldClass="text-black bg-gray-50"
+                />
+                <AppFormField
+                  name="specification"
+                  placeholder="Specification"
+                  label="Specification(optional)"
+                  fieldClass="text-black bg-gray-50"
+                />
+              </div>
               <AppFormField
                 name="receiveBy"
                 placeholder="Receive By"

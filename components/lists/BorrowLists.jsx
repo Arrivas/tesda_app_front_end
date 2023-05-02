@@ -112,6 +112,7 @@ const BorrowLists = ({
       printWindow.print();
     }
   };
+
   return (
     <>
       <div className="grid grid-cols-4 gap-1 self-end mb-3">
@@ -181,6 +182,7 @@ const BorrowLists = ({
                 return item;
               }
             })
+
             ?.map((item, index) => (
               <tr key={index}>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
@@ -202,6 +204,12 @@ const BorrowLists = ({
             ))}
         </tbody>
       </table>
+      {borrowStats.filter((item) => item.month === selectedMonth.label)[0]
+        ?.objects.length === 0 && (
+        <div className="flex justify-center items-center w-full h-full ">
+          <h2 className="font-semibold text-gray-400">no items to show</h2>
+        </div>
+      )}
     </>
   );
 };

@@ -12,7 +12,9 @@ const THeadComponent = ({
         {theadItems.map((t) => (
           <th
             onClick={
-              t.label === "input" || t.label === ""
+              t.label === "input" ||
+              t.label === "" ||
+              t.label === "Classification"
                 ? null
                 : () =>
                     setActiveTableHeader({

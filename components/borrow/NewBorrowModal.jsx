@@ -35,6 +35,7 @@ const NewBorrowModal = ({
     contactNumber: "",
     equipment: "",
     qty: 1,
+
     purpose: "",
     specificLocation: "",
     isBorrowed: true,
@@ -80,12 +81,14 @@ const NewBorrowModal = ({
             validationSchema={validationSchema}
           >
             <div className="space-y-2 py-2 overflow-y-auto px-3 h-[350px]">
-              <AppFormField
-                name="propertyNo"
-                placeholder="Property Number"
-                label="Property Number"
-                fieldClass="text-black bg-gray-50"
-              />
+              <div className="flex items-center space-x-2">
+                <AppFormField
+                  name="propertyNo"
+                  placeholder="Property Number"
+                  label="Property Number"
+                  fieldClass="text-black bg-gray-50"
+                />
+              </div>
 
               <div className="flex items-center space-x-2">
                 <AppFormField
