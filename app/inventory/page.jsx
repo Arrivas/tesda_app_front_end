@@ -221,6 +221,7 @@ const Inventory = () => {
               key={item.id}
               onClick={() => {
                 setSelectedItems([]);
+                setSelectedQr([]);
                 setSelectedTab(selectedTab === "SSP" ? "101" : "SSP");
               }}
             >
