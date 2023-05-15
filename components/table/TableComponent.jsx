@@ -60,9 +60,10 @@ const TableComponent = ({
     { id: 5, label: "Qty" },
     { id: 6, label: "Name" },
     { id: 7, label: "Role" },
-    { id: 8, label: "Status" },
-    { id: 9, label: "Timestamp" },
-    { id: 10, label: "Return Date" },
+    { id: 8, label: "Location" },
+    { id: 9, label: "Status" },
+    { id: 10, label: "Timestamp" },
+    { id: 11, label: "Return Date" },
   ];
   const isDue = (date) => (new Date(`${date}`) < new Date() ? true : false);
   return (
@@ -128,6 +129,12 @@ const TableComponent = ({
               </td>
               <td className="min-w-[220px] md:min-w-auto md:w-100%">
                 {item.role}
+              </td>
+              <td
+                title={item.location === "Inside" ? "on-site" : "off-site"}
+                className="min-w-[220px] md:min-w-auto md:w-100%"
+              >
+                {item.location}
               </td>
               <td className="min-w-[80px] md:min-w-auto md:w-100%">
                 <span

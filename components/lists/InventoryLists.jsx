@@ -72,7 +72,7 @@ const InventoryLists = ({
               }
             </style>
           </head>
-          <h1 style='text-align:center'>${selectedMonth} ${new Date(
+          <h1 style='text-align:center'>${selectedMonth.label} ${new Date(
         yearSelect
       ).getFullYear()} Borrow Report</h1>
           <body>
@@ -91,7 +91,7 @@ const InventoryLists = ({
             </thead>
               <tbody>
                 ${filteredData
-                  .map(
+                  ?.map(
                     (item) =>
                       `<tr>
                     <td>${item.type.toUpperCase()}</td>
@@ -172,8 +172,8 @@ const InventoryLists = ({
         </thead>
         <tbody>
           {inventoryStats
-            .filter((item) => item.month === selectedMonth.label)[0]
-            ?.objects.map((item, index) => (
+            ?.filter((item) => item.month === selectedMonth.label)[0]
+            ?.objects?.map((item, index) => (
               <tr key={index}>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
                   {item.type.toUpperCase()}
@@ -203,7 +203,7 @@ const InventoryLists = ({
             ))}
         </tbody>
       </table>
-      {inventoryStats.filter((item) => item.month === selectedMonth.label)[0]
+      {inventoryStats?.filter((item) => item.month === selectedMonth.label)[0]
         ?.objects.length === 0 && (
         <div className="flex justify-center items-center w-full h-full ">
           <h2 className="font-semibold text-gray-400">no items to show</h2>

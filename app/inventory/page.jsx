@@ -11,6 +11,11 @@ import TableComponentInventory from "../../components/table/TableComponentInvent
 import { useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 
+const conditionItems = [
+  { id: 1, label: "Serviceable" },
+  { id: 2, label: "Unserviceable" },
+];
+
 const Inventory = () => {
   const user = useSelector((state) => state.user);
   const [inventory, setInventory] = useState([]);
@@ -39,6 +44,7 @@ const Inventory = () => {
   const [selectedTab, setSelectedTab] = useState("SSP");
   const [classification, setClassification] = useState("Semi-Expendable");
   const [amount, setAmount] = useState(0);
+  const [condition, setCondition] = useState({ id: 1, label: "Serviceable" });
 
   const fetchInventory = async () => {
     try {
@@ -96,7 +102,7 @@ const Inventory = () => {
     values.docType = docType.value;
     values.amount = Number(amount);
     values.classification = classification;
-
+    values.condition = condition.label;
     await axios
       .post(`${links.default}/inventory/new`, values)
       .then((res) => {
@@ -149,6 +155,7 @@ const Inventory = () => {
             amount: values.amount,
             classification: values.classification,
             _id: values._id,
+            condition: values.condition,
           }
         : item
     );
@@ -244,6 +251,9 @@ const Inventory = () => {
           showQr={showQr}
           search={search}
           type="inventory"
+          condition={condition}
+          setCondition={setCondition}
+          conditionItems={conditionItems}
           docType={docType}
           showNew={showNew}
           startDate={startDate}

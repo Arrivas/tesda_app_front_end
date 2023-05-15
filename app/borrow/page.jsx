@@ -11,6 +11,25 @@ import TableMenu from "../../components/borrow/TableMenu";
 import { useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 
+const locationItems = [
+  { id: 1, label: "Inside" },
+  { id: 2, label: "Outside" },
+];
+
+const roleItems = [
+  { id: 1, label: "Trainee" },
+  { id: 2, label: "Trainor" },
+  { id: 3, label: "Admin Staff" },
+];
+
+const intentionItems = [
+  { id: 1, label: "Training" },
+  { id: 2, label: "Event" },
+  { id: 3, label: "Meeting" },
+  { id: 4, label: "Lecture" },
+  { id: 5, label: "Office Staff purposes" },
+];
+
 const Home = () => {
   const user = useSelector((state) => state.user);
   const [borrow, setBorrow] = useState([]);
@@ -34,23 +53,8 @@ const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [location, setLocation] = useState({ id: 1, label: "Inside" });
   const [role, setRole] = useState({ id: 1, label: "Trainee" });
-  const [condition, setCondition] = useState({ id: 1, label: "Serviceable" });
 
-  const locationItems = [
-    { id: 1, label: "Inside" },
-    { id: 2, label: "Outside" },
-  ];
-
-  const roleItems = [
-    { id: 1, label: "Trainee" },
-    { id: 2, label: "Trainor" },
-    { id: 3, label: "Admin Staff" },
-  ];
-
-  const conditionItems = [
-    { id: 1, label: "Serviceable" },
-    { id: 2, label: "Unserviceable" },
-  ];
+  const [intention, setIntention] = useState(intentionItems[0]);
 
   const fetchBorrow = async () => {
     try {
@@ -60,7 +64,6 @@ const Home = () => {
       toast.error("something went wrong, cannot get borrow lists");
     }
   };
-
   useEffect(() => {
     let ready = true;
     if (ready) fetchBorrow().then((res) => setBorrow(res?.data));
@@ -107,10 +110,10 @@ const Home = () => {
     const dateReturn = startDate.toISOString();
     const data = {
       ...values,
+      intention: intention.label,
       dateReturn,
       location: location.label,
       role: role.label,
-      condition: condition.label,
       image,
     };
 
@@ -154,7 +157,6 @@ const Home = () => {
         ? {
             ...item,
             address: values.address,
-            condition: values.condition,
             contactNumber: values.contactNumber,
             dateReturn: values.dateReturn,
             equipment: values.equipment,
@@ -163,7 +165,7 @@ const Home = () => {
             location: values.location,
             specificLocation: values.specificLocation,
             propertyNo: values.propertyNo,
-            purpose: values.purpose,
+            intention: values.intention,
             qty: values.qty,
             role: values.role,
             image: image ? image : values.image,
@@ -224,6 +226,9 @@ const Home = () => {
         {/* table menu */}
 
         <TableMenu
+          intentionItems={intentionItems}
+          setIntention={setIntention}
+          intention={intention}
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
           borrow={borrow}
@@ -246,9 +251,6 @@ const Home = () => {
           setLocation={setLocation}
           role={role}
           setRole={setRole}
-          condition={condition}
-          setCondition={setCondition}
-          conditionItems={conditionItems}
           roleItems={roleItems}
           locationItems={locationItems}
         />

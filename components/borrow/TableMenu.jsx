@@ -44,6 +44,9 @@ const TableMenu = ({
   locationItems,
   docType,
   setDocType,
+  intention,
+  setIntention,
+  intentionItems,
   type = "default",
 }) => {
   const pathName = usePathname();
@@ -126,6 +129,9 @@ const TableMenu = ({
       {/* modal */}
       {type === "default" ? (
         <NewBorrowModal
+          intention={intention}
+          setIntention={setIntention}
+          intentionItems={intentionItems}
           startDate={startDate}
           setStartDate={setStartDate}
           showNew={showNew}
@@ -137,14 +143,14 @@ const TableMenu = ({
           setLocation={setLocation}
           role={role}
           setRole={setRole}
-          condition={condition}
-          setCondition={setCondition}
-          conditionItems={conditionItems}
           roleItems={roleItems}
           locationItems={locationItems}
         />
       ) : (
         <NewInventoryModal
+          condition={condition}
+          setCondition={setCondition}
+          conditionItems={conditionItems}
           amount={amount}
           setAmount={setAmount}
           classification={classification}

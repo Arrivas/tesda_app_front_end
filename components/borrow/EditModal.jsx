@@ -12,6 +12,30 @@ import UploadImage from "../forms/UploadImage";
 import axios from "axios";
 import links from "../../config/links";
 
+const locationItems = [
+  { id: 1, label: "Inside" },
+  { id: 2, label: "Outside" },
+];
+
+const roleItems = [
+  { id: 1, label: "Trainee" },
+  { id: 2, label: "Trainer" },
+  { id: 3, label: "Admin Staff" },
+];
+
+const borrowedItems = [
+  { id: 1, label: "borrowed", isBorrowed: true },
+  { id: 2, label: "returned", isBorrowed: false },
+];
+
+const intentionItems = [
+  { id: 1, label: "Training" },
+  { id: 2, label: "Event" },
+  { id: 3, label: "Meeting" },
+  { id: 4, label: "Lecture" },
+  { id: 5, label: "Office Staff purposes" },
+];
+
 const EditModal = ({
   showEdit,
   setShowEdit,
@@ -32,32 +56,11 @@ const EditModal = ({
   });
   const [role, setRole] = useState({ id: 1, label: items.role });
 
-  const [condition, setCondition] = useState({
-    id: 1,
-    label: items.condition,
-  });
   const [startDate, setStartDate] = useState(new Date(items?.dateReturn));
-
-  const locationItems = [
-    { id: 1, label: "Inside" },
-    { id: 2, label: "Outside" },
-  ];
-
-  const roleItems = [
-    { id: 1, label: "Trainee" },
-    { id: 2, label: "Trainer" },
-    { id: 3, label: "Admin Staff" },
-  ];
-
-  const conditionItems = [
-    { id: 1, label: "Serviceable" },
-    { id: 2, label: "Unserviceable" },
-  ];
-
-  const borrowedItems = [
-    { id: 1, label: "borrowed", isBorrowed: true },
-    { id: 2, label: "returned", isBorrowed: false },
-  ];
+  const [intention, setIntention] = useState({
+    id: 1,
+    label: items?.intention,
+  });
 
   const fetchImage = async (itemId) => {
     if (!itemId) return;
@@ -101,13 +104,12 @@ const EditModal = ({
     contactNumber: items?.contactNumber,
     equipment: items?.equipment,
     qty: items?.qty,
-    purpose: items?.purpose,
-    condition: condition?.label,
     role: role?.label,
     location: location?.label,
     dateReturn: startDate.toISOString(),
     isBorrowed: isBorrowed?.isBorrowed,
     specificLocation: items?.specificLocation,
+    intention: intention.label,
     image: items?.image,
     _id: items?._id,
   };
@@ -126,7 +128,6 @@ const EditModal = ({
       .required(),
     equipment: Yup.string().required("field must not be empty"),
     qty: Yup.number().required("field must not be empty"),
-    purpose: Yup.string().required("field must not be empty"),
   });
 
   return (
@@ -172,17 +173,11 @@ const EditModal = ({
                 />
               </div>
               <div className="flex items-center space-x-2">
-                <AppFormField
-                  name="purpose"
-                  placeholder="Purpose"
-                  label="Purpose"
-                  fieldClass="text-black bg-gray-50"
-                />
                 <SelectForm
-                  select={condition}
-                  label="Condition"
-                  selectItems={conditionItems}
-                  onSetSelect={setCondition}
+                  label="Intention"
+                  select={intention}
+                  selectItems={intentionItems}
+                  onSetSelect={setIntention}
                 />
               </div>
 
@@ -242,12 +237,12 @@ const EditModal = ({
               </div>
 
               {/* image */}
-              <UploadImage
+              {/* <UploadImage
                 type="edit"
                 prevImage={items?.image}
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}
-              />
+              /> */}
             </div>
 
             {/* buttons */}

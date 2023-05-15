@@ -30,6 +30,9 @@ const NewInventoryModal = ({
   setClassification,
   amount,
   setAmount,
+  condition,
+  setCondition,
+  conditionItems,
 }) => {
   const initialValues = {
     propertyNo: "",
@@ -121,12 +124,20 @@ const NewInventoryModal = ({
                 setClassification={setClassification}
               />
 
-              <AppFormField
-                name="unit"
-                placeholder="Unit(optional)"
-                label="Unit"
-                fieldClass="text-black bg-gray-50"
-              />
+              <div className="flex flex-row flex-items-center space-x-2">
+                <SelectForm
+                  label="Condition"
+                  select={condition}
+                  selectItems={conditionItems}
+                  onSetSelect={setCondition}
+                />
+                <AppFormField
+                  name="unit"
+                  placeholder="Unit(optional)"
+                  label="Unit"
+                  fieldClass="text-black bg-gray-50"
+                />
+              </div>
               {/* purchaseDate*/}
               <div className="flex items-center w-full space-x-2">
                 <DatePickerField

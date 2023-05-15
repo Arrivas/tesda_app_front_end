@@ -11,6 +11,12 @@ import UploadImage from "../forms/UploadImage";
 import links from "../../config/links";
 import axios from "axios";
 import ClassficationField from "../forms/ClassficationField";
+import SelectForm from "../forms/SelectForm";
+
+const conditionItems = [
+  { id: 1, label: "Serviceable" },
+  { id: 2, label: "Unserviceable" },
+];
 
 const EditModal = ({
   showEdit,
@@ -26,6 +32,7 @@ const EditModal = ({
   const [classification, setClassification] = useState(
     items?.classification || ""
   );
+  const [condition, setCondition] = useState({ id: 1, label: items.condition });
 
   const initialValues = {
     propertyNo: items?.propertyNo,
@@ -37,6 +44,7 @@ const EditModal = ({
     unit: items?.unit,
     amount,
     classification,
+    condition: condition?.label,
     _id: items?._id,
   };
 
@@ -143,6 +151,13 @@ const EditModal = ({
                 setAmount={setAmount}
                 classification={classification}
                 setClassification={setClassification}
+              />
+
+              <SelectForm
+                label="Condition"
+                select={condition}
+                selectItems={conditionItems}
+                onSetSelect={setCondition}
               />
               <AppFormField
                 name="unit"

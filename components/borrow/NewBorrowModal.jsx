@@ -9,6 +9,9 @@ import SelectForm from "../forms/SelectForm";
 import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
 import UploadImage from "../forms/UploadImage";
+import axios from "axios";
+import links from "../../config/links";
+import DebounceInput from "./DebounceInput";
 
 const NewBorrowModal = ({
   showNew,
@@ -22,25 +25,12 @@ const NewBorrowModal = ({
   setLocation,
   role,
   setRole,
-  condition,
-  setCondition,
-  conditionItems,
   roleItems,
   locationItems,
+  intention,
+  setIntention,
+  intentionItems,
 }) => {
-  const initialValues = {
-    propertyNo: "",
-    fullName: "",
-    address: "",
-    contactNumber: "",
-    equipment: "",
-    qty: 1,
-
-    purpose: "",
-    specificLocation: "",
-    isBorrowed: true,
-  };
-
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -55,14 +45,32 @@ const NewBorrowModal = ({
       .required(),
     equipment: Yup.string().required("field must not be empty"),
     qty: Yup.number().required("field must not be empty"),
-    specificLocation: Yup.string().required("field must not be empty"),
-    purpose: Yup.string().required("field must not be empty"),
+    specificLocation: Yup.string(),
   });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedResult, setSelectedResult] = useState(null);
+
+  const initialValues = {
+    propertyNo: selectedResult?.propertyNo || "",
+    fullName: "",
+    address: "",
+    contactNumber: "",
+    equipment: selectedResult?.equipment || "",
+    qty: 1,
+    purpose: "",
+    specificLocation: "",
+    isBorrowed: true,
+  };
 
   return (
     <Dialog
       open={showNew}
-      onClose={() => setShowNew(false)}
+      onClose={() => {
+        setSelectedResult(null);
+        setSearchResults([]);
+        setShowNew(false);
+      }}
       className="relative z-50"
     >
       <div className="fixed inset-0 bg-black/80" aria-hidden="true" />
@@ -70,7 +78,13 @@ const NewBorrowModal = ({
         <Dialog.Panel className="w-full max-w-3xl  rounded shadow-lg bg-white p-4">
           <div className="flex justify-between items-center">
             <Dialog.Title className="font-semibold px-3">Add New</Dialog.Title>
-            <button onClick={() => setShowNew(false)}>
+            <button
+              onClick={() => {
+                setSelectedResult(null);
+                setSearchResults([]);
+                setShowNew(false);
+              }}
+            >
               <XMarkIcon className="w-5 h-5 text-gray-400 " />
             </button>
           </div>
@@ -82,12 +96,20 @@ const NewBorrowModal = ({
           >
             <div className="space-y-2 py-2 overflow-y-auto px-3 h-[350px]">
               <div className="flex items-center space-x-2">
-                <AppFormField
+                <DebounceInput
+                  selectedResult={selectedResult}
+                  setSelectedResult={setSelectedResult}
+                  searchResults={searchResults}
+                  searchTerm={searchTerm}
+                  setSearchResults={setSearchResults}
+                  setSearchTerm={setSearchTerm}
+                />
+                {/* <AppFormField
                   name="propertyNo"
                   placeholder="Property Number"
                   label="Property Number"
                   fieldClass="text-black bg-gray-50"
-                />
+                /> */}
               </div>
 
               <div className="flex items-center space-x-2">
@@ -106,17 +128,17 @@ const NewBorrowModal = ({
               </div>
 
               <div className="flex items-center space-x-2">
-                <AppFormField
+                {/* <AppFormField
                   name="purpose"
                   placeholder="Purpose"
                   label="Purpose"
                   fieldClass="text-black bg-gray-50"
-                />
+                /> */}
                 <SelectForm
-                  select={condition}
-                  label="Condition"
-                  selectItems={conditionItems}
-                  onSetSelect={setCondition}
+                  label="Intention"
+                  select={intention}
+                  selectItems={intentionItems}
+                  onSetSelect={setIntention}
                 />
               </div>
 
@@ -133,12 +155,14 @@ const NewBorrowModal = ({
                   selectItems={locationItems}
                   onSetSelect={setLocation}
                 />
-                <AppFormField
-                  name="specificLocation"
-                  placeholder="Location(specific)"
-                  label="Location(specific)"
-                  fieldClass="text-black bg-gray-50"
-                />
+                {location.label === "Outside" && (
+                  <AppFormField
+                    name="specificLocation"
+                    placeholder="Location(specific)"
+                    label="Location(specific)"
+                    fieldClass="text-black bg-gray-50"
+                  />
+                )}
               </div>
 
               <AppFormField
@@ -178,10 +202,10 @@ const NewBorrowModal = ({
                 </div>
               </div>
               {/* image */}
-              <UploadImage
+              {/* <UploadImage
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}
-              />
+              /> */}
             </div>
             {/* buttons */}
             <div className="flex items-center space-x-2">

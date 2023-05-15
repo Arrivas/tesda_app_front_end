@@ -180,6 +180,7 @@ const Header = ({ showNav, setShowNav, innerWidth }) => {
               {!showNav && innerWidth >= 640 && (
                 <nav className="py-2">
                   <button
+                    title="expand"
                     className="block w-full"
                     onClick={() => {
                       setShowNav(!showNav);

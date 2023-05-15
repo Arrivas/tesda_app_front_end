@@ -7,8 +7,8 @@ import { PrinterIcon } from "@heroicons/react/24/solid";
 
 const activeFilterItems = [
   { id: 1, label: "All", value: "all" },
-  { id: 2, label: "Serviceable", value: "serviceable" },
-  { id: 3, label: "Unerviceable", value: "unserviceable" },
+  { id: 2, label: "Borrow", value: "borrow" },
+  { id: 3, label: "Return", value: "return" },
 ];
 
 const BorrowLists = ({
@@ -37,14 +37,11 @@ const BorrowLists = ({
       ? borrowStats
           .filter((item) => item.month === selectedMonth.label)[0]
           ?.objects.filter((item) => {
-            if (
-              activeFilter.value === "serviceable" &&
-              item.condition === "Serviceable"
-            ) {
+            if (activeFilter.value === "borrow" && item.return === "borrowed") {
               return item;
             } else if (
-              activeFilter.value === "unserviceable" &&
-              item.condition === "Unserviceable"
+              activeFilter.value === "return" &&
+              item.return === "returned"
             ) {
               return item;
             } else if (activeFilter.value === "all") {
@@ -75,7 +72,7 @@ const BorrowLists = ({
               }
             </style>
           </head>
-          <h1 style='text-align:center'>${selectedMonth} ${new Date(
+          <h1 style='text-align:center'>${selectedMonth.label} ${new Date(
         yearSelect
       ).getFullYear()} Borrow Report</h1>
           <body>
@@ -85,19 +82,19 @@ const BorrowLists = ({
                   <th>Property No.</th>
                   <th>Equipment</th>
                   <th>Borrower Name</th>
-                  <th>Condition</th>
+                  <th>Intention</th>
                   <th>Location</th>
                 </tr>
               </thead>
               <tbody>
                 ${filteredData
-                  .map(
+                  ?.map(
                     (item) =>
                       `<tr>
                         <td>${item.propertyNo}</td>
                         <td>${item.equipment}</td>
                         <td>${item.borrowerName}</td>
-                        <td>${item.condition}</td>
+                        <td>${item.intention}</td>
                         <td>${item.location}</td>
                       </tr>`
                   )
@@ -160,22 +157,22 @@ const BorrowLists = ({
             <th className="bg-[#f2f2f2] text-left">Property No.</th>
             <th className="bg-[#f2f2f2] text-left">Equipment</th>
             <th className="bg-[#f2f2f2] text-left">Borrower Name</th>
-            <th className="bg-[#f2f2f2] text-left">Condition</th>
+            <th className="bg-[#f2f2f2] text-left">Intention</th>
             <th className="bg-[#f2f2f2] text-left">Location</th>
           </tr>
         </thead>
         <tbody>
           {borrowStats
-            .filter((item) => item.month === selectedMonth.label)[0]
+            ?.filter((item) => item.month === selectedMonth.label)[0]
             ?.objects.filter((item) => {
               if (
-                activeFilter.value === "serviceable" &&
-                item.condition === "Serviceable"
+                activeFilter.value === "borrow" &&
+                item.return === "borrowed"
               ) {
                 return item;
               } else if (
-                activeFilter.value === "unserviceable" &&
-                item.condition === "Unserviceable"
+                activeFilter.value === "return" &&
+                item.return === "retunred"
               ) {
                 return item;
               } else if (activeFilter.value === "all") {
@@ -195,7 +192,7 @@ const BorrowLists = ({
                   {item.borrowerName}
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
-                  {item.condition}
+                  {item.intention}
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
                   {item.location}
@@ -204,7 +201,7 @@ const BorrowLists = ({
             ))}
         </tbody>
       </table>
-      {borrowStats.filter((item) => item.month === selectedMonth.label)[0]
+      {borrowStats?.filter((item) => item.month === selectedMonth.label)[0]
         ?.objects.length === 0 && (
         <div className="flex justify-center items-center w-full h-full ">
           <h2 className="font-semibold text-gray-400">no items to show</h2>
