@@ -26,6 +26,7 @@ const TableComponentInventory = ({
   setSelectedImage,
 }) => {
   const [showSpec, setShowSpec] = useState(false);
+
   const theadItems = [
     {
       id: 1,

@@ -12,6 +12,9 @@ import NewInventoryModal from "../inventory/NewInventoryModal";
 import { usePathname } from "next/navigation";
 
 const TableMenu = ({
+  unit,
+  setUnit,
+  unitItems,
   classification,
   setClassification,
   amount,
@@ -148,6 +151,9 @@ const TableMenu = ({
         />
       ) : (
         <NewInventoryModal
+          unitItems={unitItems}
+          unit={unit}
+          setUnit={setUnit}
           condition={condition}
           setCondition={setCondition}
           conditionItems={conditionItems}

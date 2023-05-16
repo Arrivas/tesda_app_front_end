@@ -16,6 +16,13 @@ const conditionItems = [
   { id: 2, label: "Unserviceable" },
 ];
 
+const unitItems = [
+  { id: 1, label: "pc/s" },
+  { id: 2, label: "kg" },
+  { id: 3, label: "meter" },
+  { id: 4, label: "unit" },
+];
+
 const Inventory = () => {
   const user = useSelector((state) => state.user);
   const [inventory, setInventory] = useState([]);
@@ -45,6 +52,7 @@ const Inventory = () => {
   const [classification, setClassification] = useState("Semi-Expendable");
   const [amount, setAmount] = useState(0);
   const [condition, setCondition] = useState({ id: 1, label: "Serviceable" });
+  const [unit, setUnit] = useState(unitItems[0]);
 
   const fetchInventory = async () => {
     try {
@@ -103,6 +111,7 @@ const Inventory = () => {
     values.amount = Number(amount);
     values.classification = classification;
     values.condition = condition.label;
+    values.unit = unit.label;
     await axios
       .post(`${links.default}/inventory/new`, values)
       .then((res) => {
@@ -156,6 +165,7 @@ const Inventory = () => {
             classification: values.classification,
             _id: values._id,
             condition: values.condition,
+            unit: values.unit,
           }
         : item
     );
@@ -244,6 +254,9 @@ const Inventory = () => {
         </div>
 
         <TableMenu
+          unitItems={unitItems}
+          unit={unit}
+          setUnit={setUnit}
           amount={amount}
           setAmount={setAmount}
           classification={classification}

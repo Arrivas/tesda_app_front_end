@@ -18,6 +18,13 @@ const conditionItems = [
   { id: 2, label: "Unserviceable" },
 ];
 
+const unitItems = [
+  { id: 1, label: "pc/s" },
+  { id: 2, label: "kg" },
+  { id: 3, label: "meter" },
+  { id: 4, label: "unit" },
+];
+
 const EditModal = ({
   showEdit,
   setShowEdit,
@@ -33,6 +40,7 @@ const EditModal = ({
     items?.classification || ""
   );
   const [condition, setCondition] = useState({ id: 1, label: items.condition });
+  const [unit, setUnit] = useState({ id: 1, label: items.unit });
 
   const initialValues = {
     propertyNo: items?.propertyNo,
@@ -41,7 +49,7 @@ const EditModal = ({
     specification: items?.specification,
     receiveBy: items?.receiveBy,
     purchaseDate: startDate.toISOString(),
-    unit: items?.unit,
+    unit: unit.label,
     amount,
     classification,
     condition: condition?.label,
@@ -153,19 +161,20 @@ const EditModal = ({
                 setClassification={setClassification}
               />
 
-              <SelectForm
-                label="Condition"
-                select={condition}
-                selectItems={conditionItems}
-                onSetSelect={setCondition}
-              />
-              <AppFormField
-                name="unit"
-                placeholder="Unit(optional)"
-                label="Unit"
-                fieldClass="text-black bg-gray-50"
-              />
-
+              <div className="flex items-center w-full space-x-2">
+                <SelectForm
+                  label="Condition"
+                  select={condition}
+                  selectItems={conditionItems}
+                  onSetSelect={setCondition}
+                />
+                <SelectForm
+                  selectItems={unitItems}
+                  select={unit}
+                  onSetSelect={setUnit}
+                  label="Unit"
+                />
+              </div>
               <div className="flex items-center w-full space-x-2">
                 <DatePickerField
                   label="Purchase Date"

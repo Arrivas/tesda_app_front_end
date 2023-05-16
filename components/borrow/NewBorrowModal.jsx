@@ -8,9 +8,6 @@ import * as Yup from "yup";
 import SelectForm from "../forms/SelectForm";
 import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
-import UploadImage from "../forms/UploadImage";
-import axios from "axios";
-import links from "../../config/links";
 import DebounceInput from "./DebounceInput";
 
 const NewBorrowModal = ({
@@ -19,8 +16,6 @@ const NewBorrowModal = ({
   onNewSubmit,
   startDate,
   setStartDate,
-  selectedImage,
-  setSelectedImage,
   location,
   setLocation,
   role,
@@ -104,12 +99,6 @@ const NewBorrowModal = ({
                   setSearchResults={setSearchResults}
                   setSearchTerm={setSearchTerm}
                 />
-                {/* <AppFormField
-                  name="propertyNo"
-                  placeholder="Property Number"
-                  label="Property Number"
-                  fieldClass="text-black bg-gray-50"
-                /> */}
               </div>
 
               <div className="flex items-center space-x-2">

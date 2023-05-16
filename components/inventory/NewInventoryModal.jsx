@@ -33,6 +33,9 @@ const NewInventoryModal = ({
   condition,
   setCondition,
   conditionItems,
+  unit,
+  setUnit,
+  unitItems,
 }) => {
   const initialValues = {
     propertyNo: "",
@@ -40,7 +43,6 @@ const NewInventoryModal = ({
     qty: 1,
     specification: "",
     receiveBy: "",
-    unit: "",
   };
 
   const validationSchema = Yup.object({
@@ -51,7 +53,6 @@ const NewInventoryModal = ({
       .required("field must not be empty"),
     specification: Yup.string(),
     receiveBy: Yup.string().required("field must not be empty"),
-    unit: Yup.string(),
   });
 
   return (
@@ -131,11 +132,11 @@ const NewInventoryModal = ({
                   selectItems={conditionItems}
                   onSetSelect={setCondition}
                 />
-                <AppFormField
-                  name="unit"
-                  placeholder="Unit(optional)"
+                <SelectForm
+                  selectItems={unitItems}
+                  select={unit}
+                  onSetSelect={setUnit}
                   label="Unit"
-                  fieldClass="text-black bg-gray-50"
                 />
               </div>
               {/* purchaseDate*/}
