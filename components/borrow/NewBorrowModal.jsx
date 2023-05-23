@@ -72,7 +72,9 @@ const NewBorrowModal = ({
       <div className="fixed inset-0 flex items-center justify-center ">
         <Dialog.Panel className="w-full max-w-3xl  rounded shadow-lg bg-white p-4">
           <div className="flex justify-between items-center">
-            <Dialog.Title className="font-semibold px-3">Add New</Dialog.Title>
+            <Dialog.Title className="font-semibold px-3">
+              Add New Borrow
+            </Dialog.Title>
             <button
               onClick={() => {
                 setSelectedResult(null);
