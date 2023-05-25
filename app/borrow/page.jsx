@@ -30,6 +30,12 @@ const intentionItems = [
   { id: 5, label: "Office Staff purposes" },
 ];
 
+const tabItems = [
+  { id: 1, label: "Borrow" },
+  { id: 2, label: "Return" },
+  { id: 3, label: "Pastdue" },
+];
+
 const Home = () => {
   const user = useSelector((state) => state.user);
   const [borrow, setBorrow] = useState([]);
@@ -53,8 +59,8 @@ const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [location, setLocation] = useState({ id: 1, label: "Inside" });
   const [role, setRole] = useState({ id: 1, label: "Trainee" });
-
   const [intention, setIntention] = useState(intentionItems[0]);
+  const [activeTab, setActiveTab] = useState("Borrow");
 
   const fetchBorrow = async () => {
     try {
@@ -77,15 +83,26 @@ const Home = () => {
     activeTableHeader.sort,
     activeTableHeader.active
   );
+  const isDue = (date) => (new Date(`${date}`) < new Date() ? true : false);
+  const conditionedBorrow =
+    activeTab === "Borrow"
+      ? sortedBorrow.filter(
+          (item) => item.isBorrowed === true && !isDue(item.dateReturn)
+        )
+      : activeTab === "Return"
+      ? sortedBorrow.filter((item) => item.isBorrowed === false)
+      : sortedBorrow.filter(
+          (item) => isDue(item.dateReturn) && item.isBorrowed === true
+        );
 
   const indexOfLastItem = currentPage * 20;
   const indexOfFirstItem = indexOfLastItem - 20;
   const paginatedData =
     search && searchFilter.name !== ""
-      ? sortedBorrow?.filter((item) =>
+      ? conditionedBorrow?.filter((item) =>
           item[searchFilter.name].toLowerCase().startsWith(search)
         )
-      : sortedBorrow?.slice(indexOfFirstItem, indexOfLastItem);
+      : conditionedBorrow?.slice(indexOfFirstItem, indexOfLastItem);
 
   const pageNumbers = paginate(20, borrow?.length);
 
@@ -222,7 +239,19 @@ const Home = () => {
   return (
     <>
       <div className="p-5 h-screen flex flex-col">
-        <h1 className="font-semibold text-4xl text-gray-800">Borrow</h1>
+        <div className="flex-row space-x-4">
+          {tabItems.map((item) => (
+            <button key={item.id} onClick={() => setActiveTab(item.label)}>
+              <h1
+                className={`font-semibold text-4xl ${
+                  item.label === activeTab ? "text-gray-800" : "text-gray-100"
+                }`}
+              >
+                {item.label}
+              </h1>
+            </button>
+          ))}
+        </div>
         {/* table menu */}
 
         <TableMenu

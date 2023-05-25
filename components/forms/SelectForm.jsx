@@ -10,7 +10,16 @@ const SelectForm = ({
   type = "default",
 }) => {
   return (
-    <div className="w-full">
+    <div
+      className="w-full"
+      title={`${
+        select.label === "Inside"
+          ? "On-site"
+          : select.label === "Outside"
+          ? "Off-site"
+          : ""
+      }`}
+    >
       {type === "default" ? (
         <>
           {label && (

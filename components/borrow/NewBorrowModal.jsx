@@ -119,12 +119,6 @@ const NewBorrowModal = ({
               </div>
 
               <div className="flex items-center space-x-2">
-                {/* <AppFormField
-                  name="purpose"
-                  placeholder="Purpose"
-                  label="Purpose"
-                  fieldClass="text-black bg-gray-50"
-                /> */}
                 <SelectForm
                   label="Intention"
                   select={intention}

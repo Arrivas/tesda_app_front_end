@@ -66,7 +66,8 @@ const TableComponentInventory = ({
     { id: 8, label: "Unit" },
     { id: 9, label: "Amount" },
     { id: 10, label: "Classification" },
-    { id: 11, label: "Purchase Date" },
+    { id: 11, label: "Condition" },
+    { id: 12, label: "Purchase Date" },
   ];
   return (
     <>
@@ -138,6 +139,7 @@ const TableComponentInventory = ({
                 </td>
                 <td className="min-w-[100px]">{item.amount}</td>
                 <td className="min-w-[100px]">{item.classification}</td>
+                <td className="min-w-[100px]">{item.condition}</td>
                 <td className="min-w-[120px] md:min-w-auto md:w-100%">
                   <span className="text-gray-500 text-xs">
                     {moment(new Date(item.purchaseDate)).format(
