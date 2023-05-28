@@ -255,6 +255,7 @@ const Home = () => {
         {/* table menu */}
 
         <TableMenu
+          activeTab={activeTab}
           intentionItems={intentionItems}
           setIntention={setIntention}
           intention={intention}
@@ -285,6 +286,7 @@ const Home = () => {
         />
 
         <TableComponent
+          activeTab={activeTab}
           setBorrow={setBorrow}
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}

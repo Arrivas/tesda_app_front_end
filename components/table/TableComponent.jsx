@@ -22,6 +22,7 @@ const TableComponent = ({
   selectedImage,
   setSelectedImage,
   setBorrow,
+  activeTab,
 }) => {
   const theadItems = [
     {
@@ -62,15 +63,19 @@ const TableComponent = ({
     { id: 7, label: "Role" },
     { id: 8, label: "Location" },
     { id: 9, label: "Status" },
-    { id: 10, label: "Timestamp" },
-    { id: 11, label: "Return Date" },
+    { id: 10, label: "Condition" },
+    { id: 11, label: "Timestamp" },
+    { id: 12, label: "Return Date" },
   ];
+  const newTheadItems = theadItems.filter(
+    (item) => item.id !== 10 || activeTab === "Return"
+  );
   const isDue = (date) => (new Date(`${date}`) < new Date() ? true : false);
   return (
     <div className="min-w-[300px] h-full overflow-y-scroll">
       <table className="table-fixed break-words h-screen md:h-auto w-full caret-transparent">
         <THeadComponent
-          theadItems={theadItems}
+          theadItems={newTheadItems}
           activeTableHeader={activeTableHeader}
           setActiveTableHeader={setActiveTableHeader}
         />
@@ -154,6 +159,9 @@ const TableComponent = ({
                 </span>
               </td>
 
+              {activeTab === "Return" ? (
+                <td className="md:min-w-auto md:w-100%">{item.condition}</td>
+              ) : null}
               <td className="min-w-[120px] md:min-w-auto md:w-100% ">
                 <span className="text-gray-500 text-xs">
                   {moment(new Date(item.createdAt)).format(

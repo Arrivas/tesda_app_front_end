@@ -51,6 +51,7 @@ const TableMenu = ({
   setIntention,
   intentionItems,
   type = "default",
+  activeTab,
 }) => {
   const pathName = usePathname();
   return (
@@ -101,16 +102,21 @@ const TableMenu = ({
               </span>
             </button>
           )}
-          {selectedItems?.length > 0 && selectedItems?.length <= 1 && (
-            <>
-              <button
-                onClick={() => setShowEdit(true)}
-                className="flex items-center hover:bg-[#fcdd52] bg-[#fbd325] p-2 px-3 rounded-md space-x-1"
-              >
-                <PencilIcon className="h-4 w-4 text-white" />
-                <span className="text-white font-semibold">edit</span>
-              </button>
-            </>
+          {activeTab === "Borrow" ? (
+            <></>
+          ) : (
+            selectedItems?.length > 0 &&
+            selectedItems?.length <= 1 && (
+              <>
+                <button
+                  onClick={() => setShowEdit(true)}
+                  className="flex items-center hover:bg-[#fcdd52] bg-[#fbd325] p-2 px-3 rounded-md space-x-1"
+                >
+                  <PencilIcon className="h-4 w-4 text-white" />
+                  <span className="text-white font-semibold">edit</span>
+                </button>
+              </>
+            )
           )}
           {selectedItems?.length < 1 && (
             <button
