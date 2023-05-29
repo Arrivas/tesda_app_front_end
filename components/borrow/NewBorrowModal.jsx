@@ -52,7 +52,7 @@ const NewBorrowModal = ({
     address: "",
     contactNumber: "",
     equipment: selectedResult?.equipment || "",
-    qty: 1,
+    qty: 0,
     purpose: "",
     specificLocation: "",
     isBorrowed: true,

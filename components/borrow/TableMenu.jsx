@@ -118,20 +118,24 @@ const TableMenu = ({
               </>
             )
           )}
-          {selectedItems?.length < 1 && (
-            <button
-              title={
-                type === "default" ? "add new borrower" : "add new equipments"
-              }
-              onClick={() => {
-                setShowNew(true);
-                if (type !== "default") setAmount(0);
-              }}
-              className="flex items-center hover:bg-[#2c51a0] bg-[#0035A9] p-2 px-3 rounded-md space-x-1"
-            >
-              <PlusIcon className="h-4 w-4 text-white" />
-              <span className="text-white font-semibold">new</span>
-            </button>
+          {activeTab !== "Borrow" ? (
+            <></>
+          ) : (
+            selectedItems?.length < 1 && (
+              <button
+                title={
+                  type === "default" ? "add new borrower" : "add new equipments"
+                }
+                onClick={() => {
+                  setShowNew(true);
+                  if (type !== "default") setAmount(0);
+                }}
+                className="flex items-center hover:bg-[#2c51a0] bg-[#0035A9] p-2 px-3 rounded-md space-x-1"
+              >
+                <PlusIcon className="h-4 w-4 text-white" />
+                <span className="text-white font-semibold">new</span>
+              </button>
+            )
           )}
         </div>
       </div>
