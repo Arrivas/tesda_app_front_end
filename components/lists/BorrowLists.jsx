@@ -84,6 +84,7 @@ const BorrowLists = ({
                   <th>Borrower Name</th>
                   <th>Intention</th>
                   <th>Location</th>
+                  <th>Condition</th>
                 </tr>
               </thead>
               <tbody>
@@ -96,6 +97,7 @@ const BorrowLists = ({
                         <td>${item.borrowerName}</td>
                         <td>${item.intention}</td>
                         <td>${item.location}</td>
+                        <td>${item.condition || "none"}</td>
                       </tr>`
                   )
                   .join("")}
@@ -159,6 +161,7 @@ const BorrowLists = ({
             <th className="bg-[#f2f2f2] text-left">Borrower Name</th>
             <th className="bg-[#f2f2f2] text-left">Intention</th>
             <th className="bg-[#f2f2f2] text-left">Location</th>
+            <th className="bg-[#f2f2f2] text-left">Condition</th>
           </tr>
         </thead>
         <tbody>
@@ -196,6 +199,9 @@ const BorrowLists = ({
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
                   {item.location}
+                </td>
+                <td className="p-[8px] text-left border-b border-[#ddd]">
+                  {item.condition}
                 </td>
               </tr>
             ))}

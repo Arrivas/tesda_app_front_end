@@ -87,6 +87,7 @@ const InventoryLists = ({
             <th>Unit</th>
             <th>Amount</th>
             <th>Classification</th>
+            <th>Condition</th>
               </tr>
             </thead>
               <tbody>
@@ -102,6 +103,7 @@ const InventoryLists = ({
                     <td>${item.unit}</td>
                     <td>${item.amount}</td>
                     <td>${item.classification}</td>
+                    <td>${item.condition}</td>
                       </tr>`
                   )
                   .join("")}
@@ -168,6 +170,7 @@ const InventoryLists = ({
             <th className="bg-[#f2f2f2] text-left">Unit</th>
             <th className="bg-[#f2f2f2] text-left">Amount</th>
             <th className="bg-[#f2f2f2] text-left">Classification</th>
+            <th className="bg-[#f2f2f2] text-left">Condition</th>
           </tr>
         </thead>
         <tbody>
@@ -198,6 +201,9 @@ const InventoryLists = ({
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
                   {item.classification}
+                </td>
+                <td className="p-[8px] text-left border-b border-[#ddd]">
+                  {item.condition}
                 </td>
               </tr>
             ))}

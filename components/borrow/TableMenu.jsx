@@ -118,7 +118,7 @@ const TableMenu = ({
               </>
             )
           )}
-          {activeTab !== "Borrow" ? (
+          {activeTab !== "Borrow" && pathName !== "/inventory" ? (
             <></>
           ) : (
             selectedItems?.length < 1 && (
