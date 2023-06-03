@@ -40,7 +40,7 @@ const NewInventoryModal = ({
   const initialValues = {
     propertyNo: "",
     equipment: "",
-    qty: 1,
+    qty: 0,
     specification: "",
     receiveBy: "",
   };

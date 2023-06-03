@@ -10,6 +10,8 @@ const activeFilterItems = [
   { id: 1, label: "All", value: "all" },
   { id: 2, label: "SSP", value: "ssp" },
   { id: 3, label: "101", value: "101" },
+  { id: 4, label: "Serviceable", value: "Serviceable" },
+  { id: 5, label: "Unserviceable", value: "Unserviceable" },
 ];
 
 const InventoryLists = ({
@@ -41,6 +43,16 @@ const InventoryLists = ({
             if (activeFilter.value === "ssp" && item.type === "ssp") {
               return item;
             } else if (activeFilter.value === "101" && item.type === "101") {
+              return item;
+            } else if (
+              activeFilter.value === "Serviceable" &&
+              item.condition === "Serviceable"
+            ) {
+              return item;
+            } else if (
+              activeFilter.value === "Unserviceable" &&
+              item.condition === "Unserviceable"
+            ) {
               return item;
             } else if (activeFilter.value === "all") {
               return item;
@@ -176,7 +188,26 @@ const InventoryLists = ({
         <tbody>
           {inventoryStats
             ?.filter((item) => item.month === selectedMonth.label)[0]
-            ?.objects?.map((item, index) => (
+            ?.objects.filter((item) => {
+              if (activeFilter.value === "ssp" && item.type === "ssp") {
+                return item;
+              } else if (activeFilter.value === "101" && item.type === "101") {
+                return item;
+              } else if (
+                activeFilter.value === "Serviceable" &&
+                item.condition === "Serviceable"
+              ) {
+                return item;
+              } else if (
+                activeFilter.value === "Unserviceable" &&
+                item.condition === "Unserviceable"
+              ) {
+                return item;
+              } else if (activeFilter.value === "all") {
+                return item;
+              }
+            })
+            ?.map((item, index) => (
               <tr key={index}>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
                   {item.type.toUpperCase()}

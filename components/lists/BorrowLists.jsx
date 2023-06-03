@@ -9,6 +9,8 @@ const activeFilterItems = [
   { id: 1, label: "All", value: "all" },
   { id: 2, label: "Borrow", value: "borrow" },
   { id: 3, label: "Return", value: "return" },
+  { id: 4, label: "Serviceable", value: "Serviceable" },
+  { id: 5, label: "Unserviceable", value: "Unserviceable" },
 ];
 
 const BorrowLists = ({
@@ -44,9 +46,17 @@ const BorrowLists = ({
               item.return === "returned"
             ) {
               return item;
-            } else if (activeFilter.value === "all") {
+            } else if (
+              activeFilter.value === "Serviceable" &&
+              item.condition === "Serviceable"
+            ) {
               return item;
-            }
+            } else if (
+              activeFilter.value === "Unserviceable" &&
+              item.condition === "Unserviceable"
+            ) {
+              return item;
+            } else return item;
           })
       : borrowStats.filter((item) => item.month === selectedMonth.label)[0]
           ?.objects;
@@ -176,6 +186,16 @@ const BorrowLists = ({
               } else if (
                 activeFilter.value === "return" &&
                 item.return === "retunred"
+              ) {
+                return item;
+              } else if (
+                activeFilter.value === "Serviceable" &&
+                item.condition === "Serviceable"
+              ) {
+                return item;
+              } else if (
+                activeFilter.value === "Unserviceable" &&
+                item.condition === "Unserviceable"
               ) {
                 return item;
               } else if (activeFilter.value === "all") {
