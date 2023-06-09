@@ -19,9 +19,6 @@ const conditionItems = [
 const unitItems = [
   { id: 1, label: "pc/s" },
   { id: 2, label: "set/s" },
-  { id: 3, label: "kg" },
-  { id: 4, label: "meter" },
-  { id: 5, label: "unit" },
 ];
 
 const Inventory = () => {
