@@ -22,9 +22,9 @@ const NewBorrowModal = ({
   setRole,
   roleItems,
   locationItems,
-  intention,
-  setIntention,
-  intentionItems,
+  purpose,
+  setPurpose,
+  purposeItems,
 }) => {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -120,10 +120,10 @@ const NewBorrowModal = ({
 
               <div className="flex items-center space-x-2">
                 <SelectForm
-                  label="Intention"
-                  select={intention}
-                  selectItems={intentionItems}
-                  onSetSelect={setIntention}
+                  label="Purpose"
+                  select={purpose}
+                  selectItems={purposeItems}
+                  onSetSelect={setPurpose}
                 />
               </div>
 

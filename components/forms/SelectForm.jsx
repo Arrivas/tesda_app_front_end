@@ -13,11 +13,9 @@ const SelectForm = ({
     <div
       className="w-full"
       title={`${
-        select.label === "Inside"
+        select?.label === "Inside"
           ? "On-site"
-          : select.label === "Outside"
-          ? "Off-site"
-          : ""
+          : select?.label === "Outside" && "Off-site"
       }`}
     >
       {type === "default" ? (
@@ -44,7 +42,7 @@ const SelectForm = ({
                 </span>
               </Listbox.Button>
               <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 ring-black ring-opacity-20 focus:outline-none sm:text-sm">
-                {selectItems.map((item) => (
+                {selectItems?.map((item) => (
                   <Listbox.Option
                     onClick={() => onSetSelect(item)}
                     key={item.id}

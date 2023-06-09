@@ -47,9 +47,9 @@ const TableMenu = ({
   locationItems,
   docType,
   setDocType,
-  intention,
-  setIntention,
-  intentionItems,
+  purpose,
+  setPurpose,
+  purposeItems,
   type = "default",
   activeTab,
 }) => {
@@ -142,9 +142,9 @@ const TableMenu = ({
       {/* modal */}
       {type === "default" ? (
         <NewBorrowModal
-          intention={intention}
-          setIntention={setIntention}
-          intentionItems={intentionItems}
+          purpose={purpose}
+          setPurpose={setPurpose}
+          purposeItems={purposeItems}
           startDate={startDate}
           setStartDate={setStartDate}
           showNew={showNew}

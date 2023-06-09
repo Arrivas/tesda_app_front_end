@@ -18,16 +18,17 @@ const locationItems = [
 
 const roleItems = [
   { id: 1, label: "Trainee" },
-  { id: 2, label: "Trainor" },
+  { id: 2, label: "Trainer" },
   { id: 3, label: "Admin Staff" },
 ];
 
-const intentionItems = [
+const purposeItems = [
   { id: 1, label: "Training" },
   { id: 2, label: "Event" },
   { id: 3, label: "Meeting" },
   { id: 4, label: "Lecture" },
   { id: 5, label: "Office Staff purposes" },
+  { id: 6, label: "Others" },
 ];
 
 const tabItems = [
@@ -59,7 +60,7 @@ const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [location, setLocation] = useState({ id: 1, label: "Inside" });
   const [role, setRole] = useState({ id: 1, label: "Trainee" });
-  const [intention, setIntention] = useState(intentionItems[0]);
+  const [purpose, setPurpose] = useState(purposeItems[0]);
   const [activeTab, setActiveTab] = useState("Borrow");
 
   const fetchBorrow = async () => {
@@ -127,7 +128,7 @@ const Home = () => {
     const dateReturn = startDate.toISOString();
     const data = {
       ...values,
-      intention: intention.label,
+      purpose: purpose.label,
       dateReturn,
       location: location.label,
       role: role.label,
@@ -182,7 +183,7 @@ const Home = () => {
             location: values.location,
             specificLocation: values.specificLocation,
             propertyNo: values.propertyNo,
-            intention: values.intention,
+            purpose: values.purpose,
             qty: values.qty,
             role: values.role,
             image: image ? image : values.image,
@@ -256,9 +257,9 @@ const Home = () => {
 
         <TableMenu
           activeTab={activeTab}
-          intentionItems={intentionItems}
-          setIntention={setIntention}
-          intention={intention}
+          purposeItems={purposeItems}
+          setPurpose={setPurpose}
+          purpose={purpose}
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
           borrow={borrow}

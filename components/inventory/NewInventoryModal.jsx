@@ -144,7 +144,7 @@ const NewInventoryModal = ({
               {/* purchaseDate*/}
               <div className="flex items-center w-full space-x-2">
                 <DatePickerField
-                  label="Purchase Date"
+                  label="Purchased Date"
                   startDate={startDate}
                   setStartDate={setStartDate}
                   type="inventory"
