@@ -86,7 +86,7 @@ const InventoryLists = ({
           </head>
           <h1 style='text-align:center'>${selectedMonth.label} ${new Date(
         yearSelect
-      ).getFullYear()} Borrow Report</h1>
+      ).getFullYear()} ${activeFilter.label} Report</h1>
           <body>
             <table>
             <thead>

@@ -23,7 +23,6 @@ const BorrowLists = ({
 }) => {
   const [yearSelect, setYearSelect] = useState(new Date());
   const [activeFilter, setActiveFilter] = useState(activeFilterItems[0]);
-
   const handleSetYear = async (date) => {
     setYearSelect(date);
     const newDate = new Date(date);
@@ -61,6 +60,7 @@ const BorrowLists = ({
           })
       : borrowStats.filter((item) => item.month === selectedMonth.label)[0]
           ?.objects;
+    console.log(filteredData);
     if (borrowStats.filter((item) => item.month === selectedMonth.label)[0]) {
       const printWindow = window.open("", "Print Table");
       printWindow.document.write(`
@@ -83,9 +83,9 @@ const BorrowLists = ({
               }
             </style>
           </head>
-          <h1 style='text-align:center'>${selectedMonth.label} ${new Date(
+          <h1 style='text-align:center'> ${selectedMonth.label} ${new Date(
         yearSelect
-      ).getFullYear()} Borrow Report</h1>
+      ).getFullYear()} ${activeFilter.label} Report</h1>
           <body>
             <table>
               <thead>
@@ -93,7 +93,7 @@ const BorrowLists = ({
                   <th>Property No.</th>
                   <th>Equipment</th>
                   <th>Borrower Name</th>
-                  <th>Intention</th>
+                  <th>Purpose</th>
                   <th>Location</th>
                   <th>Condition</th>
                 </tr>
@@ -106,7 +106,7 @@ const BorrowLists = ({
                         <td>${item.propertyNo}</td>
                         <td>${item.equipment}</td>
                         <td>${item.borrowerName}</td>
-                        <td>${item.intention}</td>
+                        <td>${item.purpose}</td>
                         <td>${item.location}</td>
                         <td>${item.condition || "none"}</td>
                       </tr>`
@@ -170,7 +170,7 @@ const BorrowLists = ({
             <th className="bg-[#f2f2f2] text-left">Property No.</th>
             <th className="bg-[#f2f2f2] text-left">Equipment</th>
             <th className="bg-[#f2f2f2] text-left">Borrower Name</th>
-            <th className="bg-[#f2f2f2] text-left">Intention</th>
+            <th className="bg-[#f2f2f2] text-left">Purpose</th>
             <th className="bg-[#f2f2f2] text-left">Location</th>
             <th className="bg-[#f2f2f2] text-left">Condition</th>
           </tr>
@@ -216,7 +216,7 @@ const BorrowLists = ({
                   {item.borrowerName}
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
-                  {item.intention}
+                  {item.purpose}
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
                   {item.location}

@@ -28,7 +28,7 @@ const borrowedItems = [
   { id: 2, label: "returned", isBorrowed: false },
 ];
 
-const intentionItems = [
+const purposeItems = [
   { id: 1, label: "Training" },
   { id: 2, label: "Event" },
   { id: 3, label: "Meeting" },
@@ -57,9 +57,9 @@ const EditModal = ({
   const [role, setRole] = useState({ id: 1, label: items.role });
 
   const [startDate, setStartDate] = useState(new Date(items?.dateReturn));
-  const [intention, setIntention] = useState({
+  const [purpose, setPurpose] = useState({
     id: 1,
-    label: items?.intention,
+    label: items?.purpose,
   });
 
   const fetchImage = async (itemId) => {
@@ -109,7 +109,7 @@ const EditModal = ({
     dateReturn: startDate.toISOString(),
     isBorrowed: isBorrowed?.isBorrowed,
     specificLocation: items?.specificLocation,
-    intention: intention.label,
+    purpose: purpose.label,
     image: items?.image,
     _id: items?._id,
   };
@@ -174,10 +174,10 @@ const EditModal = ({
               </div>
               <div className="flex items-center space-x-2">
                 <SelectForm
-                  label="Intention"
-                  select={intention}
-                  selectItems={intentionItems}
-                  onSetSelect={setIntention}
+                  label="Purpose"
+                  select={purpose}
+                  selectItems={purposeItems}
+                  onSetSelect={setPurpose}
                 />
               </div>
 

@@ -11,7 +11,7 @@ import InventoryLists from "../../components/lists/InventoryLists";
 import RadioButtonGroup from "../../components/forms/RadioButtonGroup";
 
 const tabItems = [
-  { id: 1, label: "BORROWER" },
+  { id: 1, label: "BORROW" },
   { id: 2, label: "INVENTORY" },
 ];
 
@@ -34,7 +34,7 @@ const page = () => {
   const user = useSelector((state) => state.user);
   const [borrowStats, setBorrowStats] = useState([]);
   const [inventoryStats, setInventoryStats] = useState([]);
-  const [selectedTab, setSelectedTab] = useState("BORROWER");
+  const [selectedTab, setSelectedTab] = useState("BORROW");
   const [selectedMonth, setSelectedMonth] = useState({
     id: 999,
     label: activeMonthItems[new Date().getMonth()].label,
@@ -85,7 +85,7 @@ const page = () => {
               key={item.id}
               onClick={() => {
                 setSelectedTab(
-                  selectedTab === "BORROWER" ? "INVENTORY" : "BORROWER"
+                  selectedTab === "BORROW" ? "INVENTORY" : "BORROW"
                 );
               }}
             >
@@ -107,7 +107,7 @@ const page = () => {
 
       <hr className="bg-black h-[1px] w-full my-2" />
 
-      {selectedRadioOption === "Lists" && selectedTab === "BORROWER" ? (
+      {selectedRadioOption === "Lists" && selectedTab === "BORROW" ? (
         <BorrowLists
           borrowStats={borrowStats}
           activeMonthItems={activeMonthItems}
@@ -123,7 +123,7 @@ const page = () => {
           setSelectedMonth={setSelectedMonth}
           setInventoryStats={setInventoryStats}
         />
-      ) : selectedRadioOption === "Graphs" && selectedTab === "BORROWER" ? (
+      ) : selectedRadioOption === "Graphs" && selectedTab === "BORROW" ? (
         <BorrowChart
           borrowStats={borrowStats}
           setBorrowStats={setBorrowStats}
