@@ -60,7 +60,7 @@ const EditModal = ({
     propertyNo: Yup.string().required("field must not be empty"),
     equipment: Yup.string().required("field must not be empty"),
     qty: Yup.number().required("field must not be empty"),
-    specification: Yup.string().required("field must not be empty"),
+    specification: Yup.string(),
     receiveBy: Yup.string().required("field must not be empty"),
   });
 

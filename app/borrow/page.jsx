@@ -100,14 +100,18 @@ const Home = () => {
   const indexOfFirstItem = indexOfLastItem - 20;
   const paginatedData =
     search && searchFilter.name !== ""
-      ? conditionedBorrow?.filter((item) =>
-          item[searchFilter.name].toLowerCase().startsWith(search)
-        )
+      ? conditionedBorrow
+          ?.filter((item) => {
+            const searchTerm = search.toLowerCase();
+            const itemValue = item[searchFilter.name]?.toLowerCase();
+            return itemValue.toLowerCase().includes(searchTerm);
+          })
+          .slice(indexOfFirstItem, indexOfLastItem)
       : conditionedBorrow?.slice(indexOfFirstItem, indexOfLastItem);
 
   const pageNumbers = paginate(20, borrow?.length);
 
-  const onNewSubmit = async (values) => {
+  const onNewSubmit = async (values, { resetForm }) => {
     const formData = new FormData();
     formData.append("image", selectedImage);
     const imagePromise = selectedImage
@@ -140,6 +144,10 @@ const Home = () => {
       setShowNew(false);
       setBorrow((prevState) => [...prevState, res.data]);
       setSelectedImage(null);
+      resetForm();
+      setLocation(location[0]);
+      setRole(role[0]);
+      setPurpose(purpose[0]);
       toast.success("added successfully");
     } catch (err) {
       toast.error("failed, something went wrong");

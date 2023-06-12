@@ -73,7 +73,7 @@ const Inventory = () => {
   const paginatedData =
     search && searchFilter.name !== ""
       ? sortedInventory?.filter((item) =>
-          item[searchFilter.name].toLowerCase().startsWith(search)
+          item[searchFilter.name].toLowerCase().includes(search)
         )
       : selectedTab === "SSP"
       ? sortedInventory

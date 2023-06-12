@@ -39,28 +39,21 @@ const BorrowLists = ({
       ? borrowStats
           .filter((item) => item.month === selectedMonth.label)[0]
           ?.objects.filter((item) => {
-            if (activeFilter.value === "borrow" && item.return === "borrowed") {
-              return item;
-            } else if (
-              activeFilter.value === "return" &&
-              item.return === "returned"
+            if (
+              (activeFilter.value === "borrow" && item.return === "borrowed") ||
+              (activeFilter.value === "return" && item.return === "returned") ||
+              (activeFilter.value === "Serviceable" &&
+                item.condition === "Serviceable") ||
+              (activeFilter.value === "Unserviceable" &&
+                item.condition === "Unserviceable")
             ) {
               return item;
-            } else if (
-              activeFilter.value === "Serviceable" &&
-              item.condition === "Serviceable"
-            ) {
-              return item;
-            } else if (
-              activeFilter.value === "Unserviceable" &&
-              item.condition === "Unserviceable"
-            ) {
-              return item;
-            } else return item;
+            }
+            return false;
           })
       : borrowStats.filter((item) => item.month === selectedMonth.label)[0]
           ?.objects;
-    console.log(filteredData);
+
     if (borrowStats.filter((item) => item.month === selectedMonth.label)[0]) {
       const printWindow = window.open("", "Print Table");
       printWindow.document.write(`
@@ -96,6 +89,7 @@ const BorrowLists = ({
                   <th>Purpose</th>
                   <th>Location</th>
                   <th>Condition</th>
+                  <th>Return</th>
                 </tr>
               </thead>
               <tbody>
@@ -109,6 +103,7 @@ const BorrowLists = ({
                         <td>${item.purpose}</td>
                         <td>${item.location}</td>
                         <td>${item.condition || "none"}</td>
+                        <td>${item.return}</td>
                       </tr>`
                   )
                   .join("")}
@@ -173,6 +168,7 @@ const BorrowLists = ({
             <th className="bg-[#f2f2f2] text-left">Purpose</th>
             <th className="bg-[#f2f2f2] text-left">Location</th>
             <th className="bg-[#f2f2f2] text-left">Condition</th>
+            <th className="bg-[#f2f2f2] text-left">Return</th>
           </tr>
         </thead>
         <tbody>
@@ -180,26 +176,16 @@ const BorrowLists = ({
             ?.filter((item) => item.month === selectedMonth.label)[0]
             ?.objects.filter((item) => {
               if (
-                activeFilter.value === "borrow" &&
-                item.return === "borrowed"
+                (activeFilter.value === "borrow" &&
+                  item.return === "borrowed") ||
+                (activeFilter.value === "return" &&
+                  item.return === "returned") ||
+                (activeFilter.value === "Serviceable" &&
+                  item.condition === "Serviceable") ||
+                (activeFilter.value === "Unserviceable" &&
+                  item.condition === "Unserviceable") ||
+                activeFilter.value === "all"
               ) {
-                return item;
-              } else if (
-                activeFilter.value === "return" &&
-                item.return === "retunred"
-              ) {
-                return item;
-              } else if (
-                activeFilter.value === "Serviceable" &&
-                item.condition === "Serviceable"
-              ) {
-                return item;
-              } else if (
-                activeFilter.value === "Unserviceable" &&
-                item.condition === "Unserviceable"
-              ) {
-                return item;
-              } else if (activeFilter.value === "all") {
                 return item;
               }
             })
@@ -223,6 +209,9 @@ const BorrowLists = ({
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
                   {item.condition}
+                </td>
+                <td className="p-[8px] text-left border-b border-[#ddd]">
+                  {item.return}
                 </td>
               </tr>
             ))}
