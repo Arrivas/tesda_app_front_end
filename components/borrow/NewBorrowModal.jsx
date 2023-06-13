@@ -140,7 +140,7 @@ const NewBorrowModal = ({
                   selectItems={locationItems}
                   onSetSelect={setLocation}
                 />
-                {location.label === "Outside" && (
+                {location?.label === "Outside" && (
                   <AppFormField
                     name="specificLocation"
                     placeholder="Location(specific)"
