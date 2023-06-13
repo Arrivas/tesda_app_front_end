@@ -48,7 +48,7 @@ const BorrowLists = ({
                 item.condition === "Unserviceable")
             ) {
               return item;
-            }
+            } else if (activeFilter.value === "all") return item;
             return false;
           })
       : borrowStats.filter((item) => item.month === selectedMonth.label)[0]
@@ -183,11 +183,10 @@ const BorrowLists = ({
                 (activeFilter.value === "Serviceable" &&
                   item.condition === "Serviceable") ||
                 (activeFilter.value === "Unserviceable" &&
-                  item.condition === "Unserviceable") ||
-                activeFilter.value === "all"
+                  item.condition === "Unserviceable")
               ) {
                 return item;
-              }
+              } else if (activeFilter.value === "all") return item;
             })
 
             ?.map((item, index) => (
@@ -211,7 +210,7 @@ const BorrowLists = ({
                   {item.condition}
                 </td>
                 <td className="p-[8px] text-left border-b border-[#ddd]">
-                  {item.return}
+                  {item.return === "borrowed" ? "unreturn" : "return"}
                 </td>
               </tr>
             ))}
