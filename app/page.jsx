@@ -31,7 +31,7 @@ const page = () => {
     <>
       {user?.username && (
         <>
-          {pastDues?.length !== 0 && (
+          {pastDues?.length !== 0 ? (
             <>
               <div className="p-5">
                 <h1 className="font-bold text-2xl">PAST DUE/S!</h1>
@@ -92,6 +92,8 @@ const page = () => {
                 </div>
               </div>
             </>
+          ) : (
+            <span className="text-gray-200 p-5">no past dues yet</span>
           )}
         </>
       )}

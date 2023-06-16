@@ -44,12 +44,12 @@ const DebounceInput = ({
   return (
     <div className="relative">
       <span className="px-3 font-semibold bg-white text-xs w-full self-start">
-        Property no.
+        Equipment
       </span>
-      <Combobox value={selectedResult?.propertyNo} onChange={setSelectedResult}>
+      <Combobox value={selectedResult?.equipment} onChange={setSelectedResult}>
         <div className="w-full relative flex-1 flex items-center p-[1px] justify-center text-start border border-gray-400 rounded-md">
           <Combobox.Input
-            placeholder="Property no."
+            placeholder="Equipment"
             className="w-full border-none p-[12px] pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
             onChange={handleInputChange}
           />
@@ -66,7 +66,7 @@ const DebounceInput = ({
               value={item}
             >
               <CheckIcon className="hidden ui-selected:block" />
-              {item.propertyNo}
+              {item.equipment}
             </Combobox.Option>
           ))}
         </Combobox.Options>

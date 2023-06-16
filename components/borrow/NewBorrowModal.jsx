@@ -46,6 +46,7 @@ const NewBorrowModal = ({
     equipment: Yup.string().required("field must not be empty"),
     qty: Yup.number().required("field must not be empty"),
     purposeOthers: Yup.string(),
+    specificLocationOutside: Yup.string(),
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -61,6 +62,7 @@ const NewBorrowModal = ({
     purpose: "",
     isBorrowed: true,
     purposeOthers: "",
+    specificLocationOutside: "",
   };
 
   return (
@@ -69,6 +71,7 @@ const NewBorrowModal = ({
       onClose={() => {
         setSelectedResult(null);
         setSearchResults([]);
+        setSearchTerm("");
         setShowNew(false);
       }}
       className="relative z-50"
@@ -84,6 +87,7 @@ const NewBorrowModal = ({
               onClick={() => {
                 setSelectedResult(null);
                 setSearchResults([]);
+                setSearchTerm("");
                 setShowNew(false);
               }}
             >
@@ -98,20 +102,24 @@ const NewBorrowModal = ({
           >
             <div className="space-y-2 py-2 overflow-y-auto px-3 h-[350px]">
               <div className="flex items-center space-x-2">
-                <AppFormField
-                  name="equipment"
-                  placeholder="Equipment"
-                  label="Equipment"
-                  fieldClass="text-black bg-gray-50"
-                />
-                <DebounceInput
-                  selectedResult={selectedResult}
-                  setSelectedResult={setSelectedResult}
-                  searchResults={searchResults}
-                  searchTerm={searchTerm}
-                  setSearchResults={setSearchResults}
-                  setSearchTerm={setSearchTerm}
-                />
+                <div className="flex-[2]">
+                  <DebounceInput
+                    selectedResult={selectedResult}
+                    setSelectedResult={setSelectedResult}
+                    searchResults={searchResults}
+                    searchTerm={searchTerm}
+                    setSearchResults={setSearchResults}
+                    setSearchTerm={setSearchTerm}
+                  />
+                </div>
+                <div className="flex-1">
+                  <AppFormField
+                    name="propertyNo"
+                    placeholder="Property Number"
+                    label="Property Number"
+                    fieldClass="text-black bg-gray-50"
+                  />
+                </div>
               </div>
 
               <AppFormField
@@ -151,12 +159,18 @@ const NewBorrowModal = ({
                   selectItems={locationItems}
                   onSetSelect={setLocation}
                 />
-                {location?.label === "Outside" && (
+                {location?.label === "Inside" ? (
                   <SelectComponent
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
                     customOption={customOption}
                     setCustomOption={setCustomOption}
+                  />
+                ) : (
+                  <AppFormField
+                    label="Specific Location"
+                    name="specificLocationOutside"
+                    placeholder="Specific Location"
                   />
                 )}
               </div>

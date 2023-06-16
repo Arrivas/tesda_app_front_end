@@ -119,6 +119,7 @@ const EditModal = ({
     image: items?.image,
     _id: items?._id,
     purposeOthers: items?.purposeOthers,
+    specificLocationOutside: items?.specificLocationOutside,
   };
 
   const phoneRegExp =
@@ -210,7 +211,13 @@ const EditModal = ({
                   selectItems={locationItems}
                   onSetSelect={setLocation}
                 />
-                {location?.label === "Outside" && (
+                {location?.label === "Outside" ? (
+                  <AppFormField
+                    label="Specific Location"
+                    name="specificLocationOutside"
+                    placeholder="Specific Location"
+                  />
+                ) : (
                   <SelectComponent
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
