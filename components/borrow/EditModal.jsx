@@ -8,9 +8,9 @@ import * as Yup from "yup";
 import SelectForm from "../forms/SelectForm";
 import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
-import UploadImage from "../forms/UploadImage";
 import axios from "axios";
 import links from "../../config/links";
+import SelectComponent from "./SelectComponent";
 
 const locationItems = [
   { id: 1, label: "Inside" },
@@ -54,13 +54,19 @@ const EditModal = ({
     id: 1,
     label: items.location,
   });
-  const [role, setRole] = useState({ id: 1, label: items.role });
+  const [role, setRole] = useState({ id: 1, label: items?.role });
 
   const [startDate, setStartDate] = useState(new Date(items?.dateReturn));
   const [purpose, setPurpose] = useState({
     id: 1,
     label: items?.purpose,
   });
+  const [selectedOption, setSelectedOption] = useState(
+    items?.specificLocation || ""
+  );
+  const [customOption, setCustomOption] = useState(
+    items?.specificLocation || ""
+  );
 
   const fetchImage = async (itemId) => {
     if (!itemId) return;
@@ -108,10 +114,11 @@ const EditModal = ({
     location: location?.label,
     dateReturn: startDate.toISOString(),
     isBorrowed: isBorrowed?.isBorrowed,
-    specificLocation: items?.specificLocation,
+    specificLocation: selectedOption === "" ? customOption : selectedOption,
     purpose: purpose.label,
     image: items?.image,
     _id: items?._id,
+    purposeOthers: items?.purposeOthers,
   };
 
   const phoneRegExp =
@@ -128,6 +135,7 @@ const EditModal = ({
       .required(),
     equipment: Yup.string().required("field must not be empty"),
     qty: Yup.number().required("field must not be empty"),
+    purposeOthers: Yup.string(),
   });
 
   return (
@@ -179,21 +187,37 @@ const EditModal = ({
                   selectItems={purposeItems}
                   onSetSelect={setPurpose}
                 />
+                {purpose?.label === "Others" && (
+                  <AppFormField
+                    name="purposeOthers"
+                    placeholder="Other Purpose"
+                    label="Other purpose"
+                    fieldClass="text-black bg-gray-50"
+                  />
+                )}
               </div>
 
+              <SelectForm
+                select={role}
+                label="Role"
+                selectItems={roleItems}
+                onSetSelect={setRole}
+              />
               <div className="flex items-center space-x-2">
-                <SelectForm
-                  select={role}
-                  label="Role"
-                  selectItems={roleItems}
-                  onSetSelect={setRole}
-                />
                 <SelectForm
                   select={location}
                   label="Location"
                   selectItems={locationItems}
                   onSetSelect={setLocation}
                 />
+                {location?.label === "Outside" && (
+                  <SelectComponent
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    customOption={customOption}
+                    setCustomOption={setCustomOption}
+                  />
+                )}
               </div>
 
               <AppFormField

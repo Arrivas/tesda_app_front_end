@@ -9,6 +9,7 @@ import SelectForm from "../forms/SelectForm";
 import DatePickerField from "../forms/DatePickerField";
 import moment from "moment";
 import DebounceInput from "./DebounceInput";
+import SelectComponent from "./SelectComponent";
 
 const NewBorrowModal = ({
   showNew,
@@ -25,6 +26,10 @@ const NewBorrowModal = ({
   purpose,
   setPurpose,
   purposeItems,
+  selectedOption,
+  setSelectedOption,
+  customOption,
+  setCustomOption,
 }) => {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -40,7 +45,7 @@ const NewBorrowModal = ({
       .required(),
     equipment: Yup.string().required("field must not be empty"),
     qty: Yup.number().required("field must not be empty"),
-    specificLocation: Yup.string(),
+    purposeOthers: Yup.string(),
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -54,8 +59,8 @@ const NewBorrowModal = ({
     equipment: selectedResult?.equipment || "",
     qty: 0,
     purpose: "",
-    specificLocation: "",
     isBorrowed: true,
+    purposeOthers: "",
   };
 
   return (
@@ -93,6 +98,12 @@ const NewBorrowModal = ({
           >
             <div className="space-y-2 py-2 overflow-y-auto px-3 h-[350px]">
               <div className="flex items-center space-x-2">
+                <AppFormField
+                  name="equipment"
+                  placeholder="Equipment"
+                  label="Equipment"
+                  fieldClass="text-black bg-gray-50"
+                />
                 <DebounceInput
                   selectedResult={selectedResult}
                   setSelectedResult={setSelectedResult}
@@ -103,20 +114,12 @@ const NewBorrowModal = ({
                 />
               </div>
 
-              <div className="flex items-center space-x-2">
-                <AppFormField
-                  name="equipment"
-                  placeholder="Equipment"
-                  label="Equipment"
-                  fieldClass="text-black bg-gray-50"
-                />
-                <AppFormField
-                  name="qty"
-                  placeholder="Qty"
-                  label="Qty"
-                  fieldClass="text-black bg-gray-50"
-                />
-              </div>
+              <AppFormField
+                name="qty"
+                placeholder="Qty"
+                label="Qty"
+                fieldClass="text-black bg-gray-50"
+              />
 
               <div className="flex items-center space-x-2">
                 <SelectForm
@@ -125,6 +128,14 @@ const NewBorrowModal = ({
                   selectItems={purposeItems}
                   onSetSelect={setPurpose}
                 />
+                {purpose?.label === "Others" && (
+                  <AppFormField
+                    name="purposeOthers"
+                    placeholder="Other Purpose"
+                    label="Other purpose"
+                    fieldClass="text-black bg-gray-50"
+                  />
+                )}
               </div>
 
               <SelectForm
@@ -133,7 +144,7 @@ const NewBorrowModal = ({
                 selectItems={roleItems}
                 onSetSelect={setRole}
               />
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center justify-center space-x-1">
                 <SelectForm
                   select={location}
                   label="Location"
@@ -141,11 +152,17 @@ const NewBorrowModal = ({
                   onSetSelect={setLocation}
                 />
                 {location?.label === "Outside" && (
-                  <AppFormField
-                    name="specificLocation"
-                    placeholder="Location(specific)"
-                    label="Location(specific)"
-                    fieldClass="text-black bg-gray-50"
+                  // <AppFormField
+                  //   name="specificLocation"
+                  //   placeholder="Location(specific)"
+                  //   label="Location(specific)"
+                  //   fieldClass="text-black bg-gray-50"
+                  // />
+                  <SelectComponent
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    customOption={customOption}
+                    setCustomOption={setCustomOption}
                   />
                 )}
               </div>

@@ -62,6 +62,8 @@ const Home = () => {
   const [role, setRole] = useState({ id: 1, label: "Trainee" });
   const [purpose, setPurpose] = useState(purposeItems[0]);
   const [activeTab, setActiveTab] = useState("Borrow");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [customOption, setCustomOption] = useState("");
 
   const fetchBorrow = async () => {
     try {
@@ -87,12 +89,12 @@ const Home = () => {
   const isDue = (date) => (new Date(`${date}`) < new Date() ? true : false);
   const conditionedBorrow =
     activeTab === "Borrow"
-      ? sortedBorrow.filter(
+      ? sortedBorrow?.filter(
           (item) => item.isBorrowed === true && !isDue(item.dateReturn)
         )
       : activeTab === "Return"
-      ? sortedBorrow.filter((item) => item.isBorrowed === false)
-      : sortedBorrow.filter(
+      ? sortedBorrow?.filter((item) => item.isBorrowed === false)
+      : sortedBorrow?.filter(
           (item) => isDue(item.dateReturn) && item.isBorrowed === true
         );
 
@@ -137,6 +139,7 @@ const Home = () => {
       location: location.label,
       role: role.label,
       image,
+      specificLocation: selectedOption === "" ? customOption : selectedOption,
     };
 
     try {
@@ -144,10 +147,10 @@ const Home = () => {
       setShowNew(false);
       setBorrow((prevState) => [...prevState, res.data]);
       setSelectedImage(null);
-      resetForm();
       setLocation(location[0]);
       setRole(role[0]);
       setPurpose(purpose[0]);
+      resetForm();
       toast.success("added successfully");
     } catch (err) {
       toast.error("failed, something went wrong");
@@ -238,7 +241,7 @@ const Home = () => {
       })
       .catch((err) => toast.error("failed, something went wrong"));
     let borrowCopy = [...borrow];
-    borrowCopy = borrowCopy.filter(
+    borrowCopy = borrowCopy?.filter(
       (item) => !selectedItems.some((s) => s._id === item._id)
     );
     setBorrow(borrowCopy);
@@ -247,10 +250,18 @@ const Home = () => {
   if (!user.user) return <Loading />;
   return (
     <>
+      <title>Borrow</title>
       <div className="p-5 h-screen flex flex-col">
         <div className="flex-row space-x-4">
           {tabItems.map((item) => (
-            <button key={item.id} onClick={() => setActiveTab(item.label)}>
+            <button
+              key={item.id}
+              onClick={() => {
+                setActiveTab(item.label);
+                setSelectedItems([]);
+                setSelectedQr([]);
+              }}
+            >
               <h1
                 className={`font-semibold text-4xl ${
                   item.label === activeTab ? "text-gray-800" : "text-gray-100"
@@ -264,6 +275,10 @@ const Home = () => {
         {/* table menu */}
 
         <TableMenu
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          customOption={customOption}
+          setCustomOption={setCustomOption}
           activeTab={activeTab}
           purposeItems={purposeItems}
           setPurpose={setPurpose}

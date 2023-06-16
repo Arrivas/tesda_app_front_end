@@ -229,6 +229,7 @@ const Inventory = () => {
 
   return (
     <>
+      <title>Inventory</title>
       <div className="p-5 h-screen flex flex-col">
         <div className="flex flex-row space-x-4">
           {tabItems.map((item) => (

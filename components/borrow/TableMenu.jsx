@@ -52,6 +52,10 @@ const TableMenu = ({
   purposeItems,
   type = "default",
   activeTab,
+  selectedOption,
+  setSelectedOption,
+  customOption,
+  setCustomOption,
 }) => {
   const pathName = usePathname();
   return (
@@ -137,6 +141,10 @@ const TableMenu = ({
       {/* modal */}
       {type === "default" ? (
         <NewBorrowModal
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          customOption={customOption}
+          setCustomOption={setCustomOption}
           purpose={purpose}
           setPurpose={setPurpose}
           purposeItems={purposeItems}

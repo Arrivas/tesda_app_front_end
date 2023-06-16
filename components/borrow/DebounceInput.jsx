@@ -50,7 +50,7 @@ const DebounceInput = ({
         <div className="w-full relative flex-1 flex items-center p-[1px] justify-center text-start border border-gray-400 rounded-md">
           <Combobox.Input
             placeholder="Property no."
-            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+            className="w-full border-none p-[12px] pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
             onChange={handleInputChange}
           />
         </div>

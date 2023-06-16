@@ -19,7 +19,7 @@ const AppFormField = ({
   return (
     <div className="w-full bg-white ">
       {label && (
-        <span className="px-3 font-semibold bg-white text-xs w-full">
+        <span className="px-3 font-semibold bg-white text-xs w-full break-words">
           {label}
         </span>
       )}
