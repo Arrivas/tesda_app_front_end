@@ -152,12 +152,6 @@ const NewBorrowModal = ({
                   onSetSelect={setLocation}
                 />
                 {location?.label === "Outside" && (
-                  // <AppFormField
-                  //   name="specificLocation"
-                  //   placeholder="Location(specific)"
-                  //   label="Location(specific)"
-                  //   fieldClass="text-black bg-gray-50"
-                  // />
                   <SelectComponent
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
