@@ -10,14 +10,7 @@ const SelectForm = ({
   type = "default",
 }) => {
   return (
-    <div
-      className="w-full"
-      title={`${
-        select?.label === "Inside"
-          ? "On-site"
-          : select?.label === "Outside" && "Off-site"
-      }`}
-    >
+    <div className="w-full">
       {type === "default" ? (
         <>
           {label && (
@@ -61,7 +54,14 @@ const SelectForm = ({
                             : "font-normal"
                         }`}
                       >
-                        {item.label}
+                        {item.label}{" "}
+                        <span className="tex-gray-300">
+                          (
+                          {item?.label === "Inside"
+                            ? "On-site"
+                            : item?.label === "Outside" && "Off-site"}
+                          )
+                        </span>
                       </span>
                       {select?.label === item.label ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-800">
